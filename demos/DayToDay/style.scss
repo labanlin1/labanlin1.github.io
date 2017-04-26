@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+$unused-primary: #cbcbcb;
+$used-primary: #ffffff;
+
+*{
+  margin:0;
+  padding:0;
+  font-size: 62.5%;
+  font-family: "Lato", sans-serif;
+  box-sizing: border-box;
+}
+
+.top-row > div{
+  display:inline-block;
+}
+
+.tabs{
+  width: calc(100vw - 4rem);
+  margin:0;
+}
+
+.transcript-wrapper{
+  text-align: right;
+  width: 3rem;
+}
+
+.transcript{
+  width:100%;
+}
+.transcript i{
+  font-size: 2rem;
+}
+
+.tab{
+  font-size: 1.8rem;
+  display:inline-block;
+  padding: .7rem;
+  padding-bottom: 1rem;
+  margin-right: .5rem;
+  color: $unused-primary;
+}
+
+.tab:hover{
+  cursor:pointer;
+}
+
+.tab.active{
+  //border-bottom: white;
+  //background-color: white;
+  color:black;
+}
+
+.tab.active:hover{
+  cursor:default;
+}
+
+.tab-objects{
+  border-top: 2px solid $unused-primary;
+  margin-top: -2px;
+  font-size: 1.6rem;
+
+  div{
+    display:block;
+    padding:.5rem 0;
+    font-size: 1.6rem;
+    color: #a2a2a2;
+  }
+
+}
+.constructors-container, .suggested-container{
+  font-size: 1.8rem;
+  color: $unused-primary;
+  vertical-align: top;
+
+  .title{
+    text-align: center;
+    font-size: 1.3rem;
+    font-style: italic;
+    width:100%;
+    padding:.3rem 0 .5rem 0;
+  }
+
+}
+
+.suggested-container{
+  max-height: 20vh;
+  border-top: 1px solid #cbcbcb;
+
+  .option{
+    display:inline;
+    max-width: 40%;
+    background-color: #dfdfdf;
+    margin: .2rem;
+    padding: .5rem;
+    font-size: 1.6rem;
+    line-height:1rem;
+    border-radius: .2rem;
+
+    span, span *{
+      font-size:inherit;
+      line-height:inherit;
+    }
+  }
+}
+
+div .option strong, .tab-objects div .option em , .tab-objects div .option span.emphasis{
+  font-size: inherit;
+}
+
+span.emphasis{
+  color:black;
+}
+
+.option:active{
+  background-color: #f5f5f5;
+  color:black;
+}
+
+.option{
+  width:100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color:grey;
+}
+
+.phrase{
+  padding: 1rem;
+  margin:1rem;
+  border-bottom: 2px solid black;
+
+}
+.phrase, .phrase span, .phrase strong, .phrase span strong{
+  font-size: 1.6rem;
+}
+
+.field[contenteditable="true"]{
+  outline:none;
+  border:none;
+}
+

@@ -1,0 +1,33 @@
+{
+  "moduleName": "Restaurant",
+  "templates": [
+    {
+      "text": "Can I <get,have>",
+      "suggestedWords": [
+        {
+          "word": "coffee"
+        },
+        {
+          "word": "soup of the day"
+        },
+        {
+          "word": "water"
+        }
+      ]
+    },
+    {
+      "text": "Can I get the <cheque,bill>?",
+      "suggestedWords": [
+        {
+          "word": "Credit"
+        },
+        {
+          "word": "Debit"
+        },
+        {
+          "word": "Cash"
+        }
+      ]
+    }
+  ]
+}
