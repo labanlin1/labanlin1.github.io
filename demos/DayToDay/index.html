@@ -8,39 +8,45 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="transcript-wrapper">
+    <div class="transcript"><i class="unordered list icon"></i></div>
+</div>
 <div class="supplemental">
-    <div class="top-row">
-        <div class="tabs">
-            <div class="tab active">General</div>
-            <div class="tab">Pharmacy</div>
-        </div>
-        <div class="transcript-wrapper">
-            <div class="transcript"><i class="unordered list icon"></i></div>
-        </div>
+    <div class="tabs">
+        <div class="tab active">General</div>
+        <div class="tab">Pharmacy</div>
     </div>
     <div class="tab-objects">
         <div class="constructors-container">
             <!--<div class="title">Constructors</div>-->
-            <div class="option" data-optionID = "0">Hi there. I have laryngitis right now so I <span class = "emphasis">can't speak</span>, so I'll try to communicate through my phone like this.</div>
-            <div class="option" data-optionID = "0">I'm trying to <span class = "emphasis">find</span></div>
-            <div class="option">I'd like to fill out a <span class = "emphasis">prescription</span></div>
-            <div class="option"><span class = "emphasis">Where</span> can I find</div>
-            <div class="option">I'd like the <span class = "emphasis">bill</span> please.</div>
+            <!--<div class="option" data-optionID = "0">Hi there. I have laryngitis right now so I <span class = "emphasis">can't speak</span>, so I'll try to communicate through my phone like this.</div>-->
+            <!--<div class="option" data-optionID = "0">I'm trying to <span class = "emphasis">find</span></div>-->
+            <!--<div class="option">I'd like to fill out a <span class = "emphasis">prescription</span></div>-->
+            <!--<div class="option"><span class = "emphasis">Where</span> can I find</div>-->
+            <!--<div class="option">I'd like the <span class = "emphasis">bill</span> please.</div>-->
         </div>
 
     </div>
 </div>
 <div class="suggested-container">
     <div class="title">Suggested</div>
-    <div class="option"><span class = "emphasis">Debit</span></div>
-    <div class="option"><span class = "emphasis">Credit</span></div>
-    <div class="option"><span class = "emphasis">Cash</span></div>
-    <div class="option"><span class = "emphasis">Cheque</span></div>
+    <div class="programmed-options"><!-- Limited to three suggestions only -->
+        <div class="option emphasis"></div>
+        <div class="option emphasis"></div>
+        <div class="option emphasis"></div>
+    </div>
+    <div class="text-match-options"></div>
+    <!--<div class="option"><span class = "emphasis">Debit</span></div>-->
+    <!--<div class="option"><span class = "emphasis">Credit</span></div>-->
+    <!--<div class="option"><span class = "emphasis">Cash</span></div>-->
+    <!--<div class="option"><span class = "emphasis">Cheque</span></div>-->
 </div>
 <div class="phrase">
-    <span class="field" contenteditable="true">I'm trying to <strong>find</strong></span><span class="field" contenteditable="true">I'm trying to <strong>find</strong></span>
+    <span class="field" contenteditable="true"></span>
 </div>
+<div id="transcript-container" class = "">
 
+</div>
 <script src="index.js"></script>
 </body>
 </html>

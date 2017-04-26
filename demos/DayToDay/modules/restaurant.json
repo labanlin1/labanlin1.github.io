@@ -2,7 +2,7 @@
   "moduleName": "Restaurant",
   "templates": [
     {
-      "text": "Can I <get,have>",
+      "text": "Can I |have,get| some",
       "suggestedWords": [
         {
           "word": "coffee"
@@ -28,6 +28,26 @@
           "word": "Cash"
         }
       ]
+    }
+  ],
+  "words":[
+    {
+      "word":"Water"
+    },
+    {
+      "word":"Coffee"
+    },
+    {
+      "word":"Orange Juice"
+    },
+    {
+      "word":"Drinks"
+    },
+    {
+      "word":"Food"
+    },
+    {
+      "word":"Food"
     }
   ]
 }
