@@ -41,8 +41,8 @@
       <file leaf-file-name="index.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+            <state relative-caret-position="600">
+              <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
               <folding>
                 <element signature="e#0#41#0" expanded="false" />
                 <element signature="n#Template#0" expanded="false" />
@@ -54,10 +54,15 @@
                 <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
                 <element signature="n#!!block;n#parseJSONIntoTemplates#0" expanded="false" />
                 <element signature="n#!!block;n#setAsActiveTab#0" expanded="false" />
+                <element signature="n#!!block;n#getLastField#0" expanded="false" />
+                <element signature="n#!!block;n#createField#0" expanded="false" />
                 <element signature="n#!!block;n#addSuggestionToPhrase#0" expanded="false" />
                 <element signature="n#!!block;n#initializeSuggestions#0" expanded="false" />
+                <element signature="n#!!block;n#captureEnter#0" expanded="false" />
                 <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
                 <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
+                <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
+                <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -272,12 +277,12 @@
       <updated>1493101356654</updated>
       <workItem from="1493101357827" duration="16465000" />
       <workItem from="1493172053067" duration="10390000" />
-      <workItem from="1493230949779" duration="2741000" />
+      <workItem from="1493230949779" duration="3301000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29596000" />
+    <option name="totallyTimeSpent" value="30156000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="90" y="-11" width="1841" height="1102" extended-state="6" />
@@ -370,10 +375,15 @@
             <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
             <element signature="n#!!block;n#parseJSONIntoTemplates#0" expanded="false" />
             <element signature="n#!!block;n#setAsActiveTab#0" expanded="false" />
+            <element signature="n#!!block;n#getLastField#0" expanded="false" />
+            <element signature="n#!!block;n#createField#0" expanded="false" />
             <element signature="n#!!block;n#addSuggestionToPhrase#0" expanded="false" />
             <element signature="n#!!block;n#initializeSuggestions#0" expanded="false" />
+            <element signature="n#!!block;n#captureEnter#0" expanded="false" />
             <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
             <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
+            <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
+            <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -425,10 +435,15 @@
             <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
             <element signature="n#!!block;n#parseJSONIntoTemplates#0" expanded="false" />
             <element signature="n#!!block;n#setAsActiveTab#0" expanded="false" />
+            <element signature="n#!!block;n#getLastField#0" expanded="false" />
+            <element signature="n#!!block;n#createField#0" expanded="false" />
             <element signature="n#!!block;n#addSuggestionToPhrase#0" expanded="false" />
             <element signature="n#!!block;n#initializeSuggestions#0" expanded="false" />
+            <element signature="n#!!block;n#captureEnter#0" expanded="false" />
             <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
             <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
+            <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
+            <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -491,8 +506,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+        <state relative-caret-position="600">
+          <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
             <element signature="n#Template#0" expanded="false" />
@@ -504,10 +519,15 @@
             <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
             <element signature="n#!!block;n#parseJSONIntoTemplates#0" expanded="false" />
             <element signature="n#!!block;n#setAsActiveTab#0" expanded="false" />
+            <element signature="n#!!block;n#getLastField#0" expanded="false" />
+            <element signature="n#!!block;n#createField#0" expanded="false" />
             <element signature="n#!!block;n#addSuggestionToPhrase#0" expanded="false" />
             <element signature="n#!!block;n#initializeSuggestions#0" expanded="false" />
+            <element signature="n#!!block;n#captureEnter#0" expanded="false" />
             <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
             <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
+            <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
+            <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />
           </folding>
         </state>
       </provider>

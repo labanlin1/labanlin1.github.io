@@ -20,6 +20,10 @@ document.onkeypress = function(e){
     captureEnter(e);
 };
 
+document.onkeydown = function(e){
+    captureBackspace(e);
+};
+
 document.onkeyup = function(e){
     captureBackspace(e);
 };
