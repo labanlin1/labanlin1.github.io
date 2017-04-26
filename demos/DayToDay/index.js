@@ -9,18 +9,18 @@ var programmedOptionsContainer = document.querySelector("programmed-options");
 var textMatchOptionsContainer = document.querySelector("text-match-options");
 var transcriptContainer = document.querySelector("#transcript-container");
 var transcriptToggle = document.querySelector(".transcript");
-loadAndParseJSON("https://api.myjson.com/bins/yet63");
-getLastField().focus();
+var transcriptIcon = document.querySelector("#transcript-icon");
+var currentModule = "";
+var templates = [];
+loadAndParseJSON("https://api.myjson.com/bins/wqmi3");
+getOrCreateLastField().focus();
 initializeSuggestions();
 document.onkeypress = function (e) {
     captureEnter(e);
 };
-// document.onkeydown = function(e){
-//     captureBackspace(e);
+// document.onkeyup = function(e){
+//     captureBackspaceAndFilter(e);
 // };
-document.onkeyup = function (e) {
-    captureBackspace(e);
-};
 transcriptToggle.addEventListener("click", toggleTranscript);
 var Template = (function () {
     function Template(text, suggestedWords) {
@@ -29,8 +29,37 @@ var Template = (function () {
         this.suggestedWords = suggestedWords;
         var optionsFinder = /\|([A-Za-z,]+)\|/;
         this.alternates = optionsFinder.exec(this.text)[1].split(",");
-        this.display = text.replace(optionsFinder, "<span class = 'emphasis'>" + this.alternates[this.alternateSelected]) + "</span>";
+        this.createDisplay();
     }
+    Template.prototype.createDisplay = function () {
+        console.log(this.alternateSelected);
+        console.log(this.alternates);
+        var optionsFinder = /\|([A-Za-z,]+)\|/;
+        this.display = this.text.replace(optionsFinder, "<span class = 'emphasis'>" + this.alternates[this.alternateSelected]) + "</span>";
+    };
+    ;
+    Template.prototype.updateDisplay = function () {
+        this.element.innerHTML = this.display;
+    };
+    Template.prototype.filter = function (search) {
+        if (this.text.search(search) >= 0) {
+            //Exists
+            this.alternateSelected = 0;
+            this.element.classList.remove("hidden");
+            //Change selected alternates as required
+            for (var i = 0; i < this.alternates.length; i++) {
+                if (this.alternates[i].indexOf(search) >= 0) {
+                    this.alternateSelected = i;
+                    break;
+                }
+            }
+            this.createDisplay();
+            this.updateDisplay();
+        }
+        else {
+            this.element.classList.add("hidden");
+        }
+    };
     return Template;
 }());
 var Word = (function () {
@@ -45,9 +74,9 @@ function addTemplateToPhrase(template) {
     var newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = template.display;
-    phraseContainer.insertBefore(newTemplateInstance, getLastField());
+    phraseContainer.insertBefore(newTemplateInstance, getOrCreateLastField());
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
-    getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
+    getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
     //Update Suggested Tab
     updateProgrammableSugggestions(template);
 }
@@ -59,7 +88,13 @@ function removeTemplateFromPhrase(e) {
         target = target.parentNode;
     }
     phraseContainer.removeChild(target);
-    getLastField().focus();
+    var lastField = getLastField();
+    lastField.focus();
+    //Join if required
+    if (lastField.previousElementSibling.classList.contains("field")) {
+        lastField.innerHTML = lastField.previousElementSibling.innerHTML + lastField.innerHTML;
+        lastField.previousElementSibling.remove();
+    }
 }
 function updateProgrammableSugggestions(template) {
     var programmableSuggestions = document.querySelectorAll(".programmed-options .option");
@@ -97,6 +132,7 @@ function parseJSONIntoTemplates(json) {
     //Create New Objects
     var newContainer = document.createElement("div");
     newContainer.classList.add("constructors-container");
+    var moduleContainer = new Array(jsonObject.templates.length);
     var _loop_1 = function(i) {
         var t = jsonObject.templates[i];
         var option = new Template(t.text, t.suggestedWords);
@@ -108,14 +144,22 @@ function parseJSONIntoTemplates(json) {
         newOption.addEventListener("click", function () {
             addTemplateToPhrase(option);
         });
+        option.element = newOption;
         newContainer.appendChild(newOption);
+        // option.filter("have");
+        moduleContainer[i] = option;
     };
     for (var i = 0; i < jsonObject.templates.length; i++) {
         _loop_1(i);
     }
+    templates[jsonObject.moduleName] = moduleContainer;
     tabsObjectsContainer.appendChild(newContainer);
     newContainer.classList.add("active");
+    currentModule = jsonObject.moduleName;
     setAsActiveTab(newTab);
+    document.onkeyup = function (e) {
+        captureBackspaceAndFilter(e);
+    };
 }
 function setAsActiveTab(tab) {
     var activeTab = document.querySelector(".tab.active");
@@ -123,7 +167,7 @@ function setAsActiveTab(tab) {
     tab.classList.add("active");
 }
 //Helper Functions
-function getLastField() {
+function getOrCreateLastField() {
     var elements = document.querySelectorAll(".field");
     if (elements[elements.length - 1].innerHTML == "") {
         return elements[elements.length - 1];
@@ -133,6 +177,10 @@ function getLastField() {
         phraseContainer.appendChild(newField);
         return newField;
     }
+}
+function getLastField() {
+    var elements = document.querySelectorAll(".field");
+    return elements[elements.length - 1];
 }
 function createField() {
     var element = document.createElement("span");
@@ -146,9 +194,9 @@ function addSuggestionToPhrase(e) {
     var newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = text;
-    phraseContainer.insertBefore(newTemplateInstance, getLastField());
+    phraseContainer.insertBefore(newTemplateInstance, getOrCreateLastField());
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
-    getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
+    getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
     //Update Suggested Tab
 }
 function initializeSuggestions() {
@@ -168,7 +216,7 @@ function captureEnter(e) {
         newField.focus();
     }
 }
-function captureBackspace(e) {
+function captureBackspaceAndFilter(e) {
     var keyID = e.keyCode;
     //8 => backspace, 46 => delete
     if (keyID == 8) {
@@ -176,6 +224,19 @@ function captureBackspace(e) {
         if (activeElement.classList.contains("field")) {
             if (activeElement.textContent == "") {
                 removeLastWord(activeElement.previousElementSibling);
+            }
+        }
+    }
+    else {
+        //Filter
+        console.log(templates["Restaurant"]);
+        if (document.activeElement.classList.contains("field")) {
+            var relevantTemplates = templates[currentModule];
+            if (relevantTemplates) {
+                for (var i = 0; i < relevantTemplates.length; i++) {
+                    console.log(relevantTemplates[i]);
+                    relevantTemplates[i].filter(document.activeElement.textContent);
+                }
             }
         }
     }
@@ -200,12 +261,24 @@ function removeLastWord(element) {
             element.removeChild(el);
             if (element.childNodes.length == 0) {
                 phraseContainer.removeChild(element);
+                var lastField = getLastField();
+                if (lastField.previousElementSibling.classList.contains("field")) {
+                    lastField.focus();
+                    lastField.innerHTML = lastField.previousElementSibling.innerHTML + lastField.innerHTML;
+                    lastField.previousElementSibling.remove();
+                }
             }
         }
         else {
             element.textContent = text;
         }
     }
+    // else if (element && element.classList.contains("field")){
+    //     //Join fields
+    //     console.log("x");
+    //     document.activeElement.innerHTML = element.innerHTML + document.activeElement.innerHTML;
+    //     element.parentNode.removeChild(element);
+    // }
 }
 function addToTranscript(log) {
     var htmlMarkupRemover = /<(?:\/)?[A-Za-z ="']*>/ig;
@@ -217,10 +290,12 @@ function addToTranscript(log) {
 function toggleTranscript() {
     if (transcriptContainer.classList.contains("visible")) {
         transcriptContainer.classList.remove("visible");
+        transcriptIcon.className = "unordered list icon";
     }
     else {
         transcriptContainer.classList.add("visible");
         transcriptContainer.scrollTop = transcriptContainer.clientHeight;
+        transcriptIcon.className = "remove icon";
     }
 }
 //# sourceMappingURL=index.js.map

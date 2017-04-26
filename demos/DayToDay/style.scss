@@ -188,5 +188,9 @@ div.template{
   display:inline-block;
   background-color:$unused-primary;
   padding: .4rem;
-  margin: .2 .2rem;
+  margin: .2rem .2rem;
+}
+
+.option.hidden{
+  display:none;
 }
