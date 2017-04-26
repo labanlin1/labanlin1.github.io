@@ -12,7 +12,6 @@ let textMatchOptionsContainer = document.querySelector("text-match-options");
 let transcriptContainer = document.querySelector("#transcript-container");
 let transcriptToggle = document.querySelector(".transcript");
 
-
 loadAndParseJSON("https://api.myjson.com/bins/yet63");
 getLastField().focus();
 initializeSuggestions();
@@ -29,6 +28,7 @@ document.onkeyup = function(e){
 };
 
 transcriptToggle.addEventListener("click", toggleTranscript);
+
 class Template{
     text:string;
     display:string;
@@ -59,7 +59,7 @@ function addTemplateToPhrase(template:Template){
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = template.display;
     phraseContainer.insertBefore(newTemplateInstance,getLastField());
-    newTemplateInstance.addEventListener("dblclick", removeTemplateFromPhrase);
+    newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
     getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
 
     //Update Suggested Tab
@@ -172,7 +172,7 @@ function addSuggestionToPhrase(e){
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = text;
     phraseContainer.insertBefore(newTemplateInstance,getLastField());
-    newTemplateInstance.addEventListener("dblclick", removeTemplateFromPhrase);
+    newTemplateInstance.addEventListener("touchstart", removeTemplateFromPhrase);
     getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
 
     //Update Suggested Tab
@@ -180,8 +180,9 @@ function addSuggestionToPhrase(e){
 
 function initializeSuggestions(){
     const suggestions = document.querySelectorAll(".programmed-options .option");
+    console.log(suggestions.length);
     for (let i = 0; i<suggestions.length; i++){
-        suggestions[i].addEventListener("click", addSuggestionToPhrase);
+        suggestions[i].addEventListener("touchstart", addSuggestionToPhrase);
     }
 }
 

@@ -46,7 +46,7 @@ function addTemplateToPhrase(template) {
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = template.display;
     phraseContainer.insertBefore(newTemplateInstance, getLastField());
-    newTemplateInstance.addEventListener("dblclick", removeTemplateFromPhrase);
+    newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
     getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
     //Update Suggested Tab
     updateProgrammableSugggestions(template);
@@ -144,14 +144,15 @@ function addSuggestionToPhrase(e) {
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = text;
     phraseContainer.insertBefore(newTemplateInstance, getLastField());
-    newTemplateInstance.addEventListener("dblclick", removeTemplateFromPhrase);
+    newTemplateInstance.addEventListener("touchstart", removeTemplateFromPhrase);
     getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
     //Update Suggested Tab
 }
 function initializeSuggestions() {
     var suggestions = document.querySelectorAll(".programmed-options .option");
+    console.log(suggestions.length);
     for (var i = 0; i < suggestions.length; i++) {
-        suggestions[i].addEventListener("click", addSuggestionToPhrase);
+        suggestions[i].addEventListener("touchstart", addSuggestionToPhrase);
     }
 }
 function captureEnter(e) {

@@ -144,4 +144,7 @@ div.option.emphasis:empty {
   display: block;
   z-index: 50; }
 
+.option:hover, .phrase:hover {
+  cursor: pointer; }
+
 /*# sourceMappingURL=style.css.map */
