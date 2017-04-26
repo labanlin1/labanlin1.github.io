@@ -6,7 +6,7 @@
 
 const tabsContainer = document.querySelector("tabs");
 
-loadAndParseJSON("modules/restaurant.json");
+loadAndParseJSON("/modules/restaurant.json");
 
 class Template{
     text:string;

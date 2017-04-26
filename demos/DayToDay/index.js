@@ -3,7 +3,7 @@
  */
 //Default Variables
 var tabsContainer = document.querySelector("tabs");
-loadAndParseJSON("modules/restaurant.json");
+loadAndParseJSON("/modules/restaurant.json");
 var Template = (function () {
     function Template(text, suggestedWords) {
         this.text = text;
