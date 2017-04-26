@@ -3,7 +3,7 @@
  */
 //Default Variables
 var tabsContainer = document.querySelector("tabs");
-loadAndParseJSON("/Users/Laban/WebstormProjects/DaytoDay/modules/restaurant.json");
+loadAndParseJSON("modules/restaurant.json");
 var Template = (function () {
     function Template(text, suggestedWords) {
         this.text = text;
