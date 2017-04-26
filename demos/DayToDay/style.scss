@@ -11,6 +11,7 @@ $used-primary: #ffffff;
   box-sizing: border-box;
 }
 
+
 .tabs{
   width: calc(100vw - 4rem);
   margin:0;
@@ -103,7 +104,7 @@ $used-primary: #ffffff;
     line-height:1rem;
     border-radius: .2rem;
 
-    span, span *{
+    span, span *, div, div *{
       font-size:inherit;
       line-height:inherit;
     }
@@ -149,11 +150,6 @@ span.emphasis{
   display:inline-block;
 }
 
-.template{
-  background-color:$unused-primary;
-  padding: .5rem;
-}
-
 div.option.emphasis:empty{
   display:none;
 }
@@ -185,4 +181,12 @@ div.option.emphasis:empty{
 
 .option:hover, .phrase:hover{
   cursor:pointer;
+}
+
+div.template{
+  font-size: 1.6rem;
+  display:inline-block;
+  background-color:$unused-primary;
+  padding: .4rem;
+  margin: .2 .2rem;
 }

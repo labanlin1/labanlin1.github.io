@@ -21,8 +21,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="519">
+              <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -31,8 +31,8 @@
       <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2000">
-              <caret line="185" column="28" lean-forward="false" selection-start-line="185" selection-start-column="28" selection-end-line="185" selection-end-column="28" />
+            <state relative-caret-position="2170">
+              <caret line="190" column="12" lean-forward="false" selection-start-line="190" selection-start-column="12" selection-end-line="190" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -41,13 +41,12 @@
       <file leaf-file-name="index.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="184" column="51" lean-forward="false" selection-start-line="184" selection-start-column="51" selection-end-line="184" selection-end-column="51" />
+            <state relative-caret-position="585">
+              <caret line="77" column="27" lean-forward="false" selection-start-line="77" selection-start-column="27" selection-end-line="77" selection-end-column="27" />
               <folding>
                 <element signature="e#0#41#0" expanded="false" />
                 <element signature="n#Template#0" expanded="false" />
                 <element signature="n#Word#0" expanded="false" />
-                <element signature="n#!!block;n#removeTemplateFromPhrase#0" expanded="false" />
                 <element signature="n#!!block;n#updateProgrammableSugggestions#0" expanded="false" />
                 <element signature="n#!!block;n#loadAndParseJSON#0" expanded="false" />
                 <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
@@ -56,7 +55,6 @@
                 <element signature="n#!!block;n#getLastField#0" expanded="false" />
                 <element signature="n#!!block;n#createField#0" expanded="false" />
                 <element signature="n#!!block;n#captureEnter#0" expanded="false" />
-                <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
                 <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
                 <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
                 <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />
@@ -68,7 +66,7 @@
       <file leaf-file-name="restaurant.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/restaurant.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1150">
+            <state relative-caret-position="565">
               <caret line="46" column="19" lean-forward="false" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
               <folding />
             </state>
@@ -103,6 +101,12 @@
       <find>wra</find>
       <find>top-row</find>
       <find>click</find>
+      <find>template</find>
+      <find>span</find>
+      <find>.template</find>
+      <find>div</find>
+      <find>addtemplate</find>
+      <find>remove</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -275,12 +279,12 @@
       <updated>1493101356654</updated>
       <workItem from="1493101357827" duration="16465000" />
       <workItem from="1493172053067" duration="10390000" />
-      <workItem from="1493230949779" duration="5011000" />
+      <workItem from="1493230949779" duration="8459000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31866000" />
+    <option name="totallyTimeSpent" value="35314000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="90" y="-11" width="1841" height="1102" extended-state="6" />
@@ -366,7 +370,6 @@
             <element signature="e#0#41#0" expanded="false" />
             <element signature="n#Template#0" expanded="false" />
             <element signature="n#Word#0" expanded="false" />
-            <element signature="n#!!block;n#removeTemplateFromPhrase#0" expanded="false" />
             <element signature="n#!!block;n#updateProgrammableSugggestions#0" expanded="false" />
             <element signature="n#!!block;n#loadAndParseJSON#0" expanded="false" />
             <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
@@ -375,7 +378,6 @@
             <element signature="n#!!block;n#getLastField#0" expanded="false" />
             <element signature="n#!!block;n#createField#0" expanded="false" />
             <element signature="n#!!block;n#captureEnter#0" expanded="false" />
-            <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
             <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
             <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
             <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />
@@ -423,7 +425,6 @@
             <element signature="e#0#41#0" expanded="false" />
             <element signature="n#Template#0" expanded="false" />
             <element signature="n#Word#0" expanded="false" />
-            <element signature="n#!!block;n#removeTemplateFromPhrase#0" expanded="false" />
             <element signature="n#!!block;n#updateProgrammableSugggestions#0" expanded="false" />
             <element signature="n#!!block;n#loadAndParseJSON#0" expanded="false" />
             <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
@@ -432,7 +433,6 @@
             <element signature="n#!!block;n#getLastField#0" expanded="false" />
             <element signature="n#!!block;n#createField#0" expanded="false" />
             <element signature="n#!!block;n#captureEnter#0" expanded="false" />
-            <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
             <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
             <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
             <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />
@@ -472,9 +472,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/restaurant.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1150">
+        <state relative-caret-position="565">
           <caret line="46" column="19" lean-forward="false" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
           <folding />
         </state>
@@ -482,29 +490,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2000">
-          <caret line="185" column="28" lean-forward="false" selection-start-line="185" selection-start-column="28" selection-end-line="185" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state relative-caret-position="2170">
+          <caret line="190" column="12" lean-forward="false" selection-start-line="190" selection-start-column="12" selection-end-line="190" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="184" column="51" lean-forward="false" selection-start-line="184" selection-start-column="51" selection-end-line="184" selection-end-column="51" />
+        <state relative-caret-position="585">
+          <caret line="77" column="27" lean-forward="false" selection-start-line="77" selection-start-column="27" selection-end-line="77" selection-end-column="27" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
             <element signature="n#Template#0" expanded="false" />
             <element signature="n#Word#0" expanded="false" />
-            <element signature="n#!!block;n#removeTemplateFromPhrase#0" expanded="false" />
             <element signature="n#!!block;n#updateProgrammableSugggestions#0" expanded="false" />
             <element signature="n#!!block;n#loadAndParseJSON#0" expanded="false" />
             <element signature="n#!!block;n#retrieveJson#0" expanded="false" />
@@ -513,7 +512,6 @@
             <element signature="n#!!block;n#getLastField#0" expanded="false" />
             <element signature="n#!!block;n#createField#0" expanded="false" />
             <element signature="n#!!block;n#captureEnter#0" expanded="false" />
-            <element signature="n#!!block;n#captureBackspace#0" expanded="false" />
             <element signature="n#!!block;n#removeLastWord#0" expanded="false" />
             <element signature="n#!!block;n#addToTranscript#0" expanded="false" />
             <element signature="n#!!block;n#toggleTranscript#0" expanded="false" />

@@ -80,7 +80,7 @@
     font-size: 1.6rem;
     line-height: 1rem;
     border-radius: .2rem; }
-    .suggested-container .option span, .suggested-container .option span * {
+    .suggested-container .option span, .suggested-container .option span *, .suggested-container .option div, .suggested-container .option div * {
       font-size: inherit;
       line-height: inherit; }
 
@@ -116,10 +116,6 @@ span.emphasis {
   min-width: 4rem;
   display: inline-block; }
 
-.template {
-  background-color: #cbcbcb;
-  padding: .5rem; }
-
 div.option.emphasis:empty {
   display: none; }
 
@@ -146,5 +142,12 @@ div.option.emphasis:empty {
 
 .option:hover, .phrase:hover {
   cursor: pointer; }
+
+div.template {
+  font-size: 1.6rem;
+  display: inline-block;
+  background-color: #cbcbcb;
+  padding: .4rem;
+  margin: .2 .2rem; }
 
 /*# sourceMappingURL=style.css.map */

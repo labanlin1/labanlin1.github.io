@@ -15,13 +15,14 @@ let transcriptToggle = document.querySelector(".transcript");
 loadAndParseJSON("https://api.myjson.com/bins/yet63");
 getLastField().focus();
 initializeSuggestions();
+
 document.onkeypress = function(e){
     captureEnter(e);
 };
 
-document.onkeydown = function(e){
-    captureBackspace(e);
-};
+// document.onkeydown = function(e){
+//     captureBackspace(e);
+// };
 
 document.onkeyup = function(e){
     captureBackspace(e);
@@ -55,7 +56,7 @@ class Word{
 
 function addTemplateToPhrase(template:Template){
     //Insert Template
-    let newTemplateInstance = document.createElement("span");
+    let newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = template.display;
     phraseContainer.insertBefore(newTemplateInstance,getLastField());
@@ -67,8 +68,14 @@ function addTemplateToPhrase(template:Template){
 }
 
 function removeTemplateFromPhrase(e){
+    e.preventDefault();
     let target = e.target;
+    console.log(target);
+    while(!(target.classList.contains("template"))){
+        target = target.parentNode;
+    }
     phraseContainer.removeChild(target);
+    getLastField().focus();
 }
 
 function updateProgrammableSugggestions(template:Template){
@@ -127,9 +134,7 @@ function parseJSONIntoTemplates(json){
         newOption.addEventListener("click", function(){
             addTemplateToPhrase(option);
         });
-        newOption.addEventListener("touchend", function(){
-            addTemplateToPhrase(option);
-        });
+
         newContainer.appendChild(newOption);
 
     }
@@ -168,11 +173,11 @@ function createField(){
 function addSuggestionToPhrase(e){
     const text = e.target.innerHTML;
     //Insert Template
-    let newTemplateInstance = document.createElement("span");
+    let newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = text;
     phraseContainer.insertBefore(newTemplateInstance,getLastField());
-    newTemplateInstance.addEventListener("touchstart", removeTemplateFromPhrase);
+    newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
     getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
 
     //Update Suggested Tab
@@ -180,9 +185,8 @@ function addSuggestionToPhrase(e){
 
 function initializeSuggestions(){
     const suggestions = document.querySelectorAll(".programmed-options .option");
-    console.log(suggestions.length);
     for (let i = 0; i<suggestions.length; i++){
-        suggestions[i].addEventListener("touchstart", addSuggestionToPhrase);
+        suggestions[i].addEventListener("click", addSuggestionToPhrase);
     }
 }
 
@@ -201,7 +205,7 @@ function captureEnter(e){
 function captureBackspace(e){
     let keyID = e.keyCode;
     //8 => backspace, 46 => delete
-    if (keyID == 46){
+    if (keyID == 8){
         const activeElement = document.activeElement;
         if (activeElement.classList.contains("field")){
             if (activeElement.textContent == ""){
@@ -212,13 +216,34 @@ function captureBackspace(e){
 }
 
 function removeLastWord(element){
-    if (element) {
-        let text = element.innerHTML;
+
+    if (element && element.classList.contains("template")) {
+        //Find last child node
+
+        let el = element.childNodes[element.childNodes.length-1];
+
+        //Remove trailing spaces from text content if any
+
+        let text = el.textContent;
+
+        if (text.charAt(text.length-1) == " "){
+            text = text.substring(0, text.length-1);
+        }
+
         let lastIndex = text.lastIndexOf(" ");
-        text = text.substring(0, lastIndex);
-        element.innerHTML = text;
-        if (text == "" || text == " ") {
-            element.parentNode.removeChild(element);
+        if (lastIndex == -1){
+            text = "";
+        }else{
+            text = text.substring(0,lastIndex);
+        }
+
+        if (text == "" || text == " "){
+            element.removeChild(el);
+            if (element.childNodes.length == 0){
+                phraseContainer.removeChild(element);
+            }
+        }else{
+            element.textContent = text;
         }
     }
 }
@@ -239,3 +264,4 @@ function toggleTranscript(){
         transcriptContainer.scrollTop = transcriptContainer.clientHeight;
     }
 }
+

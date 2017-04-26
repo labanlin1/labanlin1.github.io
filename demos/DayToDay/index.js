@@ -15,9 +15,9 @@ initializeSuggestions();
 document.onkeypress = function (e) {
     captureEnter(e);
 };
-document.onkeydown = function (e) {
-    captureBackspace(e);
-};
+// document.onkeydown = function(e){
+//     captureBackspace(e);
+// };
 document.onkeyup = function (e) {
     captureBackspace(e);
 };
@@ -42,7 +42,7 @@ var Word = (function () {
 //Template Functionality
 function addTemplateToPhrase(template) {
     //Insert Template
-    var newTemplateInstance = document.createElement("span");
+    var newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = template.display;
     phraseContainer.insertBefore(newTemplateInstance, getLastField());
@@ -52,8 +52,14 @@ function addTemplateToPhrase(template) {
     updateProgrammableSugggestions(template);
 }
 function removeTemplateFromPhrase(e) {
+    e.preventDefault();
     var target = e.target;
+    console.log(target);
+    while (!(target.classList.contains("template"))) {
+        target = target.parentNode;
+    }
     phraseContainer.removeChild(target);
+    getLastField().focus();
 }
 function updateProgrammableSugggestions(template) {
     var programmableSuggestions = document.querySelectorAll(".programmed-options .option");
@@ -102,9 +108,6 @@ function parseJSONIntoTemplates(json) {
         newOption.addEventListener("click", function () {
             addTemplateToPhrase(option);
         });
-        newOption.addEventListener("touchend", function () {
-            addTemplateToPhrase(option);
-        });
         newContainer.appendChild(newOption);
     };
     for (var i = 0; i < jsonObject.templates.length; i++) {
@@ -140,19 +143,18 @@ function createField() {
 function addSuggestionToPhrase(e) {
     var text = e.target.innerHTML;
     //Insert Template
-    var newTemplateInstance = document.createElement("span");
+    var newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = text;
     phraseContainer.insertBefore(newTemplateInstance, getLastField());
-    newTemplateInstance.addEventListener("touchstart", removeTemplateFromPhrase);
+    newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
     getLastField().focus(); //Webstorm says this doesn't work, but it totally does.
     //Update Suggested Tab
 }
 function initializeSuggestions() {
     var suggestions = document.querySelectorAll(".programmed-options .option");
-    console.log(suggestions.length);
     for (var i = 0; i < suggestions.length; i++) {
-        suggestions[i].addEventListener("touchstart", addSuggestionToPhrase);
+        suggestions[i].addEventListener("click", addSuggestionToPhrase);
     }
 }
 function captureEnter(e) {
@@ -169,7 +171,7 @@ function captureEnter(e) {
 function captureBackspace(e) {
     var keyID = e.keyCode;
     //8 => backspace, 46 => delete
-    if (keyID == 46) {
+    if (keyID == 8) {
         var activeElement = document.activeElement;
         if (activeElement.classList.contains("field")) {
             if (activeElement.textContent == "") {
@@ -179,13 +181,29 @@ function captureBackspace(e) {
     }
 }
 function removeLastWord(element) {
-    if (element) {
-        var text = element.innerHTML;
+    if (element && element.classList.contains("template")) {
+        //Find last child node
+        var el = element.childNodes[element.childNodes.length - 1];
+        //Remove trailing spaces from text content if any
+        var text = el.textContent;
+        if (text.charAt(text.length - 1) == " ") {
+            text = text.substring(0, text.length - 1);
+        }
         var lastIndex = text.lastIndexOf(" ");
-        text = text.substring(0, lastIndex);
-        element.innerHTML = text;
+        if (lastIndex == -1) {
+            text = "";
+        }
+        else {
+            text = text.substring(0, lastIndex);
+        }
         if (text == "" || text == " ") {
-            element.parentNode.removeChild(element);
+            element.removeChild(el);
+            if (element.childNodes.length == 0) {
+                phraseContainer.removeChild(element);
+            }
+        }
+        else {
+            element.textContent = text;
         }
     }
 }
