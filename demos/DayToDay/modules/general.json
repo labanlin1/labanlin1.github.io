@@ -1,0 +1,67 @@
+{
+  "moduleName": "General",
+  "templates": [
+    {
+      "text": "Hi there. I can't |speak,talk| due to laryngitis.",
+      "suggestedWords": []
+    },
+    {
+      "text": "|I'm looking for,Can you help me find|",
+      "suggestedWords": []
+    },
+    {
+      "text": "Can you give me directions to",
+      "suggestedWords": [
+        {
+          "word":"the nearest subway stop"
+        },
+        {
+          "word":"t"
+        },
+        {
+          "word":"the nearest subway stop"
+        }
+      ]
+    },
+    {
+      "text": "|I'm looking for,Can you help me find|",
+      "suggestedWords": []
+    },
+    {
+      "text": "|I'm looking for,Can you help me find|",
+      "suggestedWords": []
+    },
+    {
+      "text": "|I'm looking for,Can you help me find|",
+      "suggestedWords": []
+    },
+    {
+      "text": "|I'm looking for,Can you help me find|",
+      "suggestedWords": []
+    },
+    {
+      "text": "|I'm looking for,Can you help me find|",
+      "suggestedWords": []
+    }
+  ],
+  "words":[
+    {
+      "word":"Water"
+    },
+    {
+      "word":"Coffee"
+    },
+    {
+      "word":"Orange Juice"
+    },
+    {
+      "word":"Drinks"
+    },
+    {
+      "word":"Food"
+    },
+    {
+      "word":"Food"
+    }
+  ]
+}

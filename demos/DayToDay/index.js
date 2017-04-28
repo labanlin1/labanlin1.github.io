@@ -23,41 +23,52 @@ document.onkeypress = function (e) {
 // };
 transcriptToggle.addEventListener("click", toggleTranscript);
 var Template = (function () {
-    function Template(text, suggestedWords) {
-        this.alternateSelected = 0;
+    function Template(text, suggestedWords, el) {
+        this.element = el;
+        this.variationSelected = 0;
         this.text = text;
         this.suggestedWords = suggestedWords;
         var optionsFinder = /\|([A-Za-z,]+)\|/;
-        this.alternates = optionsFinder.exec(this.text)[1].split(",");
-        this.createDisplay();
+        this.variants = optionsFinder.exec(this.text)[1].split(",");
+        this.variations = new Array(this.variants.length);
+        for (var i = 0; i < this.variants.length; i++) {
+            var variation = this.variants[i];
+            this.variations[i] = this.text.replace(optionsFinder, variation);
+        }
+        this.updateDisplay();
     }
-    Template.prototype.createDisplay = function () {
-        console.log(this.alternateSelected);
-        console.log(this.alternates);
-        var optionsFinder = /\|([A-Za-z,]+)\|/;
-        this.display = this.text.replace(optionsFinder, "<span class = 'emphasis'>" + this.alternates[this.alternateSelected]) + "</span>";
-    };
-    ;
     Template.prototype.updateDisplay = function () {
-        this.element.innerHTML = this.display;
+        var variantString = "<span class = 'emphasis'>" + this.variants[this.variationSelected] + "</span>";
+        var optionsFinder = /\|([A-Za-z,]+)\|/;
+        this.element.innerHTML = this.text.replace(optionsFinder, variantString);
+    };
+    Template.prototype.showDisplay = function () {
+        this.element.classList.remove("hidden");
+    };
+    Template.prototype.hideDisplay = function () {
+        this.element.classList.add("hidden");
     };
     Template.prototype.filter = function (search) {
-        if (this.text.search(search) >= 0) {
-            //Exists
-            this.alternateSelected = 0;
-            this.element.classList.remove("hidden");
-            //Change selected alternates as required
-            for (var i = 0; i < this.alternates.length; i++) {
-                if (this.alternates[i].indexOf(search) >= 0) {
-                    this.alternateSelected = i;
-                    break;
-                }
+        //Change selected alternates as required
+        search = search.trim();
+        if (search == "") {
+            this.showDisplay();
+            return;
+        }
+        var resultFound = false;
+        for (var i = 0; i < this.variations.length; i++) {
+            if (this.variations[i].indexOf(search) >= 0) {
+                this.variationSelected = i;
+                this.updateDisplay();
+                resultFound = true;
+                break;
             }
-            this.createDisplay();
-            this.updateDisplay();
+        }
+        if (resultFound) {
+            this.showDisplay();
         }
         else {
-            this.element.classList.add("hidden");
+            this.hideDisplay();
         }
     };
     return Template;
@@ -73,7 +84,8 @@ function addTemplateToPhrase(template) {
     //Insert Template
     var newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
-    newTemplateInstance.innerHTML = template.display;
+    newTemplateInstance.innerHTML = template.element.innerHTML;
+    console.log(template.element);
     phraseContainer.insertBefore(newTemplateInstance, getOrCreateLastField());
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
     getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
@@ -83,7 +95,6 @@ function addTemplateToPhrase(template) {
 function removeTemplateFromPhrase(e) {
     e.preventDefault();
     var target = e.target;
-    console.log(target);
     while (!(target.classList.contains("template"))) {
         target = target.parentNode;
     }
@@ -98,7 +109,6 @@ function removeTemplateFromPhrase(e) {
 }
 function updateProgrammableSugggestions(template) {
     var programmableSuggestions = document.querySelectorAll(".programmed-options .option");
-    console.log(programmableSuggestions);
     for (var i = 0; i < Math.min(3, template.suggestedWords.length); i++) {
         programmableSuggestions[i].innerHTML = template.suggestedWords[i].word;
     }
@@ -121,8 +131,6 @@ function retrieveJson(url) {
 }
 function parseJSONIntoTemplates(json) {
     var jsonObject = JSON.parse(json);
-    console.log(jsonObject);
-    console.log(jsonObject.moduleName);
     //Create New Tab
     var newTab = document.createElement("div");
     newTab.classList.add("tab");
@@ -135,16 +143,14 @@ function parseJSONIntoTemplates(json) {
     var moduleContainer = new Array(jsonObject.templates.length);
     var _loop_1 = function(i) {
         var t = jsonObject.templates[i];
-        var option = new Template(t.text, t.suggestedWords);
-        //Wrap Option in appropriate markup
         var newOption = document.createElement("div");
         newOption.classList.add("option");
         newOption.setAttribute("module", jsonObject.moduleName);
-        newOption.innerHTML = option.display;
+        var option = new Template(t.text, t.suggestedWords, newOption);
+        //Wrap Option in appropriate markup
         newOption.addEventListener("click", function () {
             addTemplateToPhrase(option);
         });
-        option.element = newOption;
         newContainer.appendChild(newOption);
         // option.filter("have");
         moduleContainer[i] = option;
@@ -219,27 +225,26 @@ function captureEnter(e) {
 function captureBackspaceAndFilter(e) {
     var keyID = e.keyCode;
     //8 => backspace, 46 => delete
-    if (keyID == 8) {
+    if (isInKeyCodeBounds(keyID)) {
         var activeElement = document.activeElement;
         if (activeElement.classList.contains("field")) {
-            if (activeElement.textContent == "") {
+            if (activeElement.textContent == "" && keyID == 8) {
                 removeLastWord(activeElement.previousElementSibling);
             }
-        }
-    }
-    else {
-        //Filter
-        console.log(templates["Restaurant"]);
-        if (document.activeElement.classList.contains("field")) {
             var relevantTemplates = templates[currentModule];
             if (relevantTemplates) {
                 for (var i = 0; i < relevantTemplates.length; i++) {
-                    console.log(relevantTemplates[i]);
                     relevantTemplates[i].filter(document.activeElement.textContent);
                 }
             }
         }
     }
+}
+function isInKeyCodeBounds(keyCode) {
+    //48-90 is 0 - Z
+    //96 - 105 is 0-9 Numpad
+    //186- 191 is various punctuation
+    return ((keyCode >= 48 && keyCode <= 90) || (keyCode >= 96 && keyCode <= 105) || (keyCode >= 186 && keyCode <= 191) || keyCode == 8);
 }
 function removeLastWord(element) {
     if (element && element.classList.contains("template")) {

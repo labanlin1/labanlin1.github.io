@@ -32,47 +32,64 @@ transcriptToggle.addEventListener("click", toggleTranscript);
 class Template{
     element;
     text:string;
-    display:string;
-    alternates:string[];
-    alternateSelected: number;
+    variations:string[];
+    variationSelected: number;
+    variants:string[];//Probably a better naming scheme req'd, but variants contains the key words while variations contain the entire strings, allowing the HTML to be generated on the fly but search to be instantaneous
     suggestedWords:Word[];
-    constructor(text:string, suggestedWords:Word[]){
-        this.alternateSelected=0;
+    constructor(text:string, suggestedWords:Word[], el){
+        this.element = el;
+        this.variationSelected=0;
         this.text = text;
         this.suggestedWords = suggestedWords;
         const optionsFinder = /\|([A-Za-z,]+)\|/;
-        this.alternates = optionsFinder.exec(this.text)[1].split(",");
-        this.createDisplay();
+        this.variants = optionsFinder.exec(this.text)[1].split(",");
+        this.variations = new Array(this.variants.length);
+        for (let i = 0; i< this.variants.length; i++) {
+            const variation = this.variants[i];
+            this.variations[i]  = this.text.replace(optionsFinder, variation);
+        }
+        this.updateDisplay();
     }
-
-    createDisplay(){
-        console.log(this.alternateSelected);
-        console.log(this.alternates);
-        const optionsFinder = /\|([A-Za-z,]+)\|/;
-        this.display = this.text.replace(optionsFinder, "<span class = 'emphasis'>" + this.alternates[this.alternateSelected]) + "</span>";
-    };
 
     updateDisplay(){
-        this.element.innerHTML = this.display;
+        const variantString = "<span class = 'emphasis'>" + this.variants[this.variationSelected] + "</span>";
+        const optionsFinder = /\|([A-Za-z,]+)\|/;
+        this.element.innerHTML = this.text.replace(optionsFinder, variantString);
     }
 
-    filter(search:string){
-        if (this.text.search(search)>=0){
-            //Exists
-            this.alternateSelected = 0;
-            this.element.classList.remove("hidden");
+    showDisplay(){
+        this.element.classList.remove("hidden");
+    }
 
-            //Change selected alternates as required
-            for(let i = 0; i<this.alternates.length; i++){
-                if (this.alternates[i].indexOf(search)>=0){
-                    this.alternateSelected = i;
-                    break;
-                }
+    hideDisplay(){
+        this.element.classList.add("hidden");
+    }
+
+
+    filter(search:string){
+        //Change selected alternates as required
+        search = search.trim();
+
+        if (search == ""){
+            this.showDisplay();
+            return;
+        }
+
+        let resultFound = false;
+
+        for(let i = 0; i<this.variations.length; i++){
+            if (this.variations[i].indexOf(search)>=0){
+                this.variationSelected = i;
+                this.updateDisplay();
+                resultFound = true;
+                break;
             }
-            this.createDisplay();
-            this.updateDisplay();
+        }
+
+        if (resultFound){
+            this.showDisplay();
         }else{
-            this.element.classList.add("hidden");
+            this.hideDisplay();
         }
     }
 }
@@ -89,7 +106,8 @@ function addTemplateToPhrase(template:Template){
     //Insert Template
     let newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
-    newTemplateInstance.innerHTML = template.display;
+    newTemplateInstance.innerHTML = template.element.innerHTML;
+    console.log(template.element);
     phraseContainer.insertBefore(newTemplateInstance,getOrCreateLastField());
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
     getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
@@ -101,7 +119,6 @@ function addTemplateToPhrase(template:Template){
 function removeTemplateFromPhrase(e){
     e.preventDefault();
     let target = e.target;
-    console.log(target);
     while(!(target.classList.contains("template"))){
         target = target.parentNode;
     }
@@ -118,7 +135,6 @@ function removeTemplateFromPhrase(e){
 
 function updateProgrammableSugggestions(template:Template){
     let programmableSuggestions = document.querySelectorAll(".programmed-options .option");
-    console.log(programmableSuggestions);
     for (let i = 0; i<Math.min(3,template.suggestedWords.length); i++){
         programmableSuggestions[i].innerHTML = template.suggestedWords[i].word;
     }
@@ -146,8 +162,6 @@ function retrieveJson(url:string){
 
 function parseJSONIntoTemplates(json){
     let jsonObject = JSON.parse(json);
-    console.log(jsonObject);
-    console.log(jsonObject.moduleName);
 
     //Create New Tab
     let newTab = document.createElement("div");
@@ -165,16 +179,18 @@ function parseJSONIntoTemplates(json){
 
     for (let i = 0; i<jsonObject.templates.length; i++){
         const t = jsonObject.templates[i];
-        let option = new Template(t.text, t.suggestedWords);
-        //Wrap Option in appropriate markup
+
         let newOption = document.createElement("div");
         newOption.classList.add("option");
         newOption.setAttribute("module", jsonObject.moduleName);
-        newOption.innerHTML = option.display;
+
+        let option = new Template(t.text, t.suggestedWords, newOption);
+        //Wrap Option in appropriate markup
+
         newOption.addEventListener("click", function(){
             addTemplateToPhrase(option);
         });
-        option.element = newOption;
+
         newContainer.appendChild(newOption);
         // option.filter("have");
 
@@ -259,26 +275,32 @@ function captureEnter(e){
 function captureBackspaceAndFilter(e){
     let keyID = e.keyCode;
     //8 => backspace, 46 => delete
-    if (keyID == 8){
+
+
+    if (isInKeyCodeBounds(keyID)){
         const activeElement = document.activeElement;
         if (activeElement.classList.contains("field")){
-            if (activeElement.textContent == ""){
+            if (activeElement.textContent == "" && keyID == 8){
                 removeLastWord(activeElement.previousElementSibling);
             }
-        }
-    }else{
-        //Filter
-        console.log(templates["Restaurant"]);
-        if (document.activeElement.classList.contains("field")) {
             const relevantTemplates = templates[currentModule];
             if (relevantTemplates){
                 for (let i = 0; i < relevantTemplates.length; i++) {
-                    console.log(relevantTemplates[i]);
                     relevantTemplates[i].filter(document.activeElement.textContent);
                 }
             }
         }
+
     }
+}
+
+function isInKeyCodeBounds(keyCode){
+    //48-90 is 0 - Z
+    //96 - 105 is 0-9 Numpad
+    //186- 191 is various punctuation
+
+    return ((keyCode >= 48 && keyCode <= 90) || (keyCode >= 96 && keyCode <= 105) || (keyCode >= 186 && keyCode <= 191) || keyCode == 8);
+
 }
 
 function removeLastWord(element){

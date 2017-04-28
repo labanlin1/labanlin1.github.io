@@ -16,7 +16,7 @@
       ]
     },
     {
-      "text": "Can I get the |cheque,bill|?",
+      "text": "Can I get the |cheque,bill,tab|?",
       "suggestedWords": [
         {
           "word": "Credit"
