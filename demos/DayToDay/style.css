@@ -153,4 +153,11 @@ div.template {
 .option.hidden {
   display: none; }
 
+/*
+Custom Sizes
+ */
+.iphone-6 .phone-wrapper {
+  height: 299px;
+  background-color: red; }
+
 /*# sourceMappingURL=style.css.map */
