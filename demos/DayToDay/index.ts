@@ -236,6 +236,8 @@ function parseJSONIntoTemplates(json){
 
 function setAsActiveTab(tab){
 
+    currentModule = tab;
+
     let activeTab = document.querySelectorAll(".tab");
     if (activeTab.length > 0){
         for (let i = 0; i<activeTab.length; i++){

@@ -188,6 +188,7 @@ function parseJSONIntoTemplates(json) {
     setAsActiveTab(currentModule);
 }
 function setAsActiveTab(tab) {
+    currentModule = tab;
     var activeTab = document.querySelectorAll(".tab");
     if (activeTab.length > 0) {
         for (var i = 0; i < activeTab.length; i++) {
