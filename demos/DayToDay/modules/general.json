@@ -16,31 +16,12 @@
           "word":"the nearest subway stop"
         },
         {
-          "word":"t"
-        },
-        {
-          "word":"the nearest subway stop"
+          "word":"Ripley's Aquarium"
         }
       ]
     },
     {
-      "text": "|I'm looking for,Can you help me find|",
-      "suggestedWords": []
-    },
-    {
-      "text": "|I'm looking for,Can you help me find|",
-      "suggestedWords": []
-    },
-    {
-      "text": "|I'm looking for,Can you help me find|",
-      "suggestedWords": []
-    },
-    {
-      "text": "|I'm looking for,Can you help me find|",
-      "suggestedWords": []
-    },
-    {
-      "text": "|I'm looking for,Can you help me find|",
+      "text": "I'm here to |see,visit|",
       "suggestedWords": []
     }
   ],

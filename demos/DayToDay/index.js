@@ -15,7 +15,7 @@ var templates = [];
 var field = document.querySelector(".field");
 var body = document.querySelector("body");
 var wrapper = document.querySelector("phone-wrapper");
-loadAndParseJSON("https://api.myjson.com/bins/wqmi3");
+loadAndParseJSON(["https://api.myjson.com/bins/85xtl", "https://api.myjson.com/bins/wqmi3"]);
 field.focus();
 initializeSuggestions();
 document.onkeypress = function (e) {
@@ -32,18 +32,28 @@ var Template = (function () {
         this.variationSelected = 0;
         this.text = text;
         this.suggestedWords = suggestedWords;
-        var optionsFinder = /\|([A-Za-z,]+)\|/;
-        this.variants = optionsFinder.exec(this.text)[1].split(",");
-        this.variations = new Array(this.variants.length);
-        for (var i = 0; i < this.variants.length; i++) {
-            var variation = this.variants[i];
-            this.variations[i] = this.text.replace(optionsFinder, variation);
+        var optionsFinder = /\|([A-Za-z,\s']+)\|/;
+        try {
+            this.variants = optionsFinder.exec(this.text)[1].split(",");
+            this.variations = new Array(this.variants.length);
+            for (var i = 0; i < this.variants.length; i++) {
+                var variation = this.variants[i];
+                this.variations[i] = this.text.replace(optionsFinder, variation);
+            }
+        }
+        catch (e) {
+            //no variants
+            this.variants = new Array(1);
+            this.variants[0] = this.text;
+            this.variations = new Array(1);
+            this.variations[0] = this.text;
         }
         this.updateDisplay();
     }
     Template.prototype.updateDisplay = function () {
+        console.log(this.variants[this.variationSelected]);
         var variantString = "<span class = 'emphasis'>" + this.variants[this.variationSelected] + "</span>";
-        var optionsFinder = /\|([A-Za-z,]+)\|/;
+        var optionsFinder = /\|([A-Za-z,\s']+)\|/;
         this.element.innerHTML = this.text.replace(optionsFinder, variantString);
     };
     Template.prototype.showDisplay = function () {
@@ -92,9 +102,7 @@ function addTemplateToPhrase(template) {
     phraseContainer.insertBefore(newTemplateInstance, field);
     field.innerHTML = "";
     field.focus();
-    // phraseContainer.insertBefore(newTemplateInstance,getOrCreateLastField());
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
-    // getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
     //Update Suggested Tab
     updateProgrammableSugggestions(template);
 }
@@ -115,13 +123,18 @@ function removeTemplateFromPhrase(e) {
 }
 function updateProgrammableSugggestions(template) {
     var programmableSuggestions = document.querySelectorAll(".programmed-options .option");
-    for (var i = 0; i < Math.min(3, template.suggestedWords.length); i++) {
+    for (var i = 0; i < Math.min(4, template.suggestedWords.length); i++) {
         programmableSuggestions[i].innerHTML = template.suggestedWords[i].word;
     }
 }
 //JSON Functions
 function loadAndParseJSON(url) {
-    retrieveJson(url);
+    for (var i = 0; i < url.length; i++) {
+        retrieveJson(url[i]);
+    }
+    document.onkeyup = function (e) {
+        captureBackspaceAndFilter(e);
+    };
 }
 function retrieveJson(url) {
     //http://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
@@ -140,12 +153,17 @@ function parseJSONIntoTemplates(json) {
     //Create New Tab
     var newTab = document.createElement("div");
     newTab.classList.add("tab");
+    newTab.id = "tab-" + jsonObject.moduleName;
     newTab.appendChild(document.createTextNode(jsonObject.moduleName));
     tabsContainer.appendChild(newTab);
+    newTab.addEventListener("click", function () {
+        setAsActiveTab(jsonObject.moduleName);
+    });
     console.log("New Tab: " + jsonObject.moduleName + " added successfully.");
     //Create New Objects
     var newContainer = document.createElement("div");
     newContainer.classList.add("constructors-container");
+    newContainer.id = "container-" + jsonObject.moduleName;
     var moduleContainer = new Array(jsonObject.templates.length);
     var _loop_1 = function(i) {
         var t = jsonObject.templates[i];
@@ -166,42 +184,27 @@ function parseJSONIntoTemplates(json) {
     }
     templates[jsonObject.moduleName] = moduleContainer;
     tabsObjectsContainer.appendChild(newContainer);
-    newContainer.classList.add("active");
     currentModule = jsonObject.moduleName;
-    setAsActiveTab(newTab);
-    document.onkeyup = function (e) {
-        captureBackspaceAndFilter(e);
-    };
+    setAsActiveTab(currentModule);
 }
 function setAsActiveTab(tab) {
-    var activeTab = document.querySelector(".tab.active");
-    activeTab.classList.remove("active");
-    tab.classList.add("active");
+    var activeTab = document.querySelectorAll(".tab");
+    if (activeTab.length > 0) {
+        for (var i = 0; i < activeTab.length; i++) {
+            activeTab[i].classList.remove("active");
+        }
+    }
+    document.querySelector("#tab-" + tab).classList.add("active");
+    var containers = document.querySelectorAll(".constructors-container");
+    for (var i = 0; i < containers.length; i++) {
+        containers[i].classList.remove("active");
+    }
+    document.querySelector("#" + "container-" + tab).classList.add("active");
 }
 //Helper Functions
 function getLastField() {
     var elements = document.querySelectorAll(".field");
     return elements[elements.length - 1];
-}
-function createField() {
-    var element = document.createElement("span");
-    element.setAttribute("contenteditable", "true");
-    element.classList.add("field");
-    element.addEventListener("focus", function (e) {
-        e.preventDefault();
-        body.scrollTop = 0;
-        wrapper.scrollTop = 0;
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
-    });
-    element.addEventListener("blur", function (e) {
-        e.preventDefault();
-        body.scrollTop = 0;
-        wrapper.scrollTop = 0;
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
-    });
-    return element;
 }
 function addSuggestionToPhrase(e) {
     var text = e.target.innerHTML;
@@ -223,7 +226,6 @@ function initializeSuggestions() {
 function captureEnter(e) {
     var keyID = e.keyCode;
     if (keyID == 13) {
-        console.log("Xx");
         e.preventDefault();
         addToTranscript();
         phraseContainer.innerHTML = "";
@@ -292,12 +294,6 @@ function removeLastWord(element) {
             element.textContent = text;
         }
     }
-    // else if (element && element.classList.contains("field")){
-    //     //Join fields
-    //     console.log("x");
-    //     document.activeElement.innerHTML = element.innerHTML + document.activeElement.innerHTML;
-    //     element.parentNode.removeChild(element);
-    // }
 }
 function addToTranscript() {
     var log = "";

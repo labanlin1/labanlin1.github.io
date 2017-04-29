@@ -19,7 +19,7 @@ let body = document.querySelector("body");
 let wrapper = document.querySelector("phone-wrapper");
 
 
-loadAndParseJSON("https://api.myjson.com/bins/wqmi3");
+loadAndParseJSON(["https://api.myjson.com/bins/85xtl","https://api.myjson.com/bins/wqmi3"]);
 field.focus();
 initializeSuggestions();
 
@@ -47,19 +47,32 @@ class Template{
         this.variationSelected=0;
         this.text = text;
         this.suggestedWords = suggestedWords;
-        const optionsFinder = /\|([A-Za-z,]+)\|/;
-        this.variants = optionsFinder.exec(this.text)[1].split(",");
-        this.variations = new Array(this.variants.length);
-        for (let i = 0; i< this.variants.length; i++) {
-            const variation = this.variants[i];
-            this.variations[i]  = this.text.replace(optionsFinder, variation);
+        const optionsFinder = /\|([A-Za-z,\s']+)\|/;
+
+        try {
+            this.variants = optionsFinder.exec(this.text)[1].split(",");
+
+            this.variations = new Array(this.variants.length);
+            for (let i = 0; i < this.variants.length; i++) {
+                const variation = this.variants[i];
+                this.variations[i] = this.text.replace(optionsFinder, variation);
+            }
         }
+        catch(e){
+            //no variants
+            this.variants = new Array(1);
+            this.variants[0] = this.text;
+            this.variations = new Array(1);
+            this.variations[0] = this.text;
+        }
+
         this.updateDisplay();
     }
 
     updateDisplay(){
+        console.log(this.variants[this.variationSelected]);
         const variantString = "<span class = 'emphasis'>" + this.variants[this.variationSelected] + "</span>";
-        const optionsFinder = /\|([A-Za-z,]+)\|/;
+        const optionsFinder = /\|([A-Za-z,\s']+)\|/;
         this.element.innerHTML = this.text.replace(optionsFinder, variantString);
     }
 
@@ -115,9 +128,7 @@ function addTemplateToPhrase(template:Template){
     phraseContainer.insertBefore(newTemplateInstance, field);
     field.innerHTML = "";
     field.focus();
-    // phraseContainer.insertBefore(newTemplateInstance,getOrCreateLastField());
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
-    // getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
 
     //Update Suggested Tab
     updateProgrammableSugggestions(template);
@@ -142,15 +153,22 @@ function removeTemplateFromPhrase(e){
 
 function updateProgrammableSugggestions(template:Template){
     let programmableSuggestions = document.querySelectorAll(".programmed-options .option");
-    for (let i = 0; i<Math.min(3,template.suggestedWords.length); i++){
+    for (let i = 0; i<Math.min(4,template.suggestedWords.length); i++){
         programmableSuggestions[i].innerHTML = template.suggestedWords[i].word;
     }
 }
 
 //JSON Functions
 
-function loadAndParseJSON(url:string){
-    retrieveJson(url);
+function loadAndParseJSON(url:string[]){
+    for (let i = 0; i<url.length; i++){
+        retrieveJson(url[i]);
+    }
+
+
+    document.onkeyup = function(e){
+        captureBackspaceAndFilter(e);
+    };
 }
 
 function retrieveJson(url:string){
@@ -173,14 +191,20 @@ function parseJSONIntoTemplates(json){
     //Create New Tab
     let newTab = document.createElement("div");
     newTab.classList.add("tab");
+    newTab.id = "tab-" + jsonObject.moduleName;
     newTab.appendChild(document.createTextNode(jsonObject.moduleName));
     tabsContainer.appendChild(newTab);
+
+    newTab.addEventListener("click", function(){
+        setAsActiveTab(jsonObject.moduleName);
+    });
 
     console.log("New Tab: " + jsonObject.moduleName + " added successfully.");
 
     //Create New Objects
     let newContainer = document.createElement("div");
     newContainer.classList.add("constructors-container");
+    newContainer.id = "container-" + jsonObject.moduleName;
 
     let moduleContainer = new Array(jsonObject.templates.length);
 
@@ -206,20 +230,27 @@ function parseJSONIntoTemplates(json){
 
     templates[jsonObject.moduleName] = moduleContainer;
     tabsObjectsContainer.appendChild(newContainer);
-    newContainer.classList.add("active");
     currentModule = jsonObject.moduleName;
-    setAsActiveTab(newTab);
-
-    document.onkeyup = function(e){
-        captureBackspaceAndFilter(e);
-    };
-
+    setAsActiveTab(currentModule);
 }
 
 function setAsActiveTab(tab){
-    let activeTab = document.querySelector(".tab.active");
-    activeTab.classList.remove("active");
-    tab.classList.add("active");
+
+    let activeTab = document.querySelectorAll(".tab");
+    if (activeTab.length > 0){
+        for (let i = 0; i<activeTab.length; i++){
+            activeTab[i].classList.remove("active");
+        }
+    }
+
+    document.querySelector("#tab-"+tab).classList.add("active");
+
+    let containers = document.querySelectorAll(".constructors-container");
+    for (let i = 0; i<containers.length; i++){
+        containers[i].classList.remove("active");
+    }
+    document.querySelector("#" + "container-" + tab).classList.add("active");
+
 }
 
 //Helper Functions
@@ -227,27 +258,6 @@ function setAsActiveTab(tab){
 function getLastField(){
     const elements = document.querySelectorAll(".field");
     return elements[elements.length-1];
-}
-
-function createField(){
-    let element = document.createElement("span");
-    element.setAttribute("contenteditable", "true");
-    element.classList.add("field");
-    element.addEventListener("focus", function(e){
-        e.preventDefault();
-        body.scrollTop = 0;
-        wrapper.scrollTop = 0;
-        window.scrollTo(0,0);
-        document.body.scrollTop = 0;
-    });
-    element.addEventListener("blur", function(e){
-        e.preventDefault();
-        body.scrollTop = 0;
-        wrapper.scrollTop = 0;
-        window.scrollTo(0,0);
-        document.body.scrollTop = 0;
-    });
-    return element;
 }
 
 function addSuggestionToPhrase(e){
@@ -273,7 +283,6 @@ function initializeSuggestions(){
 function captureEnter(e){
     let keyID = e.keyCode;
     if (keyID == 13){
-        console.log("Xx");
         e.preventDefault();
         addToTranscript();
         phraseContainer.innerHTML="";
@@ -358,12 +367,6 @@ function removeLastWord(element){
             element.textContent = text;
         }
     }
-    // else if (element && element.classList.contains("field")){
-    //     //Join fields
-    //     console.log("x");
-    //     document.activeElement.innerHTML = element.innerHTML + document.activeElement.innerHTML;
-    //     element.parentNode.removeChild(element);
-    // }
 }
 
 function addToTranscript(){
@@ -388,3 +391,4 @@ function toggleTranscript(){
         transcript.scrollTop = transcript.clientHeight;
     }
 }
+
