@@ -5,7 +5,7 @@ $used-primary: #ffffff;
 
 $text-size: 1.6rem;
 $text-padding: .2rem;
-$text-margin: .2rem;
+$text-margin: .3rem;
 
 $selected-background-color: #f0f0f0;
 
@@ -46,8 +46,6 @@ hr{
   background-color: $selected-background-color;
 }
 
-
-
 span.emphasis{
   color:black;
 }
@@ -70,6 +68,7 @@ span.emphasis{
 .suggested-container{
   background-color: $selected-background-color;
 }
+
 .suggested-container .option{
     display:inline;
     max-width: 40%;
@@ -127,10 +126,22 @@ div.option.emphasis:empty{
   display:none;
 }
 
-.transcript-container{
+#transcript-container{
+  width:100vw;
   display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
 }
-
+#transcript-container.visible{
+  display:block;
+  background-color: beige;
+  p{
+    font-size: $text-size;
+    line-height: 1.5 * $text-size;
+  }
+}
 .option:hover, .phrase:hover{
   cursor:pointer;
 }
@@ -197,13 +208,32 @@ div.template{
   font-size: 1.3rem;
 }
 
+#transcript-icon{
+  margin-left:.4rem;
+}
 
-
+#transcripts{
+  overflow-y: scroll;
+  padding: 1rem;
+}
+#close{
+  position:absolute;
+  bottom: .6rem;
+  left:.4rem;
+}
 /*
 Custom Sizes
  */
 
 .iphone-6{
+
+  #transcripts{
+    height: calc(302px - 2rem);
+  }
+
+  #transcript-container{
+    height: 302px;
+  }
   .phone-wrapper{
     height: 302px;
   }

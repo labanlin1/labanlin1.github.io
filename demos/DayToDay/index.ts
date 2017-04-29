@@ -9,44 +9,31 @@ let tabsObjectsContainer = document.querySelector(".tab-objects");
 let phraseContainer = document.querySelector(".phrase");
 let programmedOptionsContainer = document.querySelector("programmed-options");
 let textMatchOptionsContainer = document.querySelector("text-match-options");
+let transcript = document.querySelector("#transcripts");
 let transcriptContainer = document.querySelector("#transcript-container");
-let transcriptToggle = document.querySelector(".transcript");
 let transcriptIcon = document.querySelector("#transcript-icon");
 let currentModule = "";
 let templates=[];
-
+let field = document.querySelector(".field");
 let body = document.querySelector("body");
 let wrapper = document.querySelector("phone-wrapper");
 
-let focusing = false;
 
 loadAndParseJSON("https://api.myjson.com/bins/wqmi3");
-getOrCreateLastField().focus();
+field.focus();
 initializeSuggestions();
 
 document.onkeypress = function(e){
     captureEnter(e);
 };
 
-// getLastField().addEventListener("focus", function(e){
-//     e.preventDefault();
-//     body.scrollTop = 0;
-//     wrapper.scrollTop = 0;
-//     window.scrollTo(0,0);
-//     document.body.scrollTop = 0;
-// });
-//
-// getLastField().addEventListener("blur", function(e){
-//     e.preventDefault();
-//     body.scrollTop = 0;
-//     wrapper.scrollTop = 0;
-//     window.scrollTo(0,0);
-//     document.body.scrollTop = 0;
-//
-// });
+initializeTranscript();
 
+function initializeTranscript(){
+    transcriptIcon.addEventListener("click", toggleTranscript);
+    document.querySelector("#close").addEventListener("click", toggleTranscript);
+}
 
-transcriptIcon.addEventListener("click", toggleTranscript);
 
 class Template{
     element;
@@ -83,7 +70,6 @@ class Template{
     hideDisplay(){
         this.element.classList.add("hidden");
     }
-
 
     filter(search:string){
         //Change selected alternates as required
@@ -126,10 +112,12 @@ function addTemplateToPhrase(template:Template){
     let newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = template.element.innerHTML;
-    console.log(template.element);
-    phraseContainer.insertBefore(newTemplateInstance,getOrCreateLastField());
+    phraseContainer.insertBefore(newTemplateInstance, field);
+    field.innerHTML = "";
+    field.focus();
+    // phraseContainer.insertBefore(newTemplateInstance,getOrCreateLastField());
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
-    getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
+    // getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
 
     //Update Suggested Tab
     updateProgrammableSugggestions(template);
@@ -236,17 +224,6 @@ function setAsActiveTab(tab){
 
 //Helper Functions
 
-function getOrCreateLastField(){
-    const elements = document.querySelectorAll(".field");
-    if(elements[elements.length-1].innerHTML == ""){
-        return elements[elements.length-1];
-    }else{
-        let newField = createField();
-        phraseContainer.appendChild(newField);
-        return newField;
-    }
-}
-
 function getLastField(){
     const elements = document.querySelectorAll(".field");
     return elements[elements.length-1];
@@ -279,9 +256,9 @@ function addSuggestionToPhrase(e){
     let newTemplateInstance = document.createElement("div");
     newTemplateInstance.classList.add("template");
     newTemplateInstance.innerHTML = text;
-    phraseContainer.insertBefore(newTemplateInstance,getOrCreateLastField());
+    phraseContainer.insertBefore(newTemplateInstance,field);
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
-    getOrCreateLastField().focus(); //Webstorm says this doesn't work, but it totally does.
+    field.focus(); //Webstorm says this doesn't work, but it totally does.
 
     //Update Suggested Tab
 }
@@ -296,12 +273,14 @@ function initializeSuggestions(){
 function captureEnter(e){
     let keyID = e.keyCode;
     if (keyID == 13){
+        console.log("Xx");
         e.preventDefault();
-        addToTranscript(phraseContainer.innerHTML);
+        addToTranscript();
         phraseContainer.innerHTML="";
-        let newField = createField();
-        phraseContainer.appendChild(newField);
-        newField.focus();
+        phraseContainer.appendChild(field);
+        field.innerHTML = "";
+        field.focus();
+        filterList();
     }
 }
 
@@ -316,14 +295,18 @@ function captureBackspaceAndFilter(e){
             if (activeElement.textContent == "" && keyID == 8){
                 removeLastWord(activeElement.previousElementSibling);
             }
-            const relevantTemplates = templates[currentModule];
-            if (relevantTemplates){
-                for (let i = 0; i < relevantTemplates.length; i++) {
-                    relevantTemplates[i].filter(document.activeElement.textContent);
-                }
-            }
+           filterList();
         }
 
+    }
+}
+
+function filterList(){
+    const relevantTemplates = templates[currentModule];
+    if (relevantTemplates){
+        for (let i = 0; i < relevantTemplates.length; i++) {
+            relevantTemplates[i].filter(field.textContent);
+        }
     }
 }
 
@@ -383,26 +366,25 @@ function removeLastWord(element){
     // }
 }
 
-function addToTranscript(log:string){
+function addToTranscript(){
+    let log = "";
+    for (let i = 0; i<phraseContainer.children.length; i++){
+        log += "" + phraseContainer.children[i].innerHTML + " ";
+    }
     const htmlMarkupRemover = /<(?:\/)?[A-Za-z ="']*>/ig;
     let newEntry = log.replace(htmlMarkupRemover,"");
     let newEntryP = document.createElement("p");
     newEntryP.textContent = newEntry;
-    transcriptContainer.appendChild(newEntryP);
+    transcript.appendChild(newEntryP);
+
 }
 
 function toggleTranscript(){
     if (transcriptContainer.classList.contains("visible")){
         transcriptContainer.classList.remove("visible");
-        transcriptIcon.className = "unordered list icon";
+        field.focus();
     }else{
         transcriptContainer.classList.add("visible");
-        transcriptContainer.scrollTop = transcriptContainer.clientHeight;
-        transcriptIcon.className = "remove icon";
+        transcript.scrollTop = transcript.clientHeight;
     }
-}
-
-function scrollTop(e){
-    e.preventDefault();
-    window.scrollTo(0);
 }

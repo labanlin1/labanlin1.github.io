@@ -21,7 +21,7 @@ body {
 
 .phrase .span, .phrase .template {
   display: inline-block;
-  padding: 0.4rem;
+  padding: 0.5rem;
   margin: 0 .2rem; }
 
 hr {
@@ -36,8 +36,8 @@ span.emphasis {
 .constructors-container .option, .suggested-container .option {
   font-size: 1.6rem;
   line-height: 1.6rem;
-  margin: 0 0.2rem;
-  padding: 0.4rem;
+  margin: 0 0.3rem;
+  padding: 0.5rem;
   color: grey; }
   .constructors-container .option *, .suggested-container .option * {
     font-size: inherit;
@@ -94,8 +94,20 @@ div .option strong, .tab-objects div .option em, .tab-objects div .option span.e
 div.option.emphasis:empty {
   display: none; }
 
-.transcript-container {
-  display: none; }
+#transcript-container {
+  width: 100vw;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; }
+
+#transcript-container.visible {
+  display: block;
+  background-color: beige; }
+  #transcript-container.visible p {
+    font-size: 1.6rem;
+    line-height: 2.4rem; }
 
 .option:hover, .phrase:hover {
   cursor: pointer; }
@@ -142,9 +154,25 @@ div.template {
 #transcript-icon, #close-icon {
   font-size: 1.3rem; }
 
+#transcript-icon {
+  margin-left: .4rem; }
+
+#transcripts {
+  overflow-y: scroll;
+  padding: 1rem; }
+
+#close {
+  position: absolute;
+  bottom: .6rem;
+  left: .4rem; }
+
 /*
 Custom Sizes
  */
+.iphone-6 #transcripts {
+  height: calc(302px - 2rem); }
+.iphone-6 #transcript-container {
+  height: 302px; }
 .iphone-6 .phone-wrapper {
   height: 302px; }
 .iphone-6 .constructors-container {
