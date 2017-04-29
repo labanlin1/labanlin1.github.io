@@ -15,6 +15,11 @@ let transcriptIcon = document.querySelector("#transcript-icon");
 let currentModule = "";
 let templates=[];
 
+let body = document.querySelector("body");
+let wrapper = document.querySelector("phone-wrapper");
+
+let focusing = false;
+
 loadAndParseJSON("https://api.myjson.com/bins/wqmi3");
 getOrCreateLastField().focus();
 initializeSuggestions();
@@ -23,11 +28,25 @@ document.onkeypress = function(e){
     captureEnter(e);
 };
 
-// document.onkeyup = function(e){
-//     captureBackspaceAndFilter(e);
-// };
+// getLastField().addEventListener("focus", function(e){
+//     e.preventDefault();
+//     body.scrollTop = 0;
+//     wrapper.scrollTop = 0;
+//     window.scrollTo(0,0);
+//     document.body.scrollTop = 0;
+// });
+//
+// getLastField().addEventListener("blur", function(e){
+//     e.preventDefault();
+//     body.scrollTop = 0;
+//     wrapper.scrollTop = 0;
+//     window.scrollTo(0,0);
+//     document.body.scrollTop = 0;
+//
+// });
 
-transcriptToggle.addEventListener("click", toggleTranscript);
+
+transcriptIcon.addEventListener("click", toggleTranscript);
 
 class Template{
     element;
@@ -68,7 +87,7 @@ class Template{
 
     filter(search:string){
         //Change selected alternates as required
-        search = search.trim();
+        search = search.trim().toLowerCase();
 
         if (search == ""){
             this.showDisplay();
@@ -78,7 +97,7 @@ class Template{
         let resultFound = false;
 
         for(let i = 0; i<this.variations.length; i++){
-            if (this.variations[i].indexOf(search)>=0){
+            if (this.variations[i].toLowerCase().indexOf(search)>=0){
                 this.variationSelected = i;
                 this.updateDisplay();
                 resultFound = true;
@@ -237,6 +256,20 @@ function createField(){
     let element = document.createElement("span");
     element.setAttribute("contenteditable", "true");
     element.classList.add("field");
+    element.addEventListener("focus", function(e){
+        e.preventDefault();
+        body.scrollTop = 0;
+        wrapper.scrollTop = 0;
+        window.scrollTo(0,0);
+        document.body.scrollTop = 0;
+    });
+    element.addEventListener("blur", function(e){
+        e.preventDefault();
+        body.scrollTop = 0;
+        wrapper.scrollTop = 0;
+        window.scrollTo(0,0);
+        document.body.scrollTop = 0;
+    });
     return element;
 }
 
@@ -369,3 +402,7 @@ function toggleTranscript(){
     }
 }
 
+function scrollTop(e){
+    e.preventDefault();
+    window.scrollTo(0);
+}

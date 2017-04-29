@@ -12,16 +12,32 @@ var transcriptToggle = document.querySelector(".transcript");
 var transcriptIcon = document.querySelector("#transcript-icon");
 var currentModule = "";
 var templates = [];
+var body = document.querySelector("body");
+var wrapper = document.querySelector("phone-wrapper");
+var focusing = false;
 loadAndParseJSON("https://api.myjson.com/bins/wqmi3");
 getOrCreateLastField().focus();
 initializeSuggestions();
 document.onkeypress = function (e) {
     captureEnter(e);
 };
-// document.onkeyup = function(e){
-//     captureBackspaceAndFilter(e);
-// };
-transcriptToggle.addEventListener("click", toggleTranscript);
+// getLastField().addEventListener("focus", function(e){
+//     e.preventDefault();
+//     body.scrollTop = 0;
+//     wrapper.scrollTop = 0;
+//     window.scrollTo(0,0);
+//     document.body.scrollTop = 0;
+// });
+//
+// getLastField().addEventListener("blur", function(e){
+//     e.preventDefault();
+//     body.scrollTop = 0;
+//     wrapper.scrollTop = 0;
+//     window.scrollTo(0,0);
+//     document.body.scrollTop = 0;
+//
+// });
+transcriptIcon.addEventListener("click", toggleTranscript);
 var Template = (function () {
     function Template(text, suggestedWords, el) {
         this.element = el;
@@ -50,14 +66,14 @@ var Template = (function () {
     };
     Template.prototype.filter = function (search) {
         //Change selected alternates as required
-        search = search.trim();
+        search = search.trim().toLowerCase();
         if (search == "") {
             this.showDisplay();
             return;
         }
         var resultFound = false;
         for (var i = 0; i < this.variations.length; i++) {
-            if (this.variations[i].indexOf(search) >= 0) {
+            if (this.variations[i].toLowerCase().indexOf(search) >= 0) {
                 this.variationSelected = i;
                 this.updateDisplay();
                 resultFound = true;
@@ -192,6 +208,20 @@ function createField() {
     var element = document.createElement("span");
     element.setAttribute("contenteditable", "true");
     element.classList.add("field");
+    element.addEventListener("focus", function (e) {
+        e.preventDefault();
+        body.scrollTop = 0;
+        wrapper.scrollTop = 0;
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+    });
+    element.addEventListener("blur", function (e) {
+        e.preventDefault();
+        body.scrollTop = 0;
+        wrapper.scrollTop = 0;
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+    });
     return element;
 }
 function addSuggestionToPhrase(e) {
@@ -302,5 +332,9 @@ function toggleTranscript() {
         transcriptContainer.scrollTop = transcriptContainer.clientHeight;
         transcriptIcon.className = "remove icon";
     }
+}
+function scrollTop(e) {
+    e.preventDefault();
+    window.scrollTo(0);
 }
 //# sourceMappingURL=index.js.map
