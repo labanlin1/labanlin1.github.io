@@ -17,10 +17,11 @@ let templates=[];
 let field = document.querySelector(".field");
 let body = document.querySelector("body");
 let wrapper = document.querySelector("phone-wrapper");
-
+let modulesLoaded = 0;
+let totalModules = 0;
+let prevFieldText:string = "";
 
 loadAndParseJSON(["https://api.myjson.com/bins/85xtl","https://api.myjson.com/bins/wqmi3"]);
-field.focus();
 initializeSuggestions();
 
 document.onkeypress = function(e){
@@ -28,6 +29,21 @@ document.onkeypress = function(e){
 };
 
 initializeTranscript();
+initializePhoneSize();
+
+function initializePhoneSize(){
+    const phoneSizes = document.querySelectorAll(".phone-size");
+    for (let i = 0; i<phoneSizes.length; i++){
+        phoneSizes[i].addEventListener("click",setPhoneSize);
+    }
+}
+
+function setPhoneSize(e){
+    let target = e.target;
+    document.querySelector(".size-selection").classList.add("hidden");
+    document.querySelector("body").className = target.dataset["size"];
+    field.focus();
+}
 
 function initializeTranscript(){
     transcriptIcon.addEventListener("click", toggleTranscript);
@@ -85,7 +101,6 @@ class Template{
     }
 
     filter(search:string){
-        //Change selected alternates as required
         search = search.trim().toLowerCase();
 
         if (search == ""){
@@ -161,10 +176,12 @@ function updateProgrammableSugggestions(template:Template){
 //JSON Functions
 
 function loadAndParseJSON(url:string[]){
+
+    totalModules = url.length;
+
     for (let i = 0; i<url.length; i++){
         retrieveJson(url[i]);
     }
-
 
     document.onkeyup = function(e){
         captureBackspaceAndFilter(e);
@@ -232,12 +249,23 @@ function parseJSONIntoTemplates(json){
     tabsObjectsContainer.appendChild(newContainer);
     currentModule = jsonObject.moduleName;
     setAsActiveTab(currentModule);
+    notifyModuleLoaded();
+    console.log(field);
+    field.focus();
+}
+
+function notifyModuleLoaded(){
+    modulesLoaded++;
+    if (modulesLoaded == totalModules){
+        field.focus();
+        setAsActiveTab("General");
+    }
 }
 
 function setAsActiveTab(tab){
 
     currentModule = tab;
-
+    filterList();
     let activeTab = document.querySelectorAll(".tab");
     if (activeTab.length > 0){
         for (let i = 0; i<activeTab.length; i++){
@@ -252,6 +280,8 @@ function setAsActiveTab(tab){
         containers[i].classList.remove("active");
     }
     document.querySelector("#" + "container-" + tab).classList.add("active");
+
+    field.focus();
 
 }
 
@@ -270,7 +300,7 @@ function addSuggestionToPhrase(e){
     newTemplateInstance.innerHTML = text;
     phraseContainer.insertBefore(newTemplateInstance,field);
     newTemplateInstance.addEventListener("click", removeTemplateFromPhrase);
-    field.focus(); //Webstorm says this doesn't work, but it totally does.
+    field.focus();
 
     //Update Suggested Tab
 }
@@ -388,9 +418,13 @@ function toggleTranscript(){
     if (transcriptContainer.classList.contains("visible")){
         transcriptContainer.classList.remove("visible");
         field.focus();
+
+        field.textContent = prevFieldText;
     }else{
         transcriptContainer.classList.add("visible");
         transcript.scrollTop = transcript.clientHeight;
+        prevFieldText = field.textContent;
     }
+    field.focus();
 }
 

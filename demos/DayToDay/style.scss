@@ -221,23 +221,64 @@ div.template{
   bottom: .6rem;
   left:.4rem;
 }
+
+.size-selection.hidden{
+  display:none;
+}
+.size-selection{
+  width:100vw;
+  height:100vh;
+  position:fixed;
+  background-color: orangered;
+  z-index: 100;
+
+  color:white;
+
+  .title{
+    font-size: 3rem;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+  }
+
+  .phone-size{
+    border: 1px solid white;
+    margin-top: 1rem;
+    font-size: 1.8rem;
+    border-radius: .4rem;
+    height: 4.8rem;
+    padding-top: 2.5rem;
+    vertical-align: middle;
+  }
+  div{
+    width: 90vw;
+    margin-left: 5vw;
+    text-align: center;
+  }
+}
 /*
 Custom Sizes
  */
 
-.iphone-6{
-
+@mixin custom-size($screen-height-above-keyboard){
   #transcripts{
-    height: calc(302px - 2rem);
+    height: calc(#{$screen-height-above-keyboard} - 2rem);
   }
 
   #transcript-container{
-    height: 302px;
+    height: $screen-height-above-keyboard;
   }
   .phone-wrapper{
-    height: 302px;
+    height: $screen-height-above-keyboard;
   }
   .constructors-container{
-    height: calc(302px - 15.6rem);
+    height: calc(#{$screen-height-above-keyboard} - 15.6rem);
   }
+}
+
+.iphone-6, .iphone-7{
+  @include custom-size(302px);
+}
+
+.iphone-6-plus, .iphone-7-plus{
+  @include custom-size(358px);
 }

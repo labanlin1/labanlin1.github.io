@@ -166,16 +166,52 @@ div.template {
   bottom: .6rem;
   left: .4rem; }
 
+.size-selection.hidden {
+  display: none; }
+
+.size-selection {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: orangered;
+  z-index: 100;
+  color: white; }
+  .size-selection .title {
+    font-size: 3rem;
+    margin-top: 5rem;
+    margin-bottom: 3rem; }
+  .size-selection .phone-size {
+    border: 1px solid white;
+    margin-top: 1rem;
+    font-size: 1.8rem;
+    border-radius: .4rem;
+    height: 4.8rem;
+    padding-top: 2.5rem;
+    vertical-align: middle; }
+  .size-selection div {
+    width: 90vw;
+    margin-left: 5vw;
+    text-align: center; }
+
 /*
 Custom Sizes
  */
-.iphone-6 #transcripts {
+.iphone-6 #transcripts, .iphone-7 #transcripts {
   height: calc(302px - 2rem); }
-.iphone-6 #transcript-container {
+.iphone-6 #transcript-container, .iphone-7 #transcript-container {
   height: 302px; }
-.iphone-6 .phone-wrapper {
+.iphone-6 .phone-wrapper, .iphone-7 .phone-wrapper {
   height: 302px; }
-.iphone-6 .constructors-container {
+.iphone-6 .constructors-container, .iphone-7 .constructors-container {
   height: calc(302px - 15.6rem); }
+
+.iphone-6-plus #transcripts, .iphone-7-plus #transcripts {
+  height: calc(358px - 2rem); }
+.iphone-6-plus #transcript-container, .iphone-7-plus #transcript-container {
+  height: 358px; }
+.iphone-6-plus .phone-wrapper, .iphone-7-plus .phone-wrapper {
+  height: 358px; }
+.iphone-6-plus .constructors-container, .iphone-7-plus .constructors-container {
+  height: calc(358px - 15.6rem); }
 
 /*# sourceMappingURL=style.css.map */
