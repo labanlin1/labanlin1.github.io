@@ -294,6 +294,7 @@ function removeLastWord(element) {
     if (element && element.classList.contains("template")) {
         //Find last child node
         var el = element.childNodes[element.childNodes.length - 1];
+        console.log(el);
         //Remove trailing spaces from text content if any
         var text = el.textContent;
         if (text.charAt(text.length - 1) == " ") {
@@ -319,7 +320,7 @@ function removeLastWord(element) {
             }
         }
         else {
-            element.textContent = text;
+            el.textContent = text;
         }
     }
 }

@@ -366,6 +366,7 @@ function removeLastWord(element){
         //Find last child node
 
         let el = element.childNodes[element.childNodes.length-1];
+        console.log(el);
 
         //Remove trailing spaces from text content if any
 
@@ -396,7 +397,7 @@ function removeLastWord(element){
                 }
             }
         }else{
-            element.textContent = text;
+            el.textContent = text;
         }
     }
 }

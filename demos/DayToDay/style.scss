@@ -14,7 +14,6 @@ $selected-background-color: #f0f0f0;
   padding:0;
   font-size: 62.5%;
   font-family: "Lato", sans-serif;
-  box-sizing: content-box;
 }
 
 body{
@@ -54,7 +53,6 @@ span.emphasis{
   .option {
     font-size: $text-size;
     line-height: $text-size;
-    margin: 0 $text-margin;
     padding: $text-padding + $text-margin;
     color: grey;
 
@@ -82,6 +80,7 @@ span.emphasis{
 .constructors-container{
   display:none;
   background-color: $selected-background-color;
+  overflow-y: scroll;
 }
 
 .constructors-container.active{
@@ -229,7 +228,7 @@ div.template{
   width:100vw;
   height:100vh;
   position:fixed;
-  background-color: orangered;
+  background-color: #16397c;
   z-index: 100;
 
   color:white;
@@ -242,12 +241,11 @@ div.template{
 
   .phone-size{
     border: 1px solid white;
-    margin-top: 1rem;
+    margin-top: 1.3rem;
     font-size: 1.8rem;
     border-radius: .4rem;
-    height: 4.8rem;
-    padding-top: 2.5rem;
-    vertical-align: middle;
+    height: 6rem;
+    line-height: 5.6rem;
   }
   div{
     width: 90vw;
@@ -255,6 +253,11 @@ div.template{
     text-align: center;
   }
 }
+
+.phone-size:hover{
+  cursor:pointer;
+}
+
 /*
 Custom Sizes
  */
@@ -281,4 +284,8 @@ Custom Sizes
 
 .iphone-6-plus, .iphone-7-plus{
   @include custom-size(358px);
+}
+
+.iphone-se{
+  @include custom-size(210px);
 }
