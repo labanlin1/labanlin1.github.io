@@ -30,6 +30,7 @@ body{
     line-height:1.8rem;
     color:inherit;
   }
+  overflow-y: scroll;
 }
 
 .phrase .span, .phrase .template{
@@ -143,6 +144,11 @@ div.option.emphasis:empty{
 }
 .option:hover, .phrase:hover{
   cursor:pointer;
+}
+
+div.template, div.field{
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 div.template{

@@ -5,8 +5,6 @@
 var tabsContainer = document.querySelector(".tabs");
 var tabsObjectsContainer = document.querySelector(".tab-objects");
 var phraseContainer = document.querySelector(".phrase");
-var programmedOptionsContainer = document.querySelector("programmed-options");
-var textMatchOptionsContainer = document.querySelector("text-match-options");
 var transcript = document.querySelector("#transcripts");
 var transcriptContainer = document.querySelector("#transcript-container");
 var transcriptIcon = document.querySelector("#transcript-icon");
@@ -14,17 +12,16 @@ var currentModule = "";
 var templates = [];
 var field = document.querySelector(".field");
 var body = document.querySelector("body");
-var wrapper = document.querySelector("phone-wrapper");
 var modulesLoaded = 0;
 var totalModules = 0;
 var prevFieldText = "";
-loadAndParseJSON(["https://api.myjson.com/bins/85xtl", "https://api.myjson.com/bins/wqmi3"]);
+loadAndParseJSON(["https://api.myjson.com/bins/1hauqh", "https://api.myjson.com/bins/11aak9"]);
 initializeSuggestions();
+initializeTranscript();
+initializePhoneSize();
 document.onkeypress = function (e) {
     captureEnter(e);
 };
-initializeTranscript();
-initializePhoneSize();
 function initializePhoneSize() {
     var phoneSizes = document.querySelectorAll(".phone-size");
     for (var i = 0; i < phoneSizes.length; i++) {
@@ -47,7 +44,7 @@ var Template = (function () {
         this.variationSelected = 0;
         this.text = text;
         this.suggestedWords = suggestedWords;
-        var optionsFinder = /\|([A-Za-z,\s']+)\|/;
+        var optionsFinder = /\|([A-Za-z,\s'!?\.]+)\|/;
         try {
             this.variants = optionsFinder.exec(this.text)[1].split(",");
             this.variations = new Array(this.variants.length);
@@ -66,9 +63,8 @@ var Template = (function () {
         this.updateDisplay();
     }
     Template.prototype.updateDisplay = function () {
-        console.log(this.variants[this.variationSelected]);
         var variantString = "<span class = 'emphasis'>" + this.variants[this.variationSelected] + "</span>";
-        var optionsFinder = /\|([A-Za-z,\s']+)\|/;
+        var optionsFinder = /\|([A-Za-z,\s'!?\.]+)\|/;
         this.element.innerHTML = this.text.replace(optionsFinder, variantString);
     };
     Template.prototype.showDisplay = function () {
@@ -186,12 +182,10 @@ function parseJSONIntoTemplates(json) {
         newOption.classList.add("option");
         newOption.setAttribute("module", jsonObject.moduleName);
         var option = new Template(t.text, t.suggestedWords, newOption);
-        //Wrap Option in appropriate markup
         newOption.addEventListener("click", function () {
             addTemplateToPhrase(option);
         });
         newContainer.appendChild(newOption);
-        // option.filter("have");
         moduleContainer[i] = option;
     };
     for (var i = 0; i < jsonObject.templates.length; i++) {
@@ -202,7 +196,6 @@ function parseJSONIntoTemplates(json) {
     currentModule = jsonObject.moduleName;
     setAsActiveTab(currentModule);
     notifyModuleLoaded();
-    console.log(field);
     field.focus();
 }
 function notifyModuleLoaded() {
@@ -294,7 +287,6 @@ function removeLastWord(element) {
     if (element && element.classList.contains("template")) {
         //Find last child node
         var el = element.childNodes[element.childNodes.length - 1];
-        console.log(el);
         //Remove trailing spaces from text content if any
         var text = el.textContent;
         if (text.charAt(text.length - 1) == " ") {
@@ -332,7 +324,7 @@ function addToTranscript() {
     var htmlMarkupRemover = /<(?:\/)?[A-Za-z ="']*>/ig;
     var newEntry = log.replace(htmlMarkupRemover, "");
     var newEntryP = document.createElement("p");
-    newEntryP.textContent = newEntry;
+    newEntryP.innerHTML = newEntry;
     transcript.appendChild(newEntryP);
 }
 function toggleTranscript() {

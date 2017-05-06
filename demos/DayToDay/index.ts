@@ -7,8 +7,6 @@
 let tabsContainer = document.querySelector(".tabs");
 let tabsObjectsContainer = document.querySelector(".tab-objects");
 let phraseContainer = document.querySelector(".phrase");
-let programmedOptionsContainer = document.querySelector("programmed-options");
-let textMatchOptionsContainer = document.querySelector("text-match-options");
 let transcript = document.querySelector("#transcripts");
 let transcriptContainer = document.querySelector("#transcript-container");
 let transcriptIcon = document.querySelector("#transcript-icon");
@@ -16,20 +14,18 @@ let currentModule = "";
 let templates=[];
 let field = document.querySelector(".field");
 let body = document.querySelector("body");
-let wrapper = document.querySelector("phone-wrapper");
 let modulesLoaded = 0;
 let totalModules = 0;
 let prevFieldText:string = "";
 
-loadAndParseJSON(["https://api.myjson.com/bins/85xtl","https://api.myjson.com/bins/wqmi3"]);
+loadAndParseJSON(["https://api.myjson.com/bins/1hauqh","https://api.myjson.com/bins/11aak9"]);
 initializeSuggestions();
+initializeTranscript();
+initializePhoneSize();
 
 document.onkeypress = function(e){
     captureEnter(e);
 };
-
-initializeTranscript();
-initializePhoneSize();
 
 function initializePhoneSize(){
     const phoneSizes = document.querySelectorAll(".phone-size");
@@ -50,7 +46,6 @@ function initializeTranscript(){
     document.querySelector("#close").addEventListener("click", toggleTranscript);
 }
 
-
 class Template{
     element;
     text:string;
@@ -63,7 +58,7 @@ class Template{
         this.variationSelected=0;
         this.text = text;
         this.suggestedWords = suggestedWords;
-        const optionsFinder = /\|([A-Za-z,\s']+)\|/;
+        const optionsFinder = /\|([A-Za-z,\s'!?\.]+)\|/;
 
         try {
             this.variants = optionsFinder.exec(this.text)[1].split(",");
@@ -86,9 +81,8 @@ class Template{
     }
 
     updateDisplay(){
-        console.log(this.variants[this.variationSelected]);
         const variantString = "<span class = 'emphasis'>" + this.variants[this.variationSelected] + "</span>";
-        const optionsFinder = /\|([A-Za-z,\s']+)\|/;
+        const optionsFinder = /\|([A-Za-z,\s'!?\.]+)\|/;
         this.element.innerHTML = this.text.replace(optionsFinder, variantString);
     }
 
@@ -233,14 +227,12 @@ function parseJSONIntoTemplates(json){
         newOption.setAttribute("module", jsonObject.moduleName);
 
         let option = new Template(t.text, t.suggestedWords, newOption);
-        //Wrap Option in appropriate markup
 
         newOption.addEventListener("click", function(){
             addTemplateToPhrase(option);
         });
 
         newContainer.appendChild(newOption);
-        // option.filter("have");
 
         moduleContainer[i] = option;
     }
@@ -250,7 +242,6 @@ function parseJSONIntoTemplates(json){
     currentModule = jsonObject.moduleName;
     setAsActiveTab(currentModule);
     notifyModuleLoaded();
-    console.log(field);
     field.focus();
 }
 
@@ -366,7 +357,6 @@ function removeLastWord(element){
         //Find last child node
 
         let el = element.childNodes[element.childNodes.length-1];
-        console.log(el);
 
         //Remove trailing spaces from text content if any
 
@@ -410,7 +400,7 @@ function addToTranscript(){
     const htmlMarkupRemover = /<(?:\/)?[A-Za-z ="']*>/ig;
     let newEntry = log.replace(htmlMarkupRemover,"");
     let newEntryP = document.createElement("p");
-    newEntryP.textContent = newEntry;
+    newEntryP.innerHTML = newEntry;
     transcript.appendChild(newEntryP);
 
 }
