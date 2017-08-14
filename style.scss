@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700|Lora');
-
+//* {
+//  background: #000 !important;
+//  color: #0f0 !important;
+//  outline: solid #f00 1px !important;
+//}
 //Variables
 $W_tiny: 320px;
 $W_phone: 576px;
@@ -348,7 +352,7 @@ section.landing-image, .landing-image img{
   max-height: 70vh;
   width:100%;
   @include phone{
-    min-height: 250px;
+    min-height: 150px;
   }
 }
 
@@ -411,7 +415,7 @@ section.landing-image{
   }
 }
 
-.article-wrapper>*, .article-wrapper .iframe-alternate-photos>img{
+.article-wrapper>*,  .iframe-alternate-photos, .interactive-website{
   width: $DW_article;
   //margin: 0 calc(50vw - #{$DW_article/2});
   margin-left: calc(50vw - #{$DW_article/2});
@@ -422,13 +426,11 @@ section.landing-image{
 
 }
 .article-wrapper{
-
+  width:100%;
   padding: 3rem 5vw;
-
   @include desktop{
     padding: 3rem 0;
   }
-
   p {
     margin-top: 1.8rem;
   }
@@ -496,10 +498,16 @@ section.landing-image{
     margin-top: 1.2rem;
     margin-bottom: 1.2rem;
     margin-left: calc(50vw - #{$DW_article/2} + 3rem);
-    width: calc(#{$DW_article} - 3rem);
+    max-width: calc(#{$DW_article} - 3rem);
     @include article-width-max{
       margin-left: 2rem;
       margin-right: inherit
+    }
+    @include phone{
+      width: calc(100vw - 2rem - 10vw);
+    }
+    @include tablet{
+      width: calc(100vw - 2rem - 10vw);
     }
     padding: .2rem .2rem .2rem 2rem;
     p{
@@ -572,9 +580,13 @@ section.landing-image{
   }
 
   hr{
+    width: $DW_article - 6rem;
     margin: 3rem calc(50vw - #{$DW_article/2} + 3rem);
     @include article-width-max{
       margin: 3rem 3rem;
+    }
+    @include phone{
+      width: calc(100vw - 6rem - 10vw);
     }
   }
 }
@@ -798,16 +810,17 @@ div.controls{
 }
 
 .interactive-website .iframe-alternate-photos img{
-  //max-width: 100vw;
+  max-width: 100%;
+
   @media (min-width: #{$cutoffWidth}) {
     display:none;
   }
   //width:100%;
   margin-top: 6rem;
-
   @media (max-width: #{$cutoffWidth}) {
 
   }
+
 }
 
 .interactive-website .iframe-alternate-photos img:first-child{
@@ -816,11 +829,26 @@ div.controls{
 
 .iframe-alternate-photos{
   margin:0;
-  max-width:none;
+  margin-left: calc(50vw - 34rem);
+  @include tiny{
+    margin-left:0;
+  }
+  @include phone{
+    margin-left: 0;
+  }
+  //max-width:none;
   text-align: center;
   @media (min-width: #{$cutoffWidth}) {
     display:none;
   }
+
+
+
+
+
+
+
+
 }
 div.caption{
   text-align: center;
