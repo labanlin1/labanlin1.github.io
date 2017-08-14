@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>Day to Day | labanl.in</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/icon.min.css">
+</head>
+<body>
+<div class="lightbox">
+    <i class="icon angle left"></i>
+    <i class="icon angle right"></i>
+</div>
+<!--<section class="landing-image">-->
+    <!--<img src="../images/daytoday.png" alt="">-->
+<!--</section>-->
+<section class = "article">
+    <div class="article-wrapper">
+        <div class="title">Day to Day</div>
+        <div class="subtitle">Helps your thumbs say all the day-to-day basics</div>
+        <p>June 2017</p>
+        <p><a href='https://labanlin1.github.io/demos/DayToDay/' target = "_blank">Demo Available Here</a></p>
+        <h1>Overview</h1>
+        <p>Day to Day is a concept I tested to help me communicate with others as I went about day-to-day life while unable to speak. Its core idea is to expedite my ability to type on my phone, which I could use to interact with people if gestures were insufficient.</p>
+        <h1>Key Features</h1>
+        <h2>Automatic Filtering</h2>
+        <div class="day-to-day-video">
+            <div class="video-wrapper">
+                <video src="../assets/projects/dayToDayFiltering.mp4" muted autoplay playsinline loop preload = "metadata"></video>
+            </div>
+        </div>
+        <p>Templates are automatically searched and filtered as the user types. During the search, alternate interpretations for the same meaning are examined. For example, <em>Can I get the bill?</em> and <em>Can I get the cheque?</em> are functionally identical and are represented by the same template. If the user searches for &quot;bi&quot;, the template will show the first option; if the user searches for &quot;ch&quot;, the template will show the latter.</p>
+        <h2>Contextual Templates</h2>
+        <div class="day-to-day-video">
+            <div class="video-wrapper">
+                <video src="../assets/projects/contextualTemplates.mp4" muted autoplay playsinline loop preload = "metadata"></video>
+            </div>
+        </div>
+        <p>Day to Day comes with organized templates. For example, in the Restaurants section, &quot;Can I have some&quot; is a template. Selecting this template adds it to the main text input area, and supplies supporting templates: &quot;water?&quot;, &quot;coffee?&quot;, &quot;tea?&quot;, &quot;Thank you!&quot;. </p>
+        <h1>Design Notes</h1>
+        <h2>Keystroke Reduction</h2>
+        <p>For me, reducing keystrokes was the area Day to Day could bring me the most value. It wasn&#39;t strictly a mechanical exercise; typing faster made <em>me</em> feel better. Even though I knew most people were understanding, I still <em>felt</em> like I was wasting peoples&#39; time.</p>
+        <p>As a result, I made sure to include features to improve my typing time. Some of them were minor and obvious, like using the return key to clear and log the text. Additionally, I made sure templates were easy to remove - a quick tap in the main entry area will remove the template.</p>
+        <p>But I had to make an interesting decision about the specificity of the templates. Too many templates would be taxing—too many to filter though, and adding marginal value. Too few, and I would have to type too often.</p>
+        <p>I analyzed three options: generalization, specialization, and singular specialization. Generalization would only include templates that were exceptionally broad, such as &quot;I&#39;d like&quot;, &quot;Where is&quot;, and &quot;How can I&quot;. Specialization is the exact opposite: &quot;I&#39;d like&quot; would be represented by &quot;I&#39;d like to order&quot;, &quot;I&#39;d like to find&quot;, &quot;I&#39;d like to ask&quot;, etc. And singular specialization had just one instance of a special case, such as &quot;I&#39;d like to order&quot;.</p>
+        <p>I went with singular specialization. </p>
+        <p>This works great in the optimal case: suppose I wanted to type &quot;I&#39;d like to order a side salad.&quot; Compared to &quot;I&#39;d like&quot;, I save nine keystrokes—a clear winner.</p>
+        <table>
+            <thead>
+            <tr><th>Template</th><th>Additional Typing</th><th>Keystroke Delta</th></tr></thead>
+            <tbody><tr><td>I&#39;d like</td><td>to order a side salad</td><td class = "text-right">+9</td></tr><tr class = "highlight-green"><td>I&#39;d like to order</td><td>a side salad</td><td class = "text-right">-9</td></tr></tbody>
+        </table>
+        <p>But even in the worst case, singular specialization only suffers minor penalties—if you make it easy to remove words. </p>
+        <p>In Day to Day, the trailing word in a template can be removed by pressing <code>backspace</code>. This dramatically reduces the penalty of specialization to the number of unnecessary <em>words</em> in the template, not <em>letters</em>.</p>
+        <p>Consider the phrase &quot;I&#39;d like some water&quot;. The specialized &quot;I&#39;d like&quot; only costs two more keystrokes than the generic:</p>
+        <table>
+            <thead>
+            <tr><th>Template</th><th>Additional Typing</th><th>Keystroke Delta</th></tr></thead>
+            <tbody><tr class = "highlight-green"><td>I&#39;d like</td><td>some water</td><td class = "text-right">-2</td></tr><tr><td>I&#39;d like to order</td><td><code>del</code> <code>del</code> some water</td><td class = "text-right">+2</td></tr></tbody>
+        </table>
+        <h2>Real Estate</h2>
+        <p>By building Day to Day as a website instead of a native, full-screen iOS application, I lost a sizable chunk of real estate. The status bar, Safari navigation bar, and keyboard helper take up too much space— 26% of the available screen! Had I realized how drastic this was, I would have built this as an iOS application from the start—something for me to keep in mind moving forward.</p>
+        <img src="../assets/projects/day-to-day-wasted-space.png" alt="">
+        <h2>iOS Integration</h2>
+        <p>iOS automatically capitalizes the first letter when an input is selected. This can be annoying; after selecting a template, typically the user expects to input an uncapitalized word. Unfortunately, I believe this level of keyboard manipulation is only available on an iOS native application.</p>
+    </div>
+</section>
+<section class="additional-articles">
+    <div class="article-column prev">
+    </div>
+    <div class="home-column">
+        <a href = "../index.html">
+            <i class="home icon"></i>
+        </a>
+    </div>
+    <div class="article-column next">
+        <div class = "link-wrapper">
+            <a class="next-article" href="nhacks.io.html">
+                <div class="titles">
+                    <h1>nhacks.io</h1>
+                    <h2>A hackathon administration platform walkthrough</h2>
+                </div>
+                <div class="navigation">
+                    <i class="chevron right icon"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+<div id = "back-button">
+    <i class="chevron left icon" ></i>
+</div>
+</body>
+<script src="article.js"></script>
+</html>

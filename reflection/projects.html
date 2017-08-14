@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>Select Projects | labanl.in</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/icon.min.css">
+</head>
+<body>
+<div class="lightbox">
+    <i class="icon angle left"></i>
+    <i class="icon angle right"></i>
+</div>
+<section class = "article">
+    <div class="article-wrapper">
+        <div class="title">Select Projects</div>
+        <div class="subtitle">Baby steps here and there</div>
+        <p>This is a small collection of projects with thoroughly unimaginative names.</p>
+
+        <!--TRANSIT ALARM BEGINS HERE-->
+        <h1 data-anchor="transit-alarm">Transit Alarm</h1>
+        <img src="../images/transit-alarm.png" class = "no-zoom" alt="">
+
+
+        <p>May 2017</p>
+        <h2>Overview</h2>
+        <p>Sometimes I commute far enough to warrant a nap on the bus. Sometimes I don&#39;t wake up in time. That&#39;s where Transit Alarm comes in.</p>
+        <p>Transit Alarm sets up time or location-based alarms to remind users about upcoming transfers along their route. Time-based alarms come with a &quot;check-in&quot; feature; if users arrive at a station late, for example, they can &quot;check-in&quot; to the station and the app will recalculate all future notifications to accommodate the delay.</p>
+        <p>Transit Alarm does not entirely meet Apple Store requirements (like having a landscape orientation), but is otherwise fully functioning.</p>
+        <p><strong>[Update]</strong>: On July 6, 2017 Google rolled out a <a href='https://www.macrumors.com/2017/07/06/google-maps-update-transit-reminder-local-guides/' target="_blank">transit transfer reminder</a> feature. It&#39;s generally effective, but is only time-based, not location-based, and does not appear to have a &quot;check-in&quot; feature to accommodate delays. That said, it&#39;s a good-enough feature that complements the other services available in the Google Maps app, so I&#39;ll likely retire Transit Alarm from my phone.</p>
+        <h2>Key Features</h2>
+        <h3>Time-Based Alarms</h3>
+        <p>Although the App Store offers several transit alarms, they all seem to rely on geofences as triggers. Unfortunately, the Toronto subway system is largely underground, where geofences are ineffective. Time-based alarms are the alternate solution.</p>
+        <p>Almost by definition, however, these alarms are inferior to geofence alarms because they are <em>contextually unaware</em>. As a commuter, I need alarms to remind me when I&#39;m getting close to a location, no matter how far I&#39;ve traveled or how long it&#39;s taken. Geofences are great at this; their entire construct is built around proximity to a coordinate, which means I&#39;ll always get notified when I&#39;m approaching my transfer. It&#39;s not perfect—ideally, I&#39;d like a notification <em>minutes</em> before my transfer, not <em>meters</em> or <em>yards</em> away from my transfer, but the approximation is more than sufficient.</p>
+        <p>However, time-based alarms lose this context because they&#39;re built around a point in time. If my bus arrives early and proceeds normally, then my time-based alarm might sound after my bus arrives at my transfer. If my bus arrives late, then my alarm will come too early. </p>
+        <p>This is where &quot;check-ins&quot; come in. At the start of every leg of transit, such as boarding a bus, I can &quot;check-in&quot; to the station. Transit Alarm will compare the time of my actual check-in with its anticipated time, and shift all future alarms by that difference. This way, if my bus arrives 10 minutes late, I can check-in as I board, and all my future alarms will accommodate the 10-minute difference.</p>
+        <p>While this doesn&#39;t perfectly supply time-based alarms with context, it makes them sufficiently useful in real-world application.</p>
+        <h3>Location-Based Alarms</h3>
+        <p>Admittedly, location-based alarms are better when available: they don&#39;t require user input to receive context. Transit Alarm offers location alarms for users who only need notifications above-ground.</p>
+        <h3>Route Parsing</h3>
+        <p>Transit Alarm integrates Google&#39;s transit directions services and automatically identifies appropriate alarm locations and times. Compared to App Store applications that ask users to manually identify their geofence locations, this is a much simpler process and faster, and its value is much more appreciated for one-off trips.</p>
+        <h2>Design Notes</h2>
+        <p>When I set out to build Transit Alarm, I envisioned a robust alarm mechanism that would prefer geofences but retain time-based alarms as a back-up. </p>
+        <p>To do this, a silent, conservative time-based alarm would wake the application near the expected transfer time and check for GPS availability. If GPS is unavailable, then the alarm alerts the user immediately. Otherwise, if GPS is available, then the application will defer the alarm for another 30 seconds, at which point this process repeats. </p>
+        <p>A more complex model, shown below, could notify the user when there is no GPS availability closer to the transfer time by initiating the conservative trigger sooner but deferring the notification. Unfortunately, iOS does not allow applications to check for network status / GPS availability in background mode, so the user would have to keep their phone awake with this application in the foreground. As a consequence, this alarm pattern was never implemented.</p>
+        <img src="../assets/projects/transit-alarm-preferred-notification-pattern.svg" class = "" alt="">
+        <h2>Screenshots</h2>
+        <div class="thumbnails-wrapper nav-arrows">
+            <div class="thumbnail">
+                <img src="../assets/projects/transit-alarm-start.PNG" alt="">
+            </div>
+            <div class="thumbnail">
+                <img src="../assets/projects/google-maps-autocomplete.PNG" alt="">
+            </div>
+            <div class="thumbnail">
+                <img src="../assets/projects/date-picker.PNG" alt="">
+            </div>
+            <div class="thumbnail">
+                <img src="../assets/projects/time-alarm.PNG" alt="">
+            </div>
+            <div class="thumbnail">
+                <img src="../assets/projects/location-alarm.PNG" alt="">
+            </div>
+            <div class="thumbnail">
+                <img src="../assets/projects/itinerary.PNG" alt="">
+            </div>
+        </div>
+
+        <h2>Source Code</h2>
+        <p>GitHub link coming soon.</p>
+        <h2>External Libraries (via CocoaPods)</h2>
+        <ul><li>
+            Google Maps iOS SDK</li>
+            <li>
+                Google Places iOS SDK</li>
+            <li>
+                SwiftyJSON</li>
+        </ul>
+        <hr/>
+
+
+        <!--DAY TO DAY BEGINS HERE-->
+
+        <h1 data-anchor="day-to-day">Day to Day</h1>
+        <img src="../images/daytoday.png" class = "no-zoom" alt="">
+        <p>June 2017</p>
+        <p><a href='https://labanlin1.github.io/demos/DayToDay/' target = "_blank">Demo Available Here</a></p>
+        <h2>Overview</h2>
+        <p>Day to Day is a concept I tested to help me communicate with others as I went about day-to-day life while unable to speak. Its core idea is to expedite my ability to type on my phone, which I could use to interact with people if gestures were insufficient.</p>
+        <h2>Key Features</h2>
+        <h3>Automatic Filtering</h3>
+        <div class="day-to-day-video">
+            <div class="video-wrapper">
+                <video src="../assets/projects/dayToDayFiltering.mp4" muted autoplay playsinline loop preload = "metadata"></video>
+            </div>
+        </div>
+        <p>Templates are automatically searched and filtered as the user types. During the search, alternate interpretations for the same meaning are examined. For example, <em>Can I get the bill?</em> and <em>Can I get the cheque?</em> are functionally identical and are represented by the same template. If the user searches for &quot;bi&quot;, the template will show the first option; if the user searches for &quot;ch&quot;, the template will show the latter.</p>
+        <h3>Contextual Templates</h3>
+        <div class="day-to-day-video">
+            <div class="video-wrapper">
+                <video src="../assets/projects/contextualTemplates.mp4" muted autoplay playsinline loop preload = "metadata"></video>
+            </div>
+        </div>
+        <p>Day to Day comes with organized templates. For example, in the Restaurants section, &quot;Can I have some&quot; is a template. Selecting this template adds it to the main text input area, and supplies supporting templates: &quot;water?&quot;, &quot;coffee?&quot;, &quot;tea?&quot;, &quot;Thank you!&quot;. </p>
+        <h2>Design Notes</h2>
+        <h3>Keystroke Reduction</h3>
+        <p>For me, reducing keystrokes was the area Day to Day could bring me the most value. It wasn&#39;t strictly a mechanical exercise; typing faster made <em>me</em> feel better. Even though I knew most people were understanding, I still <em>felt</em> like I was wasting peoples&#39; time.</p>
+        <p>As a result, I made sure to include features to improve my typing time. Some of them were minor and obvious, like using the return key to clear and log the text. Additionally, I made sure templates were easy to remove - a quick tap in the main entry area will remove the template.</p>
+        <p>But I had to make an interesting decision about the specificity of the templates. Too many templates would be taxing — too many to filter though, and adding marginal value. Too few, and I would have to type too often.</p>
+        <p>I analyzed three options: generalization, specialization, and singular specialization. Generalization would only include templates that were exceptionally broad, such as &quot;I&#39;d like&quot;, &quot;Where is&quot;, and &quot;How can I&quot;. Specialization is the exact opposite: &quot;I&#39;d like&quot; would be represented by &quot;I&#39;d like to order&quot;, &quot;I&#39;d like to find&quot;, &quot;I&#39;d like to ask&quot;, etc. And singular specialization had just one instance of a special case, such as &quot;I&#39;d like to order&quot;.</p>
+        <p>I went with singular specialization. </p>
+        <p>This works great in the optimal case: suppose I wanted to type &quot;I&#39;d like to order a side salad.&quot; Compared to &quot;I&#39;d like&quot;, I save nine keystrokes — a clear winner.</p>
+        <table>
+            <thead>
+            <tr><th>Template</th><th>Additional Typing</th><th>Keystroke Delta</th></tr></thead>
+            <tbody><tr><td>I&#39;d like</td><td>to order a side salad</td><td class = "text-right">+9</td></tr><tr class = "highlight-green"><td>I&#39;d like to order</td><td>a side salad</td><td class = "text-right">-9</td></tr></tbody>
+        </table>
+        <p>But even in the worst case, singular specialization only suffers minor penalties — if you make it easy to remove words. </p>
+        <p>In Day to Day, the trailing word in a template can be removed by pressing <code>backspace</code>. This dramatically reduces the penalty of specialization to the number of unnecessary <em>words</em> in the template, not <em>letters</em>.</p>
+        <p>Consider the phrase &quot;I&#39;d like some water&quot;. The specialized &quot;I&#39;d like&quot; only costs two more keystrokes than the generic:</p>
+        <table>
+            <thead>
+            <tr><th>Template</th><th>Additional Typing</th><th>Keystroke Delta</th></tr></thead>
+            <tbody><tr class = "highlight-green"><td>I&#39;d like</td><td>some water</td><td class = "text-right">-2</td></tr><tr><td>I&#39;d like to order</td><td><code>del</code> <code>del</code> some water</td><td class = "text-right">+2</td></tr></tbody>
+        </table>
+        <h3>Real Estate</h3>
+        <p>By building Day to Day as a website instead of a native, full-screen iOS application, I lost a sizable chunk of real estate. The status bar, Safari navigation bar, and keyboard helper take up too much space— 26% of the available screen! Had I realized how drastic this was, I would have built this as an iOS application from the start — something for me to keep in mind moving forward.</p>
+        <img src="../assets/projects/day-to-day-wasted-space.png" alt="">
+        <h3>iOS Integration</h3>
+        <p>iOS automatically capitalizes the first letter when an input is selected. This can be annoying; after selecting a template, typically the user expects to input an uncapitalized word. Unfortunately, I believe this level of keyboard manipulation is only available on an iOS native application.</p>
+        <hr/>
+
+        <!--NHACKS BEGINS HERE-->
+        <h1 data-anchor="nhacks.io">nhacks.io: an interactive demonstration</h1>
+        <img src="../images/nhacks.io.png" class = "no-zoom" alt="">
+        <p><a href='https://nhacks-demo.herokuapp.com' target="_blank">Demo Available Here</a></p>
+        <p>nhacks.io is a hackathon administration platform I built for NHacks, a hackathon I ran in sophomore year. It serves as a registration platform, and handles hacker acceptance, waitlisting, email notifications as well as name tags and security.</p>
+        <p>Instead of discussing the code base, I&#39;ll demonstrate its functionality by walking through its use case as the hackathon approaches.</p>
+        <h2>Getting Started</h2>
+        <p>Visit theNHacks demo at <a href='http://nhacks-demo.herokuapp.com' target='_blank' >http://nhacks-demo.herokuapp.com</a>. It&#39;s running on a free Heroku dyno, so it might take ~5 seconds to spin up the first time.</p>
+        <p>Remember to use <strong>fake</strong> (but tasteful) information—this is a public demo, and anyone can see what you&#39;ve entered.</p>
+        <p>Note that Heroku will refresh the database at 09:30 UTC (04:30 ET) every day, so if you are accessing this demonstration at around this time, the database might reset on you.</p>
+        <h2>Three Months Before NHacks</h2>
+        <h3>Apply | Hacker</h3>
+        <p>Visit the home page at <a href='https://nhacks-demo.herokuapp.com' target = "_blank">nhacks-demo.herokuapp.com</a>. Read a little about Nspire and NHacks, and decide if you want to apply or not (yes, you do!)</p>
+        <p>Scroll back up, and click <code>APPLY</code>.</p>
+        <img src="../assets/projects/nhacks-apply.png" alt="">
+        <p>Fill in your <em>fake</em> information—take care to remember the email address you entered! It&#39;ll be your password for this demo. You&#39;ll notice the placeholder &quot;Trump University&quot; — this website is from when President Trump was a punchline, not a fact.</p>
+        <blockquote><p>nhacks.io originally confirmed registration by sending an email that included a strong, randomly generated password. Because email features have been removed for this demo, I&#39;ve made the password equal to the email.</p>
+        </blockquote>
+        <p>Click <code>NHacks Home</code> (top left) to return to the home page.</p>
+        <h3>Revise Your Application | Hacker</h3>
+        <p>Suppose you realize that you accidentally uploaded your final report instead of your resume, and you want to upload a new file.</p>
+        <p>Click <code>LOGIN</code>.</p>
+        <p>Enter the fake email address you signed up with in <em>both</em> the email and password text boxes. </p>
+        <blockquote><p>The email address serves as the password only for this demonstration — this was not a feature in production.</p>
+        </blockquote>
+        <p>Click <code>LOGIN</code></p>
+        <p>Feel free to update your resume and/or skills! Remember to save before you log out.</p>
+        <h2>One Month Before NHacks</h2>
+        <h3>Review Applications | Administrator</h3>
+        <p>Let&#39;s switch gears for a moment: you&#39;re now a hackathon administrator, and you work with me on the NHacks team.</p>
+        <p>Registrations have gone well; we&#39;re just about to close the registration, and we&#39;ve reached over 1000 applications. Let&#39;s log in to view them.</p>
+        <p>Navigate to the login page. </p>
+        <p>Login to the administrator account with the email <a href='mailto:admin@nhacks.io' target='_blank' >admin@nhacks.io</a> and password &#39;administrator&#39;.</p>
+        <blockquote><p>If this doesn&#39;t work, then someone must have changed the administrator password. Sorry, but you&#39;ll have to check in after the database refreshes again!</p>
+        </blockquote>
+        <p>Scroll down and click into any of the applications. I&#39;ve included a few example ones with @labanl.in email addresses. You should be able to view the entire application.</p>
+        <blockquote><p>Due to Heroku&#39;s ephemeral file system structure, resumes may not show up.</p>
+        </blockquote>
+        <p>Click the <code>User Details</code> tab. Here, you can make any changes you need to a user&#39;s account if you need to. Notice the QR code at the bottom—we&#39;ll come back to that.</p>
+        <p>Suppose you really like this applicant—let&#39;s approve him/her! At the top, in the orange box, change Application Decision to Approved and select <code>Update</code>.</p>
+        <p>Congratulations: you&#39;ve just approved your first hacker to your hackathon! </p>
+        <blockquote><p>When hackathon registration closed, the web application sent out emails to all applicants to notify them of their status. Accepted hackers could log in to accept their spot and provide their t-shirt size and dietary restrictions; everyone else could sign up for waitlist spots. Every time a hacker who was accepted declined their spot, the system would send a new email to the next waitlisted hacker from the same school. This maximized the number of hackers we could accept without changing logistics numbers for each school.</p>
+            <p>For brevity, I&#39;ve chosen to remove this feature from the demonstration.</p>
+        </blockquote>
+        <p>But now, you&#39;ve got to take care of your sponsors—after all, they are the ones that make this possible. Some sponsors will have negotiated access to application resumes. To give them access, click <code>Create User</code> in the teal panel on the left of the control panel.</p>
+        <p>Supply an email address and select Sponsor for Account Type. Provide a first name and last name, and click <code>Create</code>.</p>
+        <blockquote><p>If you&#39;re running out of time and you have too many applications to approve, feel free to add a Moderator account. They don&#39;t have all the administrator privileges, but they can make application decisions.</p>
+        </blockquote>
+        <p>You&#39;ll be taken to the list of all users. Return to the control panel by clicking on the Rocket icon at the top of the page.</p>
+        <p>Log out (top left).</p>
+        <h3>Screen Resumes | Sponsor</h3>
+        <p>Switch gears again — now you&#39;re a sponsor, and you&#39;ve financially supported this hackathon to build your brand awareness and increase visibility in front of exceptional potential future hires.</p>
+        <p>You just received an email inviting you to view applicant resumes! To download a zip file with the resumes, first log in with your newly created account (the one that you, as an administrator, created moments ago).</p>
+        <blockquote><p>Once again, the password is set to the email address.</p>
+        </blockquote>
+        <p>In the teal box on the left, click on any of the download links to see what kind of hackers are attending our hackathon!</p>
+        <p>Log out (top left).</p>
+        <h2>One Week Before NHacks</h2>
+        <p></p>
+        <h3>Create Name Tags | Administrator</h3>
+        <p>Switch gears  — now you&#39;re an administrator again.</p>
+        <p>Sponsors are now happy, and hackers have been notified. Your operations associate has sorted out the bus arrangements. It&#39;s time to prepare for the day of.</p>
+        <img src="../assets/projects/nhacks-name-tags.png" class = "no-zoom" alt="">
+        <blockquote><p>We ran NHacks at the London Central Public Library. For security purposes, we had to be able to ensure that everyone allowed in the building after hours was authorized to be present. To do this, I built an iOS app that could scan QR Codes and verify their validity via web API served by this web application. To ensure QR Codes were authentic, their content included the hacker&#39;s database user id, which is not otherwise exposed to the user in any way.</p>
+        </blockquote>
+        <p>To make everyone a name tag, click <code>Generate Name Tags</code> in the teal box in the main control panel.</p>
+        <p>Select all users (or just the ones you want) and click <code>Generate Selected Name Tags</code>.</p>
+        <blockquote><p>The system used to have a process where users had to allowed entry into NHacks on a separate page before their name tags could be generated. Volunteer staff, sponsors and accepted hackers were automatically allowed entry, but could manually be denied entry. This made sure we could enforce security at all points of entry.</p>
+        </blockquote>
+        <p>Ta-da! </p>
+        <p>Congratulations — you&#39;re ready to run NHacks! See you there.</p>
+    </div>
+</section>
+<section class="additional-articles">
+    <div class="article-column prev">
+    </div>
+    <div class="home-column">
+        <a href = "../index.html">
+            <i class="home icon"></i>
+        </a>
+    </div>
+    <div class="article-column next">
+        <div class = "link-wrapper">
+            <a class="next-article" href="../index.html">
+                <div class="titles">
+                    <h1>Next</h1>
+                    <h2>90 more years, 9 more seasons</h2>
+                </div>
+                <div class="navigation">
+                    <i class="chevron right icon"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+<div id = "back-button">
+    <i class="chevron left icon" ></i>
+</div>
+</body>
+<script src="article.js"></script>
+</html>
