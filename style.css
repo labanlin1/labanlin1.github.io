@@ -5,6 +5,9 @@
   box-sizing: border-box;
   font-size: 62.5%;
   text-rendering: optimizeLegibility; }
+  @media (max-width: 576px) {
+    * {
+      font-size: 56.25%; } }
 
 p, p *, span, li, div.caption, th, td, code {
   font-family: "Lora","Palatino", "Palatino Linotype", "Georgia", Times, Serif;

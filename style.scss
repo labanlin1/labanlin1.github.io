@@ -1,22 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700|Lora');
 
-//Resets and Defaults
-*{
-  margin:0;
-  padding:0;
-  box-sizing: border-box;
-  font-size: 62.5%;
-  text-rendering: optimizeLegibility;
-}
-
-p, p *, span, li, div.caption, th, td, code{
-  font-family: "Lora","Palatino", "Palatino Linotype", "Georgia", Times, Serif;
-  font-size: 1.9rem;
-  line-height: 3.2rem;
-  margin-top: 1.8rem;
-  color: rgba(0,0,0,.8);
-}
-
 //Variables
 $W_tiny: 320px;
 $W_phone: 576px;
@@ -30,8 +13,6 @@ $orange: #EFB64A;
 $DW_landing: 1060px;
 
 $DW_article: 68rem;
-
-
 
 //Mixins - based on Bootstrap break sizes https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints
 @mixin tiny{
@@ -63,6 +44,31 @@ $DW_article: 68rem;
     @content;
   }
 }
+
+//Resets and Defaults
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  @include phone{
+    font-size: 62.5% * .9;
+  }
+  text-rendering: optimizeLegibility;
+}
+
+p, p *, span, li, div.caption, th, td, code{
+  font-family: "Lora","Palatino", "Palatino Linotype", "Georgia", Times, Serif;
+  font-size: 1.9rem;
+  line-height: 3.2rem;
+  margin-top: 1.8rem;
+  color: rgba(0,0,0,.8);
+}
+
+
+
+
+
 
 //Helper Functions
 .center{
