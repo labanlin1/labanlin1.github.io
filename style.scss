@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700|Lora');
-//* {
-//  background: #000 !important;
-//  color: #0f0 !important;
-//  outline: solid #f00 1px !important;
-//}
+* {
+  background: #000 !important;
+  color: #0f0 !important;
+  outline: solid #f00 1px !important;
+}
 //Variables
 $W_tiny: 320px;
 $W_phone: 576px;
@@ -586,6 +586,9 @@ section.landing-image{
       margin: 3rem 3rem;
     }
     @include phone{
+      width: calc(100vw - 6rem - 10vw);
+    }
+    @include tiny{
       width: calc(100vw - 6rem - 10vw);
     }
   }

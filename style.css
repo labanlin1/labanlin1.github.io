@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700|Lora");
 * {
+  background: #000 !important;
+  color: #0f0 !important;
+  outline: solid #f00 1px !important; }
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -395,6 +400,9 @@ section.landing-image {
       .article-wrapper hr {
         margin: 3rem 3rem; } }
     @media (max-width: 576px) {
+      .article-wrapper hr {
+        width: calc(100vw - 6rem - 10vw); } }
+    @media (max-width: 320px) {
       .article-wrapper hr {
         width: calc(100vw - 6rem - 10vw); } }
 
