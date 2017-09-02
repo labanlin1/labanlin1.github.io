@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Image Test</title>
+    <div class="lightbox"></div>
+    <img src = "https://dummyimage.com/1600x1100/000/fff">
+    <br>
+    <img src = "https://dummyimage.com/1600x1100/000/fff">
+    <br>
+    <img src = "https://dummyimage.com/1600x1100/000/fff">
+    <br>
+    <img src = "https://dummyimage.com/1600x1100/000/fff">
+    <br>
+    <img src = "https://dummyimage.com/1600x1100/000/fff">
+    <br>
+    <img src = "https://dummyimage.com/1600x1100/000/fff">
+    <br>
+    <img src = "https://dummyimage.com/1600x1100/000/fff">
+    <br>
+    <img src = "https://dummyimage.com/3600x400/000/fff">
+
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+        img{
+            margin: 0 auto;
+            display:block;
+            max-width: 1200px;
+        }
+        img:hover{
+            cursor: zoom-in;
+        }
+
+        .lightbox{
+            opacity: 0;
+            position: fixed;
+            max-height: 100vh;
+            max-width:100vw;
+            display:block;
+            pointer-events: none;
+            background-size: contain;
+            background-repeat:no-repeat;
+            background-position: center;
+            background-color: white;
+        }
+
+        .lightbox.visible{
+            opacity: 1;
+            pointer-events:all;
+            z-index: 100;
+
+        }
+
+        .lightbox.visible:hover{
+            cursor: zoom-out;
+        }
+    </style>
+    <script>
+       var images = document.querySelectorAll("img");
+       for (var i = 0 ; i<images.length; i++){
+           if (!images[i].classList.contains("lightbox-image")){
+               images[i].addEventListener("click", expandImageIntoLightbox);
+           }
+       }
+
+       var imageExpanded = null;
+       var imageAnimationInProcess = false;
+       var scrollAnchor = null;
+       var transition = "all .3s ease-out";
+       var scrollLeeway = 40; //px
+
+       var fps = 60;
+
+       document.addEventListener("scroll", collapseImageListener);
+
+       function expandImageIntoLightbox(e) {
+
+           if (imageExpanded == null && scrollAnchor == null){
+
+               //Set LightBox Image to source Image
+               var imageTarget = e.target;
+               imageExpanded = imageTarget;
+               imageTarget.style.opacity = 0;
+               var image = document.querySelector(".lightbox");
+               image.style.backgroundImage = "url(" + imageTarget.src + ")";
+
+               //Show LightBox
+               image.style.transition = "";
+               image.classList.add("visible");
+
+               //Set LightBox Position and Dimensions
+               //I wanted to use translate because it's apparently more efficient, but the actual animation was too choppy
+               image.style.top = imageTarget.getBoundingClientRect().top + "px";
+               image.style.left = imageTarget.getBoundingClientRect().left + "px";
+               image.style.height = imageTarget.clientHeight + "px";
+               image.style.width = imageTarget.clientWidth + "px";
+               scrollAnchor = window.pageYOffset || document.body.scrollTop;
+
+               setTimeout(function(){
+                   image.style.transition = transition;
+                   image.style.top = "0px";
+                   image.style.left = "0px";
+                   image.style.height = "100vh";
+                   image.style.width = "100vw";
+                   document.body.style.cursor = "zoom-out";
+                   image.addEventListener("click", function(){
+                       collapseImage(false)
+                   });
+               }, 0);
+           }
+
+       }
+
+       function collapseImage(simpleFade, scrollDelta){
+
+           //Reverse Animation
+           imageExpanded.style.opacity = 1;
+           document.body.style.cursor = "auto";
+           var image = document.querySelector(".lightbox");
+           image.style.backgroundColor = "transparent";
+           if (simpleFade){
+               if (imageAnimationInProcess == false){
+                   image.style.transition = null;
+                   fadeOutImage(image, 0,1.5);
+               }
+           }else {
+               image.style.transition = transition;
+               image.style.top = imageExpanded.getBoundingClientRect().top + "px";
+               image.style.left = imageExpanded.getBoundingClientRect().left + "px";
+               image.style.height = imageExpanded.clientHeight + "px";
+               image.style.width = imageExpanded.clientWidth + "px";
+               setTimeout(resetImageAnimation,350); //same timeout as the transition length
+           }
+       }
+
+        function collapseImageListener(){
+            if (imageExpanded != null && scrollAnchor != null){
+                var scrollDelta = Math.abs(scrollAnchor - document.body.scrollTop);
+                if (scrollDelta >= scrollLeeway){
+                    collapseImage(true, scrollDelta);
+                }
+            }
+        }
+
+        function fadeOutImage(image, frame, duration){
+
+            imageAnimationInProcess = true;
+            var totalFrames = duration * fps;
+            frame++;
+            if (frame <= totalFrames){
+                var progress = frame / totalFrames;
+                image.style.opacity = 1 - easeOut(progress);
+                setTimeout(function(){
+                    fadeOutImage(image, frame, duration)
+                }, 1/fps);
+            }else{
+                resetImageAnimation();
+            }
+        }
+
+        function resetImageAnimation(){
+            var image = document.querySelector(".lightbox");
+            image.backgroundImage = "";
+            image.style.transition = "";
+            image.classList.remove("visible");
+            image.style.top = null;
+            image.style.left = null;
+            image.style.width = null;
+            image.style.height = null;
+            image.style.opacity = null;
+            imageExpanded = null;
+            scrollAnchor = null;
+            imageAnimationInProcess = false;
+        }
+
+       function easeOut(t) { return t*(2-t) }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

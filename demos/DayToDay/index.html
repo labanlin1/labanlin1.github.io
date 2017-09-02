@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day to Day</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/icon.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class = "iphone-6-plus">
+    <div class="size-selection">
+        <div class="title">Select your phone size:</div>
+        <div class="phone-size" data-size = "iphone-se">iPhone 5, 5S, SE</div>
+        <div class="phone-size" data-size = "iphone-7">iPhone 6, 6S, 7</div>
+        <div class="phone-size" data-size = "iphone-7-plus">iPhone 6 Plus, 6s Plus, 7 Plus</div>
+    </div>
+    <div class="phone-wrapper">
+        <div class="phrase">
+            <span class="field" contenteditable="true"></span>
+        </div>
+        <hr/>
+        <div class="suggested-container">
+            <div class="programmed-options"><!-- Limited to three suggestions only -->
+                <div class="option emphasis"></div>
+                <div class="option emphasis"></div>
+                <div class="option emphasis"></div>
+                <div class="option emphasis"></div>
+            </div>
+            <div class="text-match-options"></div>
+            <!--<div class="option"><span class = "emphasis">Debit</span></div>-->
+        </div>
+        <hr/>
+        <div class="tab-objects">
+            <div class="constructors-container">
+                <!--<div class="title">Constructors</div>-->
+                <!--<div class="option" data-optionID = "0">Hi there. I have laryngitis right now so I <span class = "emphasis">can't speak</span>, so I'll try to communicate through my phone like this.</div>-->
+            </div>
+
+        </div>
+
+        <div class="transcript-wrapper">
+            <!--<div class="transcript"><i class="unordered list icon" id = "transcript-icon"></i></div>-->
+        </div>
+
+        <div class="tabs">
+            <i class="unordered list icon" id = "transcript-icon"></i>
+            <!--<div class="tab active">General</div>-->
+            <!--<div class="tab">Pharmacy</div>-->
+        </div>
+
+        <div id = "transcript-container">
+            <div id="transcripts"></div>
+            <div id = "close">
+                <i class="remove icon" id = "close-icon"></i>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

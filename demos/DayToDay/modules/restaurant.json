@@ -1,0 +1,110 @@
+{
+  "moduleName": "Restaurant",
+  "templates": [
+    {
+      "text": "Can I |have,get| some",
+      "suggestedWords": [
+        {
+          "word": "water?"
+        },
+        {
+          "word": "coffee?"
+        },
+        {
+          "word": "tea?"
+        },
+        {
+          "word": "Thank you!"
+        }
+      ]
+    },
+    {
+      "text": "I'd like |to order,some,number|",
+      "suggestedWords": [
+        {
+          "word": "#"
+        },{
+          "word": "please"
+        }
+      ]
+    },
+    {
+      "text": "Can I get the |cheque,bill,tab|?",
+      "suggestedWords": [
+        {
+          "word": "Credit"
+        },
+        {
+          "word": "Debit"
+        },
+        {
+          "word": "Cash"
+        },
+        {
+          "word": "Apple Pay"
+        },
+        {
+          "word": "Thank you!"
+        }
+      ]
+    },
+    {
+      "text": "Where's the",
+      "suggestedWords": [
+        {
+          "word": "washroom?"
+        },
+        {
+          "word": "bar?"
+        },
+        {
+          "word": "sink?"
+        }
+      ]
+    },
+    {
+      "text": "It |tastes,smells|",
+      "suggestedWords": [
+        {
+          "word": "great"
+        },
+        {
+          "word": "good"
+        },
+        {
+          "word": "off"
+        },
+        {
+          "word": "raw"
+        }
+      ]
+    },
+    {
+      "text": "|Compliments| to the chef!",
+      "suggestedWords": [
+        {
+          "word": "Well done!"
+        },
+        {
+          "word": "Fantastic!"
+        }
+      ]
+    },
+    {
+      "text": "I'm with |a party of,group of|",
+      "suggestedWords": []
+    },
+    {
+      "text": "Can you |describe,explain,compare|",
+      "suggestedWords": []
+    },
+    {
+      "text": "I'm here to |pick up|",
+      "suggestedWords": [
+        {
+          "text": "a Ritual order"
+        }
+      ]
+    }
+  ]
+}
