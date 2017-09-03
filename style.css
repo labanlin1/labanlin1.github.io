@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700|Lora");
 * {
+  -webkit-text-size-adjust: none;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
