@@ -105,7 +105,7 @@ a i.icon{
 hr{
   border-top: 2px $blue solid;
   max-width: calc(#{$DW_landing} - 2rem);
-  margin: 0px auto;
+  margin: 0 auto;
   @include tablet{
     margin: 0 2rem;
   }
@@ -154,7 +154,7 @@ hr{
 //Landing Page
 
 .intro{
-  height:0px;
+  height:0;
   overflow-y: hidden;
   margin-top: 1rem;
 
@@ -417,7 +417,6 @@ section.landing-image{
 
 .article-wrapper>*,  .iframe-alternate-photos, .interactive-website{
   width: $DW_article;
-  //margin: 0 calc(50vw - #{$DW_article/2});
   margin-left: calc(50vw - #{$DW_article/2});
   @include article-width-max{
     max-width: 100%;
@@ -830,6 +829,7 @@ div.controls{
   margin-top: 0;
 }
 
+
 .iframe-alternate-photos{
   margin:0;
   margin-left: calc(50vw - 34rem);
@@ -839,7 +839,9 @@ div.controls{
   @include phone{
     margin-left: 0;
   }
-  //max-width:none;
+  @include tablet{
+    margin-left:0;
+  }
   text-align: center;
   @media (min-width: #{$cutoffWidth}) {
     display:none;
@@ -887,17 +889,17 @@ div.caption{
     position:absolute;
     font-size: 80px;
     top: calc(50vh - 40px);
-    text-shadow: 0px 0px 20px #8c8c8c;
-    width:0px; //remove i sizing; nav-arrows will retain sizing
+    text-shadow: 0 0 20px #8c8c8c;
+    width:0; //remove i sizing; nav-arrows will retain sizing
     @include tablet{
       font-size: 50px;
       top: calc(50vh - 25px);
-      text-shadow: 0px 0px 30px #000000;
+      text-shadow: 0 0 30px #000000;
     }
     @include phone{
       font-size: 50px;
       top: calc(50vh - 25px);
-      text-shadow: 0px 0px 30px #000000;
+      text-shadow: 0 0 30px #000000;
     }
 
   }

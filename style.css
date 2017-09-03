@@ -41,7 +41,7 @@ a i.icon {
 hr {
   border-top: 2px #3878BA solid;
   max-width: calc(1060px - 2rem);
-  margin: 0px auto; }
+  margin: 0 auto; }
   @media (min-width: 576px) and (max-width: 768px) {
     hr {
       margin: 0 2rem; } }
@@ -75,7 +75,7 @@ hr {
     padding-top: 80px; } }
 
 .intro {
-  height: 0px;
+  height: 0;
   overflow-y: hidden;
   margin-top: 1rem; }
   @media (min-width: 769px) {
@@ -570,6 +570,9 @@ div.controls {
   @media (max-width: 576px) {
     .iframe-alternate-photos {
       margin-left: 0; } }
+  @media (min-width: 576px) and (max-width: 768px) {
+    .iframe-alternate-photos {
+      margin-left: 0; } }
   @media (min-width: 1000px) {
     .iframe-alternate-photos {
       display: none; } }
@@ -602,18 +605,18 @@ div.caption {
   position: absolute;
   font-size: 80px;
   top: calc(50vh - 40px);
-  text-shadow: 0px 0px 20px #8c8c8c;
-  width: 0px; }
+  text-shadow: 0 0 20px #8c8c8c;
+  width: 0; }
   @media (min-width: 576px) and (max-width: 768px) {
     .lightbox.nav-arrows i.icon {
       font-size: 50px;
       top: calc(50vh - 25px);
-      text-shadow: 0px 0px 30px #000000; } }
+      text-shadow: 0 0 30px #000000; } }
   @media (max-width: 576px) {
     .lightbox.nav-arrows i.icon {
       font-size: 50px;
       top: calc(50vh - 25px);
-      text-shadow: 0px 0px 30px #000000; } }
+      text-shadow: 0 0 30px #000000; } }
 .lightbox.nav-arrows i.icon:hover {
   cursor: pointer;
   color: black; }
