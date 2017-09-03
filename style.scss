@@ -5,6 +5,7 @@
 //  outline: solid #f00 1px !important;
 //}
 //Variables
+$H_landscape_phone: 414px;
 $W_tiny: 320px;
 $W_phone: 576px;
 $W_tablet: 768px;
@@ -19,6 +20,13 @@ $DW_landing: 1060px;
 $DW_article: 68rem;
 
 //Mixins - based on Bootstrap break sizes https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints
+@mixin landscape-phone{
+  @media (max-height: #{$H_landscape_phone}) {
+    @content;
+  }
+}
+
+
 @mixin tiny{
   @media (max-width: #{$W_tiny}) {
     @content;
@@ -56,6 +64,9 @@ $DW_article: 68rem;
   box-sizing: border-box;
   font-size: 62.5%;
   @include phone{
+    font-size: 62.5% * .9;
+  }
+  @include landscape-phone{
     font-size: 62.5% * .9;
   }
   text-rendering: optimizeLegibility;
@@ -421,6 +432,9 @@ section.landing-image{
   @include article-width-max{
     max-width: 100%;
     margin: 0;
+  }
+  @include landscape-phone{
+    width: 100%;
   }
 
 }
