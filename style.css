@@ -751,4 +751,11 @@ div.caption {
     content: "To view this demo, please rotate your phone or switch to a larger screen.";
     height: auto; } }
 
+iframe.video {
+  height: 50.625vw; }
+  @media (min-width: 769px) {
+    iframe.video {
+      width: 68rem;
+      height: 38.25rem; } }
+
 /*# sourceMappingURL=style.css.map */

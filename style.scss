@@ -1016,8 +1016,6 @@ div.caption{
         height: $w;
       }
     }
-
-
   }
 }
 
@@ -1098,3 +1096,12 @@ div.caption{
 
 //MISCELLANEOUS
 
+//Vimeo Videos
+//16 x 9 resolution
+iframe.video{
+  height: 90vw * 9 / 16;
+  @include desktop{
+    width: $DW_article;
+    height: $DW_article * 9 / 16;
+  }
+}

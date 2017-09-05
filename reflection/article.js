@@ -283,7 +283,7 @@ function initializeInteractiveWebsitesAsRequired(){
     }
 }
 function loadiframes(){
-    var iframes = document.getElementsByTagName("iframe");
+    var iframes = document.querySelectorAll("iframe:not(.video)");
     for (var i = 0; i<iframes.length; i++){
         var ifr = iframes[i];
         ifr.src = ifr.dataset.src;
@@ -344,6 +344,7 @@ function adjustRelevantIframeSize(event){
     }
     iframeParent.classList.add(newClass);
 }
+
 function findIframe(element){
     return element.getElementsByTagName("iframe")[0] ? element.getElementsByTagName("iframe")[0] : false;
 }
