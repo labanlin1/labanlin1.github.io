@@ -752,7 +752,9 @@ div.caption {
     height: auto; } }
 
 iframe.video {
-  height: 50.625vw; }
+  height: 50.625vw;
+  margin-top: 4rem;
+  margin-bottom: 4rem; }
   @media (min-width: 769px) {
     iframe.video {
       width: 68rem;

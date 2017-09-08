@@ -344,7 +344,6 @@ function adjustRelevantIframeSize(event){
     }
     iframeParent.classList.add(newClass);
 }
-
 function findIframe(element){
     return element.getElementsByTagName("iframe")[0] ? element.getElementsByTagName("iframe")[0] : false;
 }
@@ -391,7 +390,6 @@ function smoothScroll(framesComplete, totalFrames, verticalDistance, origin){
         }, 1/fps * 1000);
     }
 }
-
 
 //Animation Functions
 function easeOut(t) { return t*(2-t) }
