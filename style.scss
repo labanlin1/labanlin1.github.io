@@ -153,13 +153,13 @@ hr{
 
 .info{
   @include desktop() {
-    padding-top:172px;
+    padding: 30px 0 20px 0;
   }
   @include tablet(){
-    padding-top: 130px;
+    padding: 30px 0 20px 0;
   }
   @include phone(){
-    padding-top: 80px;
+    padding: 10px 0 10px 0;
   }
 }
 
