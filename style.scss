@@ -21,7 +21,7 @@ $DW_article: 68rem;
 
 //Mixins - based on Bootstrap break sizes https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints
 @mixin landscape-phone{
-  @media (max-height: #{$H_landscape_phone}) {
+  @media (max-height: #{$H_landscape_phone}) and (max-width: #{$W_phone}){
     @content;
   }
 }
