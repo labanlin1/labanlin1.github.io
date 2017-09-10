@@ -5,10 +5,6 @@
 element("show-hide-intro").addEventListener("click", toggleIntro);
 var introTimeOut;
 
-function elements(classes){
-    return document.getElementsByClassName(classes);
-}
-
 function element(id){
     return document.getElementById(id);
 }
@@ -29,11 +25,9 @@ function toggleIntro(){
         //adjust heights
         adjustHeight(0,duration*fps + 1, fullHeight, introEl, fps, duration , true);
         element("show-hide-intro").innerHTML = "less";
-        element("profile-picture").classList.add("shrink");
     }else{
         adjustHeight(0,duration*fps + 1, parseInt(introEl.offsetHeight), introEl, fps, duration , false);
         element("show-hide-intro").innerHTML = "more";
-        element("profile-picture").classList.remove("shrink");
     }
 }
 
