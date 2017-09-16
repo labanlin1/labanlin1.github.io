@@ -409,6 +409,8 @@ section.landing-image {
 
 .article {
   padding-bottom: 4rem; }
+  .article p {
+    font-weight: 300; }
   .article hr {
     border-top: 1px solid #dadada; }
 
