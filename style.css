@@ -412,7 +412,7 @@ section.landing-image {
   .article p {
     font-weight: 300; }
   .article hr {
-    border-top: 1px solid #dadada; }
+    border: 1px solid #dadada; }
 
 .additional-articles {
   background-color: #FAFAFA;
