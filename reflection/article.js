@@ -383,7 +383,7 @@ hashScroll(true);
 function smoothScroll(framesComplete, totalFrames, verticalDistance, origin){
     framesComplete++;
     var percentage = easeInOut(framesComplete/totalFrames) * verticalDistance;
-    document.body.scrollTop = origin + percentage;
+    window.scrollTo(0,origin + percentage);
     if (framesComplete < totalFrames){
         setTimeout(function(){
             smoothScroll(framesComplete, totalFrames, verticalDistance, origin);
