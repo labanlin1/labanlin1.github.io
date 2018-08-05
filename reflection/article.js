@@ -203,6 +203,11 @@ function collapseImageListener(){
         }
     }
 }
+document.addEventListener("keyup", escapeHandler);
+function escapeHandler(event){
+    //Escape Pressed and image is expanded
+    if (event.keyCode == 27 && imageExpanded!=null) collapseImage(false)
+}
 function fadeOutImage(image, frame, duration){
     imageAnimationInProcess = true;
     var totalFrames = duration * fps;
