@@ -58,3 +58,31 @@ function adjustHeight(currentIteration, limit, fullHeight, el, fps, duration, fo
 }
 
 function easeInOut(t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 }
+
+//Preload Images
+function preload(images){
+    var imagesArray = new Array(images.length)
+    for (var i = 0; i < images.length; i++){
+        imagesArray[i] = new Image()
+        imagesArray[i].src = `https://labanl.in/images/${images[i]}`
+    }
+}
+
+// dir /b > filenames.txt in Windows to copy all file names in /images
+let imageNames = [
+    "DayToDay-thumb.png",
+    "DayToDay.png",
+    "labanl.in-thumb.png",
+    "labanlin.png",
+    "nhacks.io-thumb.png",
+    "nhacks.io.png",
+    "nhacks.png",
+    "nhacks2.png ",
+    "transit-alarm.png",
+    "TransitAlarm-thumb.png",
+    "TransitAlarm.png",
+    "voice-thumb.png",
+    "voice.png",
+]
+
+preload(imageNames)
