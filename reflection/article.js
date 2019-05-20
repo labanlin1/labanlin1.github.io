@@ -70,193 +70,193 @@ function landingImageOpacity(){
     }
 }
 
-//Images
-//Images should expand as req and collapse on scroll
-var imageExpanded = null;
-var imageAnimationInProcess = false;
-var scrollAnchor = null;
-var transition = "all .2s ease-out";
-var scrollLeeway = 40; //px
-var mustFadeOut = false;
-var imageCollection = null;
-var imageCollectionPos = null;
-var originalImagePos = null;
-document.addEventListener("scroll", collapseImageListener);
+// //Images
+// //Images should expand as req and collapse on scroll
+// var imageExpanded = null;
+// var imageAnimationInProcess = false;
+// var scrollAnchor = null;
+// var transition = "all .2s ease-out";
+// var scrollLeeway = 40; //px
+// var mustFadeOut = false;
+// var imageCollection = null;
+// var imageCollectionPos = null;
+// var originalImagePos = null;
+// document.addEventListener("scroll", collapseImageListener);
 
-addImageEventListeners();
-function addImageEventListeners(){
-    var images = document.querySelectorAll(".article img:not(.no-zoom)");
-    for (var i = 0 ; i<images.length; i++){
-        if (!images[i].classList.contains("lightbox-image")){
-            images[i].addEventListener("click", expandImageIntoLightbox);
-        }
-    }
-    var navArrows = document.querySelectorAll(".lightbox .icon");
-    for (var i = 0; i < navArrows.length; i++){
-        navArrows[i].addEventListener("click", function(e){
-            e.stopPropagation();
-            var target = e.target;
-            var forward = target.classList.contains("right");
-            nextImage(forward);
-        })
-    }
-}
-function expandImageIntoLightbox(e) {
+// addImageEventListeners();
+// function addImageEventListeners(){
+//     var images = document.querySelectorAll(".article img:not(.no-zoom)");
+//     for (var i = 0 ; i<images.length; i++){
+//         if (!images[i].classList.contains("lightbox-image")){
+//             images[i].addEventListener("click", expandImageIntoLightbox);
+//         }
+//     }
+//     var navArrows = document.querySelectorAll(".lightbox .icon");
+//     for (var i = 0; i < navArrows.length; i++){
+//         navArrows[i].addEventListener("click", function(e){
+//             e.stopPropagation();
+//             var target = e.target;
+//             var forward = target.classList.contains("right");
+//             nextImage(forward);
+//         })
+//     }
+// }
+// function expandImageIntoLightbox(e) {
 
-    if (imageExpanded == null && scrollAnchor == null){
+//     if (imageExpanded == null && scrollAnchor == null){
 
-        //Set LightBox Image to source Image
-        var imageTarget = e.target;
-        imageExpanded = imageTarget;
-        imageTarget.style.opacity = 0;
-        var image = document.querySelector(".lightbox");
-        image.style.backgroundImage = "url(" + imageTarget.src + ")";
-        image.style.backgroundColor = "white";
+//         //Set LightBox Image to source Image
+//         var imageTarget = e.target;
+//         imageExpanded = imageTarget;
+//         imageTarget.style.opacity = 0;
+//         var image = document.querySelector(".lightbox");
+//         image.style.backgroundImage = "url(" + imageTarget.src + ")";
+//         image.style.backgroundColor = "white";
 
-        //Show LightBox
-        image.style.transition = null;
-        image.classList.add("visible");
+//         //Show LightBox
+//         image.style.transition = null;
+//         image.classList.add("visible");
 
-        //Set LightBox Position and Dimensions
-        //I wanted to use translate because it's apparently more efficient, but the actual animation was too choppy
-        image.style.top = imageTarget.getBoundingClientRect().top + "px";
-        image.style.left = imageTarget.getBoundingClientRect().left + "px";
-        image.style.height = imageTarget.clientHeight + "px";
-        image.style.width = imageTarget.clientWidth + "px";
-        scrollAnchor = window.pageYOffset || document.body.scrollTop;
+//         //Set LightBox Position and Dimensions
+//         //I wanted to use translate because it's apparently more efficient, but the actual animation was too choppy
+//         image.style.top = imageTarget.getBoundingClientRect().top + "px";
+//         image.style.left = imageTarget.getBoundingClientRect().left + "px";
+//         image.style.height = imageTarget.clientHeight + "px";
+//         image.style.width = imageTarget.clientWidth + "px";
+//         scrollAnchor = window.pageYOffset || document.body.scrollTop;
 
-        //Due to cover vs contain, scaling down is problematic; fade out instead if cover
-        if (imageTarget.parentNode.classList.contains("thumbnail")){
-            var parent = imageTarget.parentNode.parentNode;
-            if (parent.classList.contains("square")){
-                mustFadeOut = true;
-            }
-        }
+//         //Due to cover vs contain, scaling down is problematic; fade out instead if cover
+//         if (imageTarget.parentNode.classList.contains("thumbnail")){
+//             var parent = imageTarget.parentNode.parentNode;
+//             if (parent.classList.contains("square")){
+//                 mustFadeOut = true;
+//             }
+//         }
 
 
-        //Identify collection if available
-        var thumbnailsWrapper = imageTarget.parentNode.parentNode;
-        if (thumbnailsWrapper.classList.contains("nav-arrows")){
-            image.classList.add("nav-arrows");
-            var thumbs = thumbnailsWrapper.children;
-            imageCollection = Array();
-            for (var i = 0; i<thumbs.length; i++){
-                var thumbDiv = thumbs[i];
-                if (thumbDiv && thumbDiv.classList.contains("thumbnail")){
-                    imageCollection.push(thumbDiv.children[0].src);
-                    if (thumbDiv.children[0].src == imageTarget.src){
-                        originalImagePos = i;
-                        imageCollectionPos = i;
-                    }
-                }
-            }
-        }
+//         //Identify collection if available
+//         var thumbnailsWrapper = imageTarget.parentNode.parentNode;
+//         if (thumbnailsWrapper.classList.contains("nav-arrows")){
+//             image.classList.add("nav-arrows");
+//             var thumbs = thumbnailsWrapper.children;
+//             imageCollection = Array();
+//             for (var i = 0; i<thumbs.length; i++){
+//                 var thumbDiv = thumbs[i];
+//                 if (thumbDiv && thumbDiv.classList.contains("thumbnail")){
+//                     imageCollection.push(thumbDiv.children[0].src);
+//                     if (thumbDiv.children[0].src == imageTarget.src){
+//                         originalImagePos = i;
+//                         imageCollectionPos = i;
+//                     }
+//                 }
+//             }
+//         }
 
-        setTimeout(function(){
-            image.style.transition = transition;
-            image.style.top = "0px";
-            image.style.left = "0px";
-            image.style.height = "100vh";
-            image.style.width = "100vw";
-            document.body.style.cursor = "zoom-out";
-            image.addEventListener("click", function(){
-                collapseImage(mustFadeOut);
-            });
+//         setTimeout(function(){
+//             image.style.transition = transition;
+//             image.style.top = "0px";
+//             image.style.left = "0px";
+//             image.style.height = "100vh";
+//             image.style.width = "100vw";
+//             document.body.style.cursor = "zoom-out";
+//             image.addEventListener("click", function(){
+//                 collapseImage(mustFadeOut);
+//             });
 
-        }, 0);
-    }
+//         }, 0);
+//     }
 
-}
-function collapseImage(simpleFade){
+// }
+// function collapseImage(simpleFade){
 
-    //Reverse Animation
-    document.body.style.cursor = "auto";
-    var image = document.querySelector(".lightbox");
-    if (simpleFade){
-        if (imageAnimationInProcess == false){
-            image.style.transition = null;
-            imageExpanded.style.opacity = 1;
-            fadeOutImage(image, 0,1.5);
-        }
-    }else {
-        if (imageCollectionPos) {
-            image.style.backgroundImage = "url(" + imageCollection[originalImagePos] + ")";
-        }
-        image.style.transition = transition;
-        image.style.top = imageExpanded.getBoundingClientRect().top + "px";
-        image.style.left = imageExpanded.getBoundingClientRect().left + "px";
-        image.style.height = imageExpanded.clientHeight + "px";
-        image.style.width = imageExpanded.clientWidth + "px";
-        image.style.backgroundColor = "transparent";
+//     //Reverse Animation
+//     document.body.style.cursor = "auto";
+//     var image = document.querySelector(".lightbox");
+//     if (simpleFade){
+//         if (imageAnimationInProcess == false){
+//             image.style.transition = null;
+//             imageExpanded.style.opacity = 1;
+//             fadeOutImage(image, 0,1.5);
+//         }
+//     }else {
+//         if (imageCollectionPos) {
+//             image.style.backgroundImage = "url(" + imageCollection[originalImagePos] + ")";
+//         }
+//         image.style.transition = transition;
+//         image.style.top = imageExpanded.getBoundingClientRect().top + "px";
+//         image.style.left = imageExpanded.getBoundingClientRect().left + "px";
+//         image.style.height = imageExpanded.clientHeight + "px";
+//         image.style.width = imageExpanded.clientWidth + "px";
+//         image.style.backgroundColor = "transparent";
 
-        // setTimeout(resetImageAnimation,300); //same timeout as the transition length
+//         // setTimeout(resetImageAnimation,300); //same timeout as the transition length
 
-    }
-    setTimeout(resetImageAnimation,300);
-    image.classList.remove("nav-arrows");
-}
-function collapseImageListener(){
-    if (imageExpanded != null && scrollAnchor != null){
-        var scrollDelta = Math.abs(scrollAnchor - document.body.scrollTop);
-        if (scrollDelta >= scrollLeeway){
-            collapseImage(true);
-        }
-    }
-}
-document.addEventListener("keyup", escapeHandler);
-function escapeHandler(event){
-    //Escape Pressed and image is expanded
-    if (event.keyCode == 27 && imageExpanded!=null) collapseImage(false)
-}
-function fadeOutImage(image, frame, duration){
-    imageAnimationInProcess = true;
-    var totalFrames = duration * fps;
-    frame++;
-    if (frame <= totalFrames){
-        var progress = frame / totalFrames;
-        image.style.opacity = 1 - easeOut(progress);
-        setTimeout(function(){
-            fadeOutImage(image, frame, duration)
-        }, 1/fps);
-    }else{
-        resetImageAnimation();
-    }
-}
-function resetImageAnimation(){
-    var image = document.querySelector(".lightbox");
-    // image.style.backgroundImage = "";
-    image.style.transition = null;
-    image.classList.remove("visible");
-    image.style.top = null;
-    image.style.left = null;
-    image.style.width = null;
-    image.style.height = null;
-    image.style.opacity = null;
-    if (imageExpanded){
-        imageExpanded.style.opacity = 1;
-    }
-    imageExpanded = null;
-    scrollAnchor = null;
-    imageAnimationInProcess = false;
-    mustFadeOut = false;
-    imageCollection = null;
-    imageCollectionPos = null
-    originalImagePos = null;
-}
-function nextImage(forward){
-    if (forward) {
-        imageCollectionPos += 1;
-        if (imageCollectionPos >= imageCollection.length) imageCollectionPos = 0;
-    }else {
-        imageCollectionPos -=1 ;
-        if (imageCollectionPos < 0) imageCollectionPos = imageCollection.length - 1;
-    }
+//     }
+//     setTimeout(resetImageAnimation,300);
+//     image.classList.remove("nav-arrows");
+// }
+// function collapseImageListener(){
+//     if (imageExpanded != null && scrollAnchor != null){
+//         var scrollDelta = Math.abs(scrollAnchor - document.body.scrollTop);
+//         if (scrollDelta >= scrollLeeway){
+//             collapseImage(true);
+//         }
+//     }
+// }
+// document.addEventListener("keyup", escapeHandler);
+// function escapeHandler(event){
+//     //Escape Pressed and image is expanded
+//     if (event.keyCode == 27 && imageExpanded!=null) collapseImage(false)
+// }
+// function fadeOutImage(image, frame, duration){
+//     imageAnimationInProcess = true;
+//     var totalFrames = duration * fps;
+//     frame++;
+//     if (frame <= totalFrames){
+//         var progress = frame / totalFrames;
+//         image.style.opacity = 1 - easeOut(progress);
+//         setTimeout(function(){
+//             fadeOutImage(image, frame, duration)
+//         }, 1/fps);
+//     }else{
+//         resetImageAnimation();
+//     }
+// }
+// function resetImageAnimation(){
+//     var image = document.querySelector(".lightbox");
+//     // image.style.backgroundImage = "";
+//     image.style.transition = null;
+//     image.classList.remove("visible");
+//     image.style.top = null;
+//     image.style.left = null;
+//     image.style.width = null;
+//     image.style.height = null;
+//     image.style.opacity = null;
+//     if (imageExpanded){
+//         imageExpanded.style.opacity = 1;
+//     }
+//     imageExpanded = null;
+//     scrollAnchor = null;
+//     imageAnimationInProcess = false;
+//     mustFadeOut = false;
+//     imageCollection = null;
+//     imageCollectionPos = null
+//     originalImagePos = null;
+// }
+// function nextImage(forward){
+//     if (forward) {
+//         imageCollectionPos += 1;
+//         if (imageCollectionPos >= imageCollection.length) imageCollectionPos = 0;
+//     }else {
+//         imageCollectionPos -=1 ;
+//         if (imageCollectionPos < 0) imageCollectionPos = imageCollection.length - 1;
+//     }
 
-    var image = document.querySelector(".lightbox");
-    image.transition = transition;
-    image.style.backgroundImage = "url(" + imageCollection[imageCollectionPos] + ")";
+//     var image = document.querySelector(".lightbox");
+//     image.transition = transition;
+//     image.style.backgroundImage = "url(" + imageCollection[imageCollectionPos] + ")";
 
-}
+// }
 
 //IFrame Functions
 //iframes should be loaded if the screen is large enough or resized to be large enough; else it should load the alternate images

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>I Made a Thing | Laban Lin</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,700|Lora" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../atom-one-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/icon.min.css">
+    <meta property="og:title" content="I Made a Thing | Laban Lin" />
+    <meta name="author" content="Laban Lin">
+    <meta name="keywords"
+        content="I Made a Thing, Laban, Lin, Laban Lin, portfolio, Ivey, software, engineering, business, consulting">
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://labanl.in/reflection/i-made-a-thing" />
+    <meta property="og:image" content="https://labanl.in/images/DayToDay.png" />
+    <meta property="og:description"
+        content="An overview of a trophy I made for my girlfriend while we were long-distance." />
+</head>
+
+<body>
+    <div class="lightbox">
+        <i class="icon angle left"></i>
+        <i class="icon angle right"></i>
+    </div>
+    <div id="lightbox2">
+        <i class="icon close icon" id="close-album"></i>
+        <div class="chevron-wrapper left" id="prev-album">
+            <i class="icon chevron left"></i>
+        </div>
+        <div class="chevron-wrapper right" id="next-album">
+            <i class="icon chevron right"></i>
+        </div>
+        <div class="caption"></div>
+        <div class="image" id="lightbox2-image"></div>
+    </div>
+    <!--<section class="landing-image">-->
+    <!--<img src="../images/daytoday.png" alt="">-->
+    <!--</section>-->
+    <section class="article">
+        <div class="article-wrapper">
+            <div class="title">I made a thing!</div>
+            <div class="subtitle">I think it&#39;s pretty cute</div>
+            <p>May 2019</p>
+            <p>Skip to the Album</p>
+            <h1>Album</h1>
+            <div class="album square">
+                <div class="figure">
+                    <div class="image-container">
+                        <img src="../images/labanl.in-thumb.png" alt="">
+                    </div>
+                    <!-- <div class="caption">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                        in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
+                        McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of</div> -->
+                </div>
+                <div class="figure">
+                    <div class="image-container">
+                        <img src="../assets/projects/itinerary.PNG" alt="">
+                    </div>
+                    <div class="caption">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                        in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
+                        McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of</div>
+                </div>
+                <div class="figure">
+                    <div class="image-container">
+                        <img src="../images/labanl.in-thumb.png" alt="">
+                    </div>
+                    <div class="caption">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                        in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
+                        McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of</div>
+                </div>
+            </div>
+            <h1>The Thing I Made</h1>
+            <p>My girlfriend and I have an inside joke: once upon a time, she made a remark about being a trophy wife,
+                so now I get her a trophy every year acknowledging her as the Best Girlfriend of that year. Well, I say
+                every year, but I started this project in September of 2018, at which point I&#39;d only given her one
+                trophy.</p>
+            <p>So she was the (proud) owner of the (coveted) Best Girlfriend 2017 trophy, and I thought I could up the
+                ante - what if 2018&#39;s trophy was handmade and came with lights? I should admit that this wasn&#39;t
+                a fully organic thought; I had seen <a
+                    href="https://twitter.com/grohliest/status/1025944951123861504?lang=en" target="_blank">this
+                    tweet</a> a while back, which is a pretty similar concept, but I thought I&#39;d enjoy making a
+                trophy since this was a hardware task which, as a software engineering student, I had no experience
+                with.</p>
+            <div class="single-image no-zoom">
+                <img src="../assets/projects/trophies/tweet.png">
+                <p class="caption">Source: <a href="https://twitter.com/grohliest/status/1025944951123861504?lang=en"
+                    target="_blank">
+                    https://twitter.com/grohliest/status/1025944951123861504?lang=en</a></p>
+            </div>
+            
+       
+            <p>Plus, we were going to be in a long-distance relationship in the upcoming school year; I was staying an
+                extra year in school, while she had already graduated and moved for work, and I thought this would be a
+                fun thing to have.</p>
+            <p>So the idea is pretty simple: a trophy for my girlfriend that lights up when I push a button remotely.
+                But to make it even cuter, I decided to build two trophies: one for each of us, and each trophy would
+                have a button that would light up the other trophy.</p>
+            <h1>Architecture</h1>
+            <h2>Software</h2>
+            <p>To handle the trophies lighting up, I built an extremely tiny server. It provides two endpoints: one to
+                send a ping to a trophy, and another to check for pings. That&#39;s actually all there is to this
+                server: there&#39;s not even a database of pings; the server keeps track of that in memory. I figured
+                that this was fine for a server that would only ever be accessed by two trophies; if I decided one day
+                to make a bunch to sell, I could always upgrade the code.</p>
+            <h2>Hardware</h2>
+            <p><em>*Note: if you know anything about mechatronics, this will probably be really boring, but I found this
+                    really cool because I didn't know about any of this before this project.</em></p>
+            <h3>Talking to the Server</h3>
+            <p>First things first: the trophy needs to be able to connect to my server, so it needs an internet
+                connection. I used an <a href="https://elmwoodelectronics.ca/products/13678"
+                    target="_blank">ESP8266</a>, which is a networking chip with Wi-Fi and Bluetooth receivers. It&#39;s
+                often used to provide an otherwise unconnected Arduino some network access, but because it also has 1MB
+                of flash memory, it can also be programmed as a standalone chip. There are some libraries that make it
+                pretty simple to open a HTTPS connection, which solves our first problem.</p>
+            <pre><code class='language-c' lang='c'>const char* HOST = &quot;https://my-server-location.com&quot;;
+const char* fingerprint = &quot;** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **&quot;; //SHA1 SSL fingerprint
+
+WiFiClientSecure client;
+if (!client.connect(HOST, 443)) return;
+if (!client.verify(fingerprint, HOST)) return;
+client.print(String(&quot;GET &quot;) + &quot;/checkForPings?trophyId=1&quot; + &quot; HTTP/1.1\r\n&quot; +
+             &quot;Host: &quot; + &quot;my-server-location.com&quot; + &quot;\r\n&quot; +
+             &quot;Connection: close\r\n\r\n&quot;); //GETS this url
+//client.readStringUntil(&quot;\n&quot;); to read each response line
+</code></pre>
+            <h3>Turning on the lights</h3>
+            <p>The next step is to make the ESP8266 actually turn on lights. My first approach was to set an output pin
+                to high and low and directly power some LEDs this way:</p>
+            <pre><code class='language-c' lang='c'>const int LEDPIN = 3;
+pinMode(LEDPIN, OUTPUT);
+</code></pre>
+            <p><strong>OFF:</strong></p>
+            <pre><code class='language-c' lang='c'>digitalWrite(LEDPIN, LOW);
+</code></pre>
+            <div class="single-image no-zoom">
+                <img src="../assets/projects/trophies/badLightsOff.png" alt="">
+            </div>
+            <p><strong>ON:</strong></p>
+            <pre><code class='language-c' lang='c'>digitalWrite(LEDPIN, HIGH);
+</code></pre>
+            <div class="single-image no-zoom">
+                <img  src="../assets/projects/trophies/badLightsOn.png" alt="">
+            </div>
+            <p>So this does work - the light does turn on and off.</p>
+            <p>The problem - which I learned of thanks to the help of technical engineering support staff at my
+                university - is that the LEDs need approximately 20mA of current each, and the pins on the ESP8266 are
+                not supposed to output above 12mA.</p>
+            <p>So a different configuration is needed:</p>
+            <div class="single-image no-zoom">
+                <img  src="../assets/projects/trophies/goodLights.png" alt="">
+            </div>
+            <p>The key part here is the transistor, which will reduce the current drawn from the ESP8266.</p>
+            <p>Transistors have three pins: a collector (C), a base (B), and an emitter (E). </p>
+            <div class="single-image no-zoom no-fit">
+                <img src="../assets//projects//trophies/transistor.png" alt="">
+            
+                <p class="caption">Source: <a href='https://learn.sparkfun.com/tutorials/transistors/applications-i-switches'
+                    target='_blank'
+                    class='url'>https://learn.sparkfun.com/tutorials/transistors/applications-i-switches</a></p>
+                
+            </div>
+            <!-- <div class="no-fit">
+                <img class="no-zoom" src="../assets//projects//trophies/transistor.png" alt="">
+            </div> -->
+           
+            <p>Because this is an NPN transistor, when the base is LOW, no current flows to the emitter. When the base
+                is HIGH, current flows from the collector and base to the emitter, in a way that follows two rules:</p>
+            <ol start=''>
+                <li>The current flowing to the emitter is the sum of the current from the base and collector</li>
+                <li>The current from the collector will be N times as much as the current from the base, where N is an
+                    observed property of the transistor. N is not the same value at all currents and voltages, so we
+                    have to use the closest, most relevant test cases provided by the manufacturer.</li>
+            </ol>
+            <p>The ratio in rule 2 is called the DC Current Gain or h<sub>FE</sub> on data sheets. If the lowest
+                h<sub>FE</sub> for my
+                configuration is 100, for example, then the current drawn from the base will be
+                <sup>1</sup>&frasl;<sub>101</sub> the amount of
+                total current drawn at the emitter - so if I want to keep the ESP8266&#39;s current draw less than,
+                say, 6mA, I just need to ensure that 606mA is enough to drive my LEDs.</p>
+            <p>Since I have 4 LEDs in parallel, each needing 20mA, I&#39;ll need a total of 80mA provided by the
+                emitter, which we definitely can have without demanding too much from the base. This is a huge
+                improvement: before, just powering one LED exceeded our 12mA limit, but now with the addition of a
+                transistor, we can power 4 LEDs without coming close to our limit.</p>
+            <h3>Button Presses</h3>
+            <p>Registering the button presses to turn on the other trophy was fairly straightforward.</p>
+            <p>I defined an input pin on the ESP8266, and told it to listen to changes in the voltage. This occurred
+                every time I pushed the button, because a depressed button would connect the pin to ground, and cause it
+                to register LOW.</p>
+            <p>When this happens, the code raises a flag.</p>
+            <p>Then, every few seconds, the ESP8266 checks the flag and if it&#39;s been raised, it talks to the server
+                to let it know the button has been pressed.</p>
+            <pre><code class='language-c' lang='c'>//Global Flag
+volatile bool sendPulse = false;
+
+//Setup
+pinMode(1, INPUT_PULLUP); //Set Pin 1 as the input pin for the button press
+attachInterrupt(digitalPinToInterrupt(1), pulsed, CHANGE); //Attach event listener
+
+//Event Handler
+void pulsed() {
+  sendPulse = true;
+}
+
+//Main Event Loop
+void loop(){
+    if (sendPulse) {
+        //Set up HTTPS connection and send the ping
+        sendPulse = false;
+    }
+    //Do other stuff in the event loop
+    //Sleep for a few hundred milliseconds
+}
+</code></pre>
+            <h3>Trophy Design</h3>
+            <p>So at this point, I had all the features in place, and they worked on my breadboard prototype. Before I
+                could start to make a circuit board, I had to decide on a physical trophy design - this would inform the
+                dimensions of the circuit board.</p>
+            <p>I went through a bunch of potential designs, but I settled on an acrylic heart sat upon a David&#39;s Tea
+                container. This was a fairly shoddy mockup, I&#39;ll admit, but I thought it was fairly promising.</p>
+            <div class="single-image med">
+                <img src="../assets/projects/trophies/heart-mockup.jpg">
+                <p class="caption">Testing out different heart sizes - this one is around 14cm across, which is what I ended up using in the final product.</p>
+            </div>
+            <p>This meant I had to get my design onto a board that was at most 5cm wide, or else it wouldn&#39;t fit
+                inside the tea container.</p>
+            <h3>Circuit Boards</h3>
+            <p>Some hobbyist friends helped me get set up with EagleCAD, in which we made this lovely schematic:</p>
+            <div class="single-image">
+                <img src="../assets/projects/trophies/schematic.png" alt="">
+            </div>
+            <p>We turned this into a board fairly easily: once the schematic is in place, EagleCAD lets you drag and
+                drop components onto the board design and draw the connecting circuit paths as required. One tip that I
+                got was to use the <code>ratsnest</code> feature. This basically draws an area that is one giant circuit
+                path, which is really useful because it means once you draw the lines connecting your power,
+                <code>ratsnest</code> can immediately ground all the remaining pins on the board.</p>
+            <p>I also drew an outline of my last name in Chinese (林) for decoration.</p>
+            <div class="single-image">
+                <img src="../assets/projects/trophies/board.png" alt="">
+            </div>
+            <p>Notice the holes in the upper left and right corners: those were drawn in so I could mount the board and
+                its lights directly below the acrylic heart, so the light would shine directly into the material.</p>
+            <h3>Miscellaneous</h3>
+            <p>The purpose was to write about the hardware, so I don&#39;t want to spend too much time discussing other
+                ancillary parts, but there are few quick notable mentions:</p>
+            <ol start=''>
+                <li>The acrylic heart was laser cut; my school has a laser cutter that accepts a SolidWorks drawing with
+                    particular line thicknesses and colors, and cuts to form.</li>
+                <li>This laser cutter caught on fire after I&#39;d cut the heart but before I&#39;d cut an acrylic base
+                    for the hearts to be mounted to. This meant I had to develop a 3D model of the base and have it 3D
+                    printed, which is also pretty cool.</li>
+
+            </ol>
+            <h3>Assembly</h3>
+            <p>I couldn&#39;t find my photos of each step of the process, so I guess this is just a collection</p>
+            <p>Steps:</p>
+            <ol start=''>
+                <li>Manufacture some holes in the David&#39;s Tea containers in the school labs</li>
+                <li>Bevel the outside edges of the heart so that the heart shape will show up better</li>
+                <li>Glue a trophy wallpaper to the top face of the heart base</li>
+                <li>Superglue (with baking soda) the acrylic heart to the heart base</li>
+                <li>Thread the </li>
+            </ol>
+            <p>Step 1: Gluing a trophy wallpaper to the top face of the acrylic heart base</p>
+            <p>Step 2: </p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p><a href='https://learn.sparkfun.com/tutorials/transistors/applications-i-switches' target='_blank'
+                    class='url'>https://learn.sparkfun.com/tutorials/transistors/applications-i-switches</a></p>
+        </div>
+    </section>
+    <section class="additional-articles">
+        <div class="article-column prev">
+        </div>
+        <div class="home-column">
+            <a href="../index">
+                <i class="home icon"></i>
+            </a>
+        </div>
+        <div class="article-column next">
+            <div class="link-wrapper">
+                <a class="next-article" href="nhacks.io">
+                    <div class="titles">
+                        <h1>nhacks.io</h1>
+                        <h2>A hackathon administration platform walkthrough</h2>
+                    </div>
+                    <div class="navigation">
+                        <i class="chevron right icon"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <div id="back-button">
+        <i class="chevron left icon"></i>
+    </div>
+</body>
+<script src="./lightbox2.js"></script>
+<script src="article.js"></script>
+<script src="../highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</html>

@@ -81,11 +81,34 @@ p, p *, span, li, div.caption, th, td, code{
   line-height: 3.2rem;
   margin-top: 1.8rem;
   color: rgba(0,0,0,.8);
+
+  // Hyphens article: https://medium.com/clear-left-thinking/all-you-need-to-know-about-hyphenation-in-css-2baee2d89179
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+
+  -moz-hyphens: auto;
+  -moz-hyphenate-limit-chars: 6 3 3;
+  -moz-hyphenate-limit-lines: 2;
+  -moz-hyphenate-limit-last: always;
+  -moz-hyphenate-limit-zone: 8%;
+
+  -ms-hyphens: auto;
+  -ms-hyphenate-limit-chars: 6 3 3;
+  -ms-hyphenate-limit-lines: 2;
+  -ms-hyphenate-limit-last: always;
+  -ms-hyphenate-limit-zone: 8%;
+
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
 }
-
-
-
-
 
 
 //Helper Functions
@@ -134,25 +157,6 @@ hr{
   max-width: $DW_landing;
 }
 
-//Animations
-@keyframes expand{
-  from{
-    max-height:0;
-  }
-  to{
-    max-height:1000px;
-  }
-}
-
-@keyframes collapse{
-  from{
-    max-height:1000px;
-  }
-  to{
-    max-height:0;
-  }
-}
-
 .info{
   @include desktop() {
     padding: 30px 0 20px 0;
@@ -192,7 +196,6 @@ img.profile-picture{
   border-radius: 50%;
   max-width: 172px;
   max-height:172px;
-  //box-shadow: 0 2px 35px rgba(0,0,0,.43);
   transition: all .5s ease-in-out;
   @include tiny{
     max-width: 150px;
@@ -462,14 +465,14 @@ section.landing-image{
   h1, h1 em{
     font-size: 3.5rem;
     font-weight: 700;
-    line-height: 7rem;
-    padding-top: 7rem;
+    line-height: 5rem;
+    padding-top: 5rem;
   }
 
   h2, h2 em{
     font-size: 2.9rem;
     font-weight: 400;
-    line-height: 6rem;
+    line-height: 4rem;
     padding-top: 4rem;
 
   }
@@ -478,7 +481,7 @@ section.landing-image{
     font-size: 2.5rem;
     font-weight: 400;
     color: #555555;
-    line-height: 5rem;
+    line-height: 3rem;
     padding-top: 3rem;
   }
 
@@ -487,7 +490,7 @@ section.landing-image{
     font-weight: 400;
     color: #555555;
     text-decoration: underline;
-    line-height: 4rem;
+    line-height: 3rem;
   }
 
   img{
@@ -501,11 +504,32 @@ section.landing-image{
 
   }
 
+  // IMG sizing classes
+
+  // Med
+  .med{
+    text-align: center;
+  }
+  .med img{
+    max-width: 50%;
+  }
+
+  // No-Fit: show @ default size, without scaling up 
+
+  .no-fit{
+    text-align: center;
+  }
+
+  .no-fit img{
+    max-width: 100%;
+    width: auto;
+  }
+
   .interactive-website {
     margin-left:0;
   }
 
-  img:not(.no-zoom):hover{
+  .single-image:not(.no-zoom) img:hover, .album img:hover{
     cursor: zoom-in;
   }
 
@@ -534,8 +558,12 @@ section.landing-image{
     }
   }
 
-  code{
+  // Code Highlighting
+  pre code, pre code span, pre code *{
     font-family: "Courier New", Courier, Monospaced;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    hyphens: none;
   }
 
   table{
@@ -867,13 +895,6 @@ div.controls{
     display:none;
   }
 
-
-
-
-
-
-
-
 }
 div.caption{
   text-align: center;
@@ -1096,6 +1117,88 @@ div.caption{
   }
 }
 
+// Albums
+
+/* mixin for multiline */
+// http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/
+// Required until -line-clamp:3; is available in Firefox
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white){
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount; 
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  &:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColor;
+  }
+}
+
+.album{
+  display:inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.album{
+  .figure{
+    margin-bottom: 2rem;
+    width: 48%;
+    .image-container{
+      width:100%;
+      img{
+        width:100%;
+        height: auto;
+      }
+    }
+    // Limit the number of lines per caption
+    .caption{
+      font-style: normal;
+      text-align:left;
+      font-size: 1.5rem;
+      line-height: 2rem;
+      margin-top: 1rem;
+      @include multiLineEllipsis($lineHeight: 2rem, $lineCount: 3, $bgColor: white);  
+    }
+  }
+}
+
+.album.square{
+  .figure{
+    .image-container{
+      position: relative;
+
+      img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        margin:0;
+      }
+
+    }
+
+    .image-container:after{
+      content:"";
+      display:block;
+      padding-bottom:100%;
+    }
+  }
+}
 
 //MISCELLANEOUS
 
@@ -1109,4 +1212,134 @@ iframe.video{
   }
   margin-top: 4rem;
   margin-bottom: 4rem;
+}
+
+
+// Lightbox 2
+$lightboxAnimationTime: 0.15s;
+
+#lightbox2{
+  position: fixed;
+  top: 0;
+  left:0;
+  width: 0;
+  height: 0;
+  background-color: transparent;
+
+  .icon{
+    color: grey;
+    font-size: 40px;
+    display:none;
+    z-index: 1000;
+  }
+
+  .chevron-wrapper{
+    text-align: center;
+    position:fixed;
+    width: 40px;
+    height: 40px;
+  }
+
+  .chevron-wrapper.right{
+    top: calc(100vh / 2 - 20px);
+    right: 20px;
+  }
+
+  .chevron-wrapper.left{
+    top: calc(100vh / 2 - 20px);
+    left: 20px;
+  }
+
+  .icon:hover, .chevron-wrapper{
+    cursor: pointer;
+  }
+
+  .chevron-wrapper, .close.icon, .caption{
+    display:none;
+    z-index: 1000;
+  }
+
+  .chevron-wrapper.hide{
+    display:none;
+  }
+
+  .close.icon{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+  }
+
+  .image{
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    margin:0;
+  }
+
+  .caption{
+    position: fixed;
+    width:100%;
+    height: auto;
+    bottom:0px;
+    padding: 15px;
+    background-color: rgba(0,0,0,.6);
+    color: white;
+    font-size: 1.5rem;
+    font-style: normal;
+    text-align: left;
+  }
+
+  .caption:empty{
+    padding:0;
+  }
+
+}
+
+#lightbox2.fullSize{
+  width: 100%;
+  height: 100vh;
+}
+
+#lightbox2.transition{
+  transition: $lightboxAnimationTime ease-out;
+}
+
+#lightbox2.active{
+  background-color: white;
+  z-index: 999;
+
+  .close.icon, .caption{
+    display:initial;
+  }
+}
+
+#lightbox2.active.album{
+
+  .chevron-wrapper, .chevron-wrapper .icon{
+    display: initial;
+  }
+  .chevron-wrapper.hide, .chevron-wrapper.hide .icon{
+    display:none;
+  }
+}
+
+#lightbox2.fadeout{
+  opacity: 0;
+}
+
+.single-image img{
+  max-width:100%;
+
+  
+}
+
+.single-image{
+  p.caption, p.caption a{
+    color: grey;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    text-align: left;
+  }
+  
 }
