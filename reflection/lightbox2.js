@@ -1,6 +1,6 @@
 var lightbox2 = document.getElementById("lightbox2")
 var lightbox2Image = document.getElementById("lightbox2-image")
-
+var animationInProgress = false
 var selectedFigure = null
 
 document.getElementById("close-album").addEventListener("click", hideLightbox)
@@ -112,7 +112,7 @@ async function expandAlbumImage(e) {
     lightbox2Image.style.height = `${naturalImagePositions.height}px`
     lightbox2Image.style.clipPath = naturalImagePositions.clipPath
 
-    await sleep(5)
+    await nextFrame()
 
     animate(naturalImagePositions,
         {
@@ -123,17 +123,15 @@ async function expandAlbumImage(e) {
         },
         clips,
         { x: 0, y: 0 },
-        30,
-        0.5
+        500
     )
 }
 
-async function animate(initialPosition, endPosition, initialClip, endClip, fps, duration) {
+async function animate(initialPosition, endPosition, initialClip, endClip, duration) {
+    animationInProgress = true
     lightbox2.classList.add("fullSize")
-    await sleep(5)
+    await nextFrame()
     lightbox2.classList.add("transition", "active")
-    let iterations = fps * duration
-    let sleepDuration = 1 / fps
 
     let deltaPosition = {
         x: endPosition.left - initialPosition.TLx,
@@ -150,42 +148,60 @@ async function animate(initialPosition, endPosition, initialClip, endClip, fps, 
         y: endPosition.height - initialPosition.height
     }
 
-    lightbox2Image.style.clipPath = `inset(0% 0%)`
+    lightbox2Image.style.clipPath = `inset(${initialClip.y}% ${initialClip.x}%)`
 
-    for (let i = 0; i < iterations; i++) {
-        let smoothedProgress = easeOut((i + 1) / iterations) //Add a function to turn this from linear to ease-in or ease-out, for example
-        let height = (initialPosition.height + deltaSize.y * smoothedProgress)
-        let width = (initialPosition.width + deltaSize.x * smoothedProgress)
+    let progress = 0
+    let startTime = await nextFrame()
+    let currentTime = startTime
+    
+    while(progress < .99){
+        progress = easeOut((currentTime - startTime)/ duration) //Add a function to turn this from linear to ease-in or ease-out, for example
+        let height = (initialPosition.height + deltaSize.y * progress)
+        let width = (initialPosition.width + deltaSize.x * progress)
         lightbox2Image.style.width = `${width}px`
         lightbox2Image.style.height = `${height}px`
-        lightbox2Image.style.left = `${initialPosition.TLx + deltaPosition.x * smoothedProgress}px`
-        lightbox2Image.style.top = `${initialPosition.TLy + deltaPosition.y * smoothedProgress}px`
-        lightbox2Image.style.clipPath = `inset(${initialClip.y + deltaClip.y * smoothedProgress}% ${initialClip.x + deltaClip.x * smoothedProgress}%)`
-        await sleep(sleepDuration)
+        lightbox2Image.style.left = `${initialPosition.TLx + deltaPosition.x * progress}px`
+        lightbox2Image.style.top = `${initialPosition.TLy + deltaPosition.y * progress}px`
+        lightbox2Image.style.clipPath = `inset(${initialClip.y + deltaClip.y * progress}% ${initialClip.x + deltaClip.x * progress}%)`
+        currentTime = await nextFrame()
     }
+
+    // For some reason, this refuses to reach 1, so we'll just set it to 1 when it gets close enough
+    progress = 1
+
+    let height = (initialPosition.height + deltaSize.y * progress)
+    let width = (initialPosition.width + deltaSize.x * progress)
+    lightbox2Image.style.width = `${width}px`
+    lightbox2Image.style.height = `${height}px`
+    lightbox2Image.style.left = `${initialPosition.TLx + deltaPosition.x * progress}px`
+    lightbox2Image.style.top = `${initialPosition.TLy + deltaPosition.y * progress}px`
+    lightbox2Image.style.clipPath = `inset(${initialClip.y + deltaClip.y * progress}% ${initialClip.x + deltaClip.x * progress}%)`
 
     // If lightbox is fullscreen, then add event listeners to remove the lightbox
     if (endPosition.width > initialPosition.width) {
         document.addEventListener("scroll", hideLightbox)
     }
+
+    animationInProgress = false
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function nextFrame(){
+    return new Promise(resolve => {
+        window.requestAnimationFrame((timestamp) =>{
+            resolve(timestamp)
+        })
+    })
 }
 
 function hideLightbox() {
+    if (animationInProgress) return
     lightbox2.classList.add("fadeout")
     try{
         selectedFigure.querySelector("img").style.opacity = null
-    }catch(e){
-        //
-    }
+    }catch(e){}
     try{
         selectedFigure.style.opacity = null
-    }catch(e){
-
-    }
+    }catch(e){}
     
     window.setTimeout(() => {
         lightbox2Image.style.backgroundImage = ""
@@ -272,7 +288,7 @@ async function expandSingleImage(e){
 
     }
     lightbox2.querySelector(".caption").textContent = caption
-    await sleep(5)
+    await nextFrame()
     animate(naturalImagePositions,
         {
             left: 0,
@@ -280,10 +296,9 @@ async function expandSingleImage(e){
             height: document.documentElement.clientHeight,
             width: document.documentElement.clientWidth
         },
-        {x: 0, y:   0},
         { x: 0, y: 0 },
-        30,
-        0.5
+        { x: 0, y: 0 },
+        500
     )
     
 }

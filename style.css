@@ -802,88 +802,6 @@ div.controls {
   }
 }
 
-div.caption {
-  text-align: center;
-  max-width: 100%;
-  width: 100%;
-  font-style: italic;
-}
-
-.lightbox {
-  opacity: 0;
-  position: fixed;
-  display: block;
-  pointer-events: none;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: white;
-  overflow: hidden;
-}
-.lightbox i.icon {
-  display: none;
-}
-
-.lightbox.nav-arrows i.icon {
-  color: grey;
-  transition: 0.2s color ease-out;
-  display: block;
-  position: absolute;
-  font-size: 80px;
-  top: calc(50vh - 40px);
-  text-shadow: 0 0 20px #8c8c8c;
-  width: 0;
-}
-@media (min-width: 576px) and (max-width: 768px) {
-  .lightbox.nav-arrows i.icon {
-    font-size: 50px;
-    top: calc(50vh - 25px);
-    text-shadow: 0 0 30px #000000;
-  }
-}
-@media (max-width: 576px) {
-  .lightbox.nav-arrows i.icon {
-    font-size: 50px;
-    top: calc(50vh - 25px);
-    text-shadow: 0 0 30px #000000;
-  }
-}
-.lightbox.nav-arrows i.icon:hover {
-  cursor: pointer;
-  color: black;
-}
-.lightbox.nav-arrows i.icon:active {
-  color: black;
-}
-.lightbox.nav-arrows i.icon.left {
-  left: 1.5vw;
-  text-align: left;
-}
-.lightbox.nav-arrows i.icon.right {
-  right: calc(1.5vw + 20px);
-  text-align: right;
-}
-@media (min-width: 576px) and (max-width: 768px) {
-  .lightbox.nav-arrows i.icon.right {
-    right: calc(1.5vw + 12.5px);
-  }
-}
-@media (max-width: 576px) {
-  .lightbox.nav-arrows i.icon.right {
-    right: calc(1.5vw + 12.5px);
-  }
-}
-
-.lightbox.visible {
-  opacity: 1;
-  pointer-events: all;
-  z-index: 100;
-}
-
-.lightbox.visible:hover {
-  cursor: zoom-out;
-}
-
 .thumbnails-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -1106,10 +1024,20 @@ iframe.video {
   background-color: transparent;
 }
 #lightbox2 .icon {
-  color: grey;
-  font-size: 40px;
   display: none;
   z-index: 1000;
+  color: grey;
+  font-size: 40px;
+}
+@media (max-width: 576px) {
+  #lightbox2 .icon {
+    font-size: 20px;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  #lightbox2 .icon {
+    font-size: 30px;
+  }
 }
 #lightbox2 .chevron-wrapper {
   text-align: center;
@@ -1117,13 +1045,49 @@ iframe.video {
   width: 40px;
   height: 40px;
 }
+@media (max-width: 576px) {
+  #lightbox2 .chevron-wrapper {
+    width: 20px;
+    height: 20px;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  #lightbox2 .chevron-wrapper {
+    width: 30px;
+    height: 30px;
+  }
+}
 #lightbox2 .chevron-wrapper.right {
   top: calc(100vh / 2 - 20px);
   right: 20px;
 }
+@media (max-width: 576px) {
+  #lightbox2 .chevron-wrapper.right {
+    top: calc(100vh / 2 - 5px);
+    right: 5px;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  #lightbox2 .chevron-wrapper.right {
+    top: calc(100vh / 2 - 10px);
+    right: 10px;
+  }
+}
 #lightbox2 .chevron-wrapper.left {
   top: calc(100vh / 2 - 20px);
   left: 20px;
+}
+@media (max-width: 576px) {
+  #lightbox2 .chevron-wrapper.left {
+    top: calc(100vh / 2 - 5px);
+    left: 5px;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  #lightbox2 .chevron-wrapper.left {
+    top: calc(100vh / 2 - 10px);
+    left: 10px;
+  }
 }
 #lightbox2 .icon:hover, #lightbox2 .chevron-wrapper {
   cursor: pointer;
@@ -1198,7 +1162,7 @@ iframe.video {
 .single-image p.caption, .single-image p.caption a {
   color: grey;
   font-size: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 1.8rem;
   text-align: left;
 }
 

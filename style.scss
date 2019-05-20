@@ -896,89 +896,6 @@ div.controls{
   }
 
 }
-div.caption{
-  text-align: center;
-  max-width:100%;
-  width:100%;
-  font-style: italic;
-}
-
-//LightBox
-.lightbox{
-  opacity: 0;
-  position: fixed;
-  display:block;
-  pointer-events: none;
-  background-size: contain;
-  background-repeat:no-repeat;
-  background-position: center;
-  background-color: white;
-  overflow: hidden;
-
-  i.icon{
-    display:none;
-  }
-}
-
-.lightbox.nav-arrows{
-  i.icon{
-    color: grey;
-    transition: .2s color ease-out;
-    display: block;
-    position:absolute;
-    font-size: 80px;
-    top: calc(50vh - 40px);
-    text-shadow: 0 0 20px #8c8c8c;
-    width:0; //remove i sizing; nav-arrows will retain sizing
-    @include tablet{
-      font-size: 50px;
-      top: calc(50vh - 25px);
-      text-shadow: 0 0 30px #000000;
-    }
-    @include phone{
-      font-size: 50px;
-      top: calc(50vh - 25px);
-      text-shadow: 0 0 30px #000000;
-    }
-
-  }
-
-  i.icon:hover{
-    cursor: pointer;
-    color:black;
-  }
-
-  i.icon:active{
-    color: black;
-  }
-  i.icon.left{
-    left: 1.5vw;
-    text-align:left;
-
-  }
-  i.icon.right{
-    right: calc(1.5vw + 20px);
-    @include tablet{
-      right: calc(1.5vw + 12.5px);
-    }
-    @include phone{
-      right: calc(1.5vw + 12.5px);
-    }
-
-    text-align:right;
-  }
-}
-
-.lightbox.visible{
-  opacity: 1;
-  pointer-events:all;
-  z-index: 100;
-
-}
-
-.lightbox.visible:hover{
-  cursor: zoom-out;
-}
 
 //Thumbnails
 .thumbnails-wrapper{
@@ -1227,10 +1144,16 @@ $lightboxAnimationTime: 0.15s;
   background-color: transparent;
 
   .icon{
-    color: grey;
-    font-size: 40px;
     display:none;
     z-index: 1000;
+    color: grey;
+    font-size: 40px;
+    @include phone{
+      font-size: 20px;
+    }
+    @include tablet{
+      font-size: 30px;
+    }
   }
 
   .chevron-wrapper{
@@ -1238,16 +1161,41 @@ $lightboxAnimationTime: 0.15s;
     position:fixed;
     width: 40px;
     height: 40px;
+
+    @include phone{
+      width: 20px;
+      height: 20px;
+    }
+    @include tablet{
+      width: 30px;
+      height: 30px;
+    }
   }
 
   .chevron-wrapper.right{
     top: calc(100vh / 2 - 20px);
     right: 20px;
+    @include phone{
+      top: calc(100vh / 2 - 5px);
+      right: 5px;
+    }
+    @include tablet{
+      top: calc(100vh / 2 - 10px);
+      right: 10px;
+    }
   }
 
   .chevron-wrapper.left{
     top: calc(100vh / 2 - 20px);
     left: 20px;
+    @include phone{
+      top: calc(100vh / 2 - 5px);
+      left: 5px;
+    }
+    @include tablet{
+      top: calc(100vh / 2 - 10px);
+      left: 10px;
+    }
   }
 
   .icon:hover, .chevron-wrapper{
@@ -1338,7 +1286,7 @@ $lightboxAnimationTime: 0.15s;
   p.caption, p.caption a{
     color: grey;
     font-size: 1.5rem;
-    line-height: 1.5rem;
+    line-height: 1.8rem;
     text-align: left;
   }
   
