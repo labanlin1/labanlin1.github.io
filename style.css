@@ -986,6 +986,14 @@ div.controls {
   background: white;
 }
 
+.album.two-col .figure {
+  width: 48%;
+}
+
+.album.three-col .figure {
+  width: 30%;
+}
+
 .album.square .figure .image-container {
   position: relative;
 }
@@ -1169,15 +1177,14 @@ iframe.video {
   opacity: 0;
 }
 
-.single-image img {
-  max-width: 100%;
-}
-
 .single-image p.caption, .single-image p.caption a {
   color: grey;
   font-size: 1.5rem;
   line-height: 1.8rem;
   text-align: left;
+}
+.single-image img {
+  max-width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

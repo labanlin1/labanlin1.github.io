@@ -1093,6 +1093,18 @@ div.controls{
   }
 }
 
+.album.two-col{
+  .figure{
+    width: 48%;
+  }
+}
+
+.album.three-col{
+  .figure{
+    width: 30%;
+  }
+}
+
 .album.square{
   .figure{
     .image-container{

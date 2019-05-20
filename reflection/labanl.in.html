@@ -16,7 +16,17 @@
     <meta property="og:description" content="I&#39;ve always wanted a personal website. That there could be a reflection of me—a curated, privacy-conscious version, but a reflection nonetheless—drifting about the internet was a fun thought." />
 </head>
 <body>
-<div class="lightbox"></div>
+    <div id="lightbox2">
+        <i class="icon close icon" id="close-album"></i>
+        <div class="chevron-wrapper left" id="prev-album">
+            <i class="icon chevron left"></i>
+        </div>
+        <div class="chevron-wrapper right" id="next-album">
+            <i class="icon chevron right"></i>
+        </div>
+        <div class="caption"></div>
+        <div class="image" id="lightbox2-image"></div>
+    </div>
 <section class="landing-image">
     <img src="../assets/labanl.in/images/landingImage.png" alt="" class = "landing">
 </section>
@@ -42,7 +52,9 @@
             </ol>
         </blockquote>
         <p>The concept was simple: a photo, a name, some work experience, and then a portfolio of various tech projects. </p>
-        <img src = "../assets/labanl.in/images/version-one-sketch-mini.jpg">
+        <div class="single-image">
+            <img src = "../assets/labanl.in/images/version-one-sketch-mini.jpg">
+        </div>
         <p>The work experience would directly relate me to the finance industry, and the subsequent projects would differentiate me from other candidates. Even if recruiters didn&#39;t read about my projects, I hoped that they would notice I had any at all, and that that alone might make a difference. Unfortunately, I didn&#39;t get to test this theory; a few things came up in August and I did not finish the site on time. </p>
         <p>When September came around and recruiting started, here is how far I&#39;d gotten:</p>
         <div class="interactive-website desktop">
@@ -145,4 +157,5 @@
 </div>
 </body>
 <script src="article.js"></script>
+<script src="./lightbox2.js"></script>
 </html>

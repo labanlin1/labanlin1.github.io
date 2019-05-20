@@ -16,10 +16,17 @@
     <meta property="og:description" content="Day to Day is a concept I tested to help me communicate with others as I went about day-to-day life while unable to speak." />
 </head>
 <body>
-<div class="lightbox">
-    <i class="icon angle left"></i>
-    <i class="icon angle right"></i>
-</div>
+    <div id="lightbox2">
+        <i class="icon close icon" id="close-album"></i>
+        <div class="chevron-wrapper left" id="prev-album">
+            <i class="icon chevron left"></i>
+        </div>
+        <div class="chevron-wrapper right" id="next-album">
+            <i class="icon chevron right"></i>
+        </div>
+        <div class="caption"></div>
+        <div class="image" id="lightbox2-image"></div>
+    </div>
 <!--<section class="landing-image">-->
     <!--<img src="../images/daytoday.png" alt="">-->
 <!--</section>-->
@@ -70,7 +77,9 @@
         </table>
         <h2>Real Estate</h2>
         <p>By building Day to Day as a website instead of a native, full-screen iOS application, I lost a sizable chunk of real estate. The status bar, Safari navigation bar, and keyboard helper take up too much space— 26% of the available screen! Had I realized how drastic this was, I would have built this as an iOS application from the start—something for me to keep in mind moving forward.</p>
-        <img src="../assets/projects/day-to-day-wasted-space.png" alt="">
+        <div class="single-image">
+            <img src="../assets/projects/day-to-day-wasted-space.png" alt="">
+        </div>
         <h2>iOS Integration</h2>
         <p>iOS automatically capitalizes the first letter when an input is selected. This can be annoying; after selecting a template, typically the user expects to input an uncapitalized word. Unfortunately, I believe this level of keyboard manipulation is only available on an iOS native application.</p>
     </div>
@@ -102,4 +111,5 @@
 </div>
 </body>
 <script src="article.js"></script>
+<script src="lightbox2.js"></script>
 </html>

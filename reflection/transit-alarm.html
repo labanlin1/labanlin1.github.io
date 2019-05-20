@@ -16,10 +16,17 @@
     <meta property="og:description" content="Sometimes I commute far enough to warrant a nap on the bus. Sometimes I don&#39;t wake up in time. That&#39;s where Transit Alarm comes in." />
 </head>
 <body>
-<div class="lightbox">
-    <i class="icon angle left"></i>
-    <i class="icon angle right"></i>
-</div>
+    <div id="lightbox2">
+        <i class="icon close icon" id="close-album"></i>
+        <div class="chevron-wrapper left" id="prev-album">
+            <i class="icon chevron left"></i>
+        </div>
+        <div class="chevron-wrapper right" id="next-album">
+            <i class="icon chevron right"></i>
+        </div>
+        <div class="caption"></div>
+        <div class="image" id="lightbox2-image"></div>
+    </div>
 <!--<section class="landing-image">-->
     <!--<img src="../images/transit-alarm.png" alt="">-->
 <!--</section>-->
@@ -27,7 +34,6 @@
     <div class="article-wrapper">
         <div class="title">Transit Alarm</div>
         <div class="subtitle">Because falling asleep on public transit really sucks</div>
-
         <p>May 2017</p>
         <h1>Overview</h1>
         <p>Sometimes I commute far enough to warrant a nap on the bus. Sometimes I don&#39;t wake up in time. That&#39;s where Transit Alarm comes in.</p>
@@ -35,27 +41,38 @@
         <p>Transit Alarm does not entirely meet Apple Store requirements (like having a landscape orientation), but is otherwise fully functioning.</p>
         <p><strong>[Update]</strong>: On July 6, 2017 Google rolled out a <a href='https://www.macrumors.com/2017/07/06/google-maps-update-transit-reminder-local-guides/' target="_blank">transit transfer reminder</a> feature. It&#39;s generally effective, but is only time-based, not location-based, and does not appear to have a &quot;check-in&quot; feature to accommodate delays. That said, it&#39;s a good-enough feature that complements the other services available in the Google Maps app, so I&#39;ll likely retire Transit Alarm from my phone.</p>
         <h1>Screenshots</h1>
-        <div class="thumbnails-wrapper nav-arrows">
-            <div class="thumbnail">
-                <img src="../assets/projects/transit-alarm-start-mini.jpg" alt="">
+        <div class="album three-col">
+            <div class="figure">
+                <div class="image-container">
+                    <img src="../assets/projects/transit-alarm-start-mini.jpg" alt="">
+                </div>
             </div>
-            <div class="thumbnail">
-                <img src="../assets/projects/google-maps-autocomplete-mini.jpg" alt="">
+            <div class="figure">
+                <div class="image-container">
+                    <img src="../assets/projects/google-maps-autocomplete-mini.jpg" alt="">
+                </div>
             </div>
-            <div class="thumbnail">
-                <img src="../assets/projects/date-picker-mini.jpg" alt="">
+            <div class="figure">
+                <div class="image-container">
+                    <img src="../assets/projects/date-picker-mini.jpg" alt="">
+                </div>
             </div>
-            <div class="thumbnail">
-                <img src="../assets/projects/time-alarm-mini.jpg" alt="">
+            <div class="figure">
+                <div class="image-container">
+                    <img src="../assets/projects/time-alarm-mini.jpg" alt="">
+                </div>
             </div>
-            <div class="thumbnail">
-                <img src="../assets/projects/location-alarm-mini.jpg" alt="">
+            <div class="figure">
+                <div class="image-container">
+                    <img src="../assets/projects/location-alarm-mini.jpg" alt="">
+                </div>
             </div>
-            <div class="thumbnail">
-                <img src="../assets/projects/itinerary-mini.jpg" alt="">
+            <div class="figure">
+                <div class="image-container">
+                    <img src="../assets/projects/itinerary-mini.jpg" alt="">
+                </div>
             </div>
         </div>
-
         <h1>Key Features</h1>
         <h2>Time-Based Alarms</h2>
         <p>Although the App Store offers several transit alarms, they all seem to rely on geofences as triggers. Unfortunately, the Toronto subway system is largely underground, where geofences are ineffective. Time-based alarms are the alternate solution.</p>
@@ -63,7 +80,9 @@
         <p>However, time-based alarms lose this context because they&#39;re built around a point in time. If my bus arrives early and proceeds normally, then my time-based alarm might sound after my bus arrives at my transfer. If my bus arrives late, then my alarm will come too early. </p>
         <p>This is where &quot;check-ins&quot; come in. At the start of every leg of transit, such as boarding a bus, I can &quot;check-in&quot; to the station. Transit Alarm will compare the time of my actual check-in with its anticipated time, and shift all future alarms by that difference. This way, if my bus arrives 10 minutes late, I can check-in as I board, and all my future alarms will accommodate the 10-minute difference.</p>
         <p>While this doesn&#39;t perfectly supply time-based alarms with context, it makes them sufficiently useful in real-world application.</p>
-        <img src="../assets/projects/transit-alarm-check-in.svg" class = "" alt="">
+        <div class="single-image">
+            <img src="../assets/projects/transit-alarm-check-in.svg" class = "" alt="">
+        </div>
         <h2>Location-Based Alarms</h2>
         <p>Admittedly, location-based alarms are better when available: they don&#39;t require user input to receive context. Transit Alarm offers location alarms for users who only need notifications above-ground.</p>
         <h2>Route Parsing</h2>
@@ -72,9 +91,9 @@
         <p>When I set out to build Transit Alarm, I envisioned a robust alarm mechanism that would prefer geofences but retain time-based alarms as a back-up. </p>
         <p>To do this, a silent, conservative time-based alarm would wake the application near the expected transfer time and check for GPS availability. If GPS is unavailable, then the alarm alerts the user immediately. Otherwise, if GPS is available, then the application will defer the alarm for another 30 seconds, at which point this process repeats. </p>
         <p>A more complex model, shown below, could notify the user when there is no GPS availability closer to the transfer time by initiating the conservative trigger sooner but deferring the notification. Unfortunately, iOS does not allow applications to check for network status / GPS availability in background mode, so the user would have to keep their phone awake with this application in the foreground. As a consequence, this alarm pattern was never implemented.</p>
-        <img src="../assets/projects/transit-alarm-preferred-notification-pattern.svg" class = "" alt="">
-
-
+        <div class="single-image">
+            <img src="../assets/projects/transit-alarm-preferred-notification-pattern.svg" class = "" alt="">
+        </div>
         <h1>Source Code</h1>
         <p>GitHub link coming soon.</p>
         <h1>External Libraries (via CocoaPods)</h1>
@@ -115,4 +134,5 @@
 </div>
 </body>
 <script src="article.js"></script>
+<script src="./lightbox2.js"></script>
 </html>
