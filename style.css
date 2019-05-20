@@ -1117,11 +1117,25 @@ iframe.video {
   height: auto;
   bottom: 0px;
   padding: 15px;
-  background-color: rgba(0, 0, 0, 0.6);
   color: white;
   font-size: 1.5rem;
   font-style: normal;
   text-align: left;
+}
+#lightbox2 .caption:empty::before {
+  display: none;
+}
+#lightbox2 .caption::before {
+  z-index: -1;
+  content: " ";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 #lightbox2 .caption:empty {
   padding: 0;
@@ -1138,7 +1152,7 @@ iframe.video {
 
 #lightbox2.active {
   background-color: white;
-  z-index: 999;
+  z-index: 900;
 }
 #lightbox2.active .close.icon, #lightbox2.active .caption {
   display: initial;

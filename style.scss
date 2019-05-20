@@ -1231,11 +1231,29 @@ $lightboxAnimationTime: 0.15s;
     height: auto;
     bottom:0px;
     padding: 15px;
-    background-color: rgba(0,0,0,.6);
+    // background-color: rgba(0,0,0,.6);
     color: white;
     font-size: 1.5rem;
     font-style: normal;
     text-align: left;
+  }
+
+  .caption:empty::before{
+    display:none;
+  }
+
+  .caption::before{
+    z-index: -1;
+    content: " ";
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    width:100%;
+    background-color: rgba(0,0,0,.6);
+    $blur: 3px;
+    backdrop-filter: blur($blur);
+    -webkit-backdrop-filter: blur($blur);
   }
 
   .caption:empty{
@@ -1255,7 +1273,7 @@ $lightboxAnimationTime: 0.15s;
 
 #lightbox2.active{
   background-color: white;
-  z-index: 999;
+  z-index: 900;
 
   .close.icon, .caption{
     display:initial;
@@ -1276,11 +1294,6 @@ $lightboxAnimationTime: 0.15s;
   opacity: 0;
 }
 
-.single-image img{
-  max-width:100%;
-
-  
-}
 
 .single-image{
   p.caption, p.caption a{
@@ -1288,6 +1301,10 @@ $lightboxAnimationTime: 0.15s;
     font-size: 1.5rem;
     line-height: 1.8rem;
     text-align: left;
+  }
+
+  img{
+    max-width: 100%;
   }
   
 }

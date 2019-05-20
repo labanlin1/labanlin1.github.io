@@ -8,28 +8,6 @@ document.getElementById("next-album").addEventListener("click", () => { changeIm
 document.getElementById("prev-album").addEventListener("click", () => { changeImage(false) })
 document.addEventListener("keyup", escapeHandler);
 
-// Natural positions versus Mask positions
-// ---------------------
-// |nTL|mTL     mTR|nTR|
-// |   |           |   |
-// |   |           |   |
-// |   |           |   |
-// |nBL|mBL     mBR|nBR|
-// ---------------------
-
-
-// ---------------------
-// |nTL             nTR|
-// ---------------------
-// |mTL             mTR|
-// |   |           |   |
-// |   |           |   |
-// |   |           |   |
-// |   |           |   |
-// ---------------------
-// |nBL             nBR|
-// ---------------------
-
 //Add event listeners for all albums
 var albumImages = document.querySelectorAll(".album img")
 for (let i = 0; i < albumImages.length; i++) {
@@ -195,6 +173,8 @@ function nextFrame(){
 
 function hideLightbox() {
     if (animationInProgress) return
+    animationInProgress = true
+    document.removeEventListener("scroll", hideLightbox)
     lightbox2.classList.add("fadeout")
     try{
         selectedFigure.querySelector("img").style.opacity = null
@@ -206,10 +186,10 @@ function hideLightbox() {
     window.setTimeout(() => {
         lightbox2Image.style.backgroundImage = ""
         lightbox2.classList.remove("active", "fadeout", "transition", "fullSize", "album")
-        document.removeEventListener("scroll", hideLightbox)
         lightbox2Image.style.width = "0px"
         lightbox2Image.style.height = "0px"
         selectedFigure = null
+        animationInProgress = false
     }, 310)
 }
 

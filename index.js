@@ -85,4 +85,12 @@ let imageNames = [
     "voice.png",
 ]
 
-preload(imageNames)
+
+if (window.location.protocol !== "file:"){
+    document.addEventListener("DOMContentLoaded", function (e){
+        preload(imageNames)
+    })   
+}
+
+
+
