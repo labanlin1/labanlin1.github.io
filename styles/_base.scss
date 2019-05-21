@@ -1,0 +1,166 @@
+// RESPONSIVE BREAKPOINTS
+
+$H_landscape_phone: 414px;
+$W_tiny: 320px;
+$W_phone: 576px;
+$W_tablet: 768px;
+$W_desktop: 992px;
+$ArticlePaddingLR_desktop: 5rem;
+
+$blue: #3878ba;
+$orange: #efb64a;
+
+$DW_landing: 1060px;
+
+$DW_article: 68rem;
+
+//Mixins - based on Bootstrap break sizes https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints
+@mixin landscape-phone {
+  @media (max-height: #{$H_landscape_phone}) and (max-width: #{$W_phone}) {
+    @content;
+  }
+}
+
+@mixin tiny {
+  @media (max-width: #{$W_tiny}) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media (max-width: #{$W_phone}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$W_phone}) and (max-width: #{$W_tablet}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$W_tablet}) {
+    @content;
+  }
+}
+
+@mixin article-width-max {
+  @media (max-width: #{767px}) {
+    //okay this is actually terrible and should be 78 rem ($DW_Article) but Chrome doesn't render rem's properly
+    @content;
+  }
+}
+
+// DEFAULT STYLES
+* {
+  text-size-adjust: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  @include phone {
+    font-size: 62.5% * 0.9;
+  }
+  @include landscape-phone {
+    font-size: 62.5% * 0.9;
+  }
+  text-rendering: optimizeLegibility;
+}
+
+p,
+p *,
+span,
+li,
+div.caption,
+th,
+td,
+code {
+  font-family: "Lora", "Palatino", "Palatino Linotype", "Georgia", Times, Serif;
+  font-size: 1.9rem;
+  line-height: 3.2rem;
+  margin-top: 1.8rem;
+  color: rgba(0, 0, 0, 0.8);
+
+  // Hyphens article: https://medium.com/clear-left-thinking/all-you-need-to-know-about-hyphenation-in-css-2baee2d89179
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+
+  -moz-hyphens: auto;
+  -moz-hyphenate-limit-chars: 6 3 3;
+  -moz-hyphenate-limit-lines: 2;
+  -moz-hyphenate-limit-last: always;
+  -moz-hyphenate-limit-zone: 8%;
+
+  -ms-hyphens: auto;
+  -ms-hyphenate-limit-chars: 6 3 3;
+  -ms-hyphenate-limit-lines: 2;
+  -ms-hyphenate-limit-last: always;
+  -ms-hyphenate-limit-zone: 8%;
+
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
+}
+
+.text-button,
+.text-button:visited,
+.text-button:link,
+.text-button:hover,
+.text-button:active,
+a i.icon,
+.article p a {
+  color: $blue;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out 0s;
+  border-bottom: 2px transparent solid;
+}
+
+a i.icon {
+  text-align: center;
+}
+
+.text-button:hover,
+a i.icon:hover,
+.article p a:hover {
+  cursor: pointer;
+  border-bottom: 2px $orange solid;
+}
+
+.container-large {
+  margin: 0 auto;
+  width: 100%;
+  max-width: $DW_landing;
+}
+
+//Helper Functions
+.center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+
+//MISCELLANEOUS
+
+//Vimeo Videos
+//16 x 9 resolution
+iframe.video{
+	height: 90vw * 9 / 16;
+	@include desktop{
+	  width: $DW_article;
+	  height: $DW_article * 9 / 16;
+	}
+	margin-top: 4rem;
+	margin-bottom: 4rem;
+  }
+  

@@ -1,0 +1,164 @@
+.index-page {
+  #show-hide-intro {
+    font-size: 1.6rem;
+  }
+  hr {
+    border-top: 2px $blue solid;
+    max-width: calc(#{$DW_landing} - 2rem);
+    margin: 0 auto;
+    @include tablet {
+      margin: 0 2rem;
+    }
+    @include phone {
+      margin: 0 1rem;
+    }
+  }
+  .info {
+    @include desktop() {
+      padding: 30px 0 20px 0;
+    }
+    @include tablet() {
+      padding: 30px 0 20px 0;
+    }
+    @include phone() {
+      padding: 10px 0 10px 0;
+    }
+  }
+  .intro {
+    height: 0;
+    overflow-y: hidden;
+    margin-top: 1rem;
+
+    @include desktop {
+      padding: 0 1rem;
+    }
+    @include tablet {
+      padding: 0 2rem;
+    }
+    @include phone {
+      padding: 0 1rem;
+    }
+
+    p,
+    a {
+      font-size: 1.6rem;
+      line-height: 3.1rem;
+    }
+  }
+
+  .name {
+    padding-top: 5rem;
+    font-family: Lato, SansSerif;
+    font-weight: 400;
+    font-size: 4.5rem;
+    letter-spacing: 0.1rem;
+  }
+
+  .subtitle {
+    font-family: Lato, SansSerif;
+    font-weight: 300;
+    color: #707070;
+    font-size: 2rem;
+    line-height: 2.4rem;
+  }
+
+  .portfolio {
+    padding-bottom: 2rem;
+    .section-heading {
+      font-family: Lato, SansSerif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      padding: 4rem;
+    }
+    .items-container,
+    .misc-items-container {
+      max-width: $DW_landing;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: -2rem auto 2rem auto;
+
+      @include desktop {
+        padding: 0 1rem;
+      }
+      @include tablet {
+        padding: 0 2rem;
+      }
+      @include phone {
+        padding: 0 1rem;
+      }
+    }
+
+    .item {
+      text-decoration: none;
+      text-align: left;
+
+      img {
+        box-sizing: content-box;
+        width: 100%;
+        max-height: 265px;
+        object-fit: cover;
+      }
+      .title {
+        font-family: Lato, SansSerif;
+        font-weight: 700;
+        font-size: 2.3rem;
+        text-rendering: optimizeLegibility;
+        padding: 1rem 0;
+        color: black;
+      }
+
+      .subtitle {
+        font-family: Lato, SansSerif;
+        font-weight: 300;
+        color: #707070;
+        font-size: 1.9rem;
+        line-height: 2.4rem;
+      }
+    }
+  }
+
+  .items-container {
+    .item-wrapper {
+      margin: 2rem 0 3rem 0;
+      width: 48%;
+      @include phone {
+        width: 100%;
+      }
+    }
+  }
+
+  .misc-items-container {
+    .item-wrapper {
+      margin: 2rem 0 3rem 0;
+      width: 31%;
+      @include phone {
+        width: 100%;
+      }
+    }
+  }
+
+  .footer {
+    margin: 4rem 0;
+    .links {
+      padding: 5rem 0;
+      margin: 0 auto;
+      width: auto;
+    }
+
+    a i.icon {
+      padding: 0 0 2.6rem 0;
+      margin: 0 0.5rem;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    i.icon {
+      font-size: 2rem;
+    }
+  }
+}

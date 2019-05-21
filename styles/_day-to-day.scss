@@ -1,0 +1,84 @@
+// body:not(.index-page) {
+  .day-to-day-video {
+    background-image: url("assets/projects/day-to-day-iphone-video.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 4rem auto 6rem auto;
+
+    .video-wrapper {
+      height: auto;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    @include desktop {
+      height: 640px;
+      .video-wrapper {
+        height: 100%;
+        width: 100%;
+        padding-left: 90px;
+        padding-top: 154px;
+      }
+    }
+
+    @include tablet {
+      height: 640px;
+      .video-wrapper {
+        height: 100%;
+        width: 100%;
+        padding-left: 5vw;
+        padding-top: 154px;
+        margin: 4rem auto;
+      }
+    }
+
+    @media screen and (max-width: 780px) and (min-width: 576px) {
+      height: 486px;
+      .video-wrapper {
+        width: 380px;
+        height: 100%;
+        margin: 4rem auto;
+        padding-top: 117px;
+        padding-left: 0;
+        video {
+          width: 100%;
+        }
+      }
+    }
+
+    @include phone {
+      height: 320px;
+      .video-wrapper {
+        width: 250px;
+        height: 100%;
+        margin: 4rem auto;
+        padding-top: 76px;
+        video {
+          width: 100%;
+        }
+      }
+    }
+
+    @include tiny {
+      background-image: none;
+      height: auto;
+      .video-wrapper {
+        display: none;
+        video {
+          display: none;
+        }
+      }
+    }
+
+    &::before {
+      @include tiny {
+        font-family: "Palatino", "Palatino Linotype", "Georgia", Times, Serif;
+        font-size: 1.8rem;
+        font-style: italic;
+        content: "To view this demo, please rotate your phone or switch to a larger screen.";
+        height: auto;
+      }
+    }
+  }
+// }

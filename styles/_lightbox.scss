@@ -1,0 +1,302 @@
+/* mixin for multiline */
+// http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/
+// Required until -line-clamp:3; is available in Firefox
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white) {
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount;
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  &:before {
+    content: "...";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColor;
+  }
+}
+
+body:not(.index-page) {
+  .single-image:not(.no-zoom)::before,
+  .album::before {
+    z-index: 1;
+    padding: 2rem 0 1rem 0;
+    display: block;
+    font-size: 1.5rem;
+    color: grey;
+    line-height: 1.8rem;
+    text-align: center;
+    width: 100%;
+    font-family: "Lora", "Palatino", "Palatino Linotype", "Georgia", Times, Serif;
+  }
+
+  .single-image:not(.no-zoom)::before {
+    content: "Click or tap the image below for fullscreen mode";
+  }
+
+  .album::before {
+    content: "Click or tap any image in the album below for fullscreen mode";
+  }
+
+  #lightbox2::before {
+    content: none;
+  }
+
+  .single-image {
+    p.caption,
+    p.caption a {
+      color: grey;
+      font-size: 1.5rem;
+      line-height: 1.8rem;
+      text-align: left;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .album {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .figure {
+      margin-bottom: 2rem;
+      width: 48%;
+      .image-container {
+        width: 100%;
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      // Limit the number of lines per caption
+      .caption {
+        font-style: normal;
+        text-align: left;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin-top: 1rem;
+        @include multiLineEllipsis($lineHeight: 2rem, $lineCount: 3, $bgColor: white);
+      }
+    }
+  }
+
+  .album.two-col {
+    .figure {
+      width: 48%;
+    }
+  }
+
+  .album.three-col {
+    .figure {
+      width: 30%;
+    }
+  }
+
+  .album.square {
+    .figure {
+      .image-container {
+        position: relative;
+
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center center;
+          margin: 0;
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          padding-bottom: 100%;
+        }
+      }
+    }
+  }
+
+  // Lightbox 2
+  $lightboxAnimationTime: 0.15s;
+
+  #lightbox2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    background-color: transparent;
+
+    .icon {
+      display: none;
+      z-index: 1000;
+      color: grey;
+      font-size: 40px;
+      @include phone {
+        font-size: 20px;
+      }
+      @include tablet {
+        font-size: 30px;
+      }
+    }
+
+    .chevron-wrapper {
+      text-align: center;
+      position: fixed;
+      width: 40px;
+      height: 40px;
+
+      @include phone {
+        width: 20px;
+        height: 20px;
+      }
+      @include tablet {
+        width: 30px;
+        height: 30px;
+      }
+
+      top: calc(100vh / 2 - 20px);
+
+      &.right {
+        right: 20px;
+        @include phone {
+          top: calc(100vh / 2 - 5px);
+          right: 5px;
+        }
+        @include tablet {
+          top: calc(100vh / 2 - 10px);
+          right: 10px;
+        }
+      }
+
+      &.left {
+        left: 20px;
+        @include phone {
+          top: calc(100vh / 2 - 5px);
+          left: 5px;
+        }
+        @include tablet {
+          top: calc(100vh / 2 - 10px);
+          left: 10px;
+        }
+      }
+    }
+
+    .icon:hover,
+    .chevron-wrapper {
+      cursor: pointer;
+    }
+
+    .chevron-wrapper,
+    .close.icon,
+    .caption {
+      display: none;
+      z-index: 1000;
+    }
+
+    .chevron-wrapper.hide {
+      display: none;
+    }
+
+    .close.icon {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+
+      @include phone {
+        left: 5px;
+      }
+      @include tablet {
+        left: 10px;
+      }
+    }
+
+    .image {
+      position: relative;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      margin: 0;
+    }
+
+    .caption {
+      position: fixed;
+      width: 100%;
+      height: auto;
+      bottom: 0px;
+      padding: 15px;
+      // background-color: rgba(0,0,0,.6);
+      color: white;
+      font-size: 1.5rem;
+      font-style: normal;
+      text-align: left;
+    }
+
+    .caption:empty::before {
+      display: none;
+    }
+
+    .caption::before {
+      z-index: -1;
+      content: " ";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      $blur: 3px;
+      backdrop-filter: blur($blur);
+      -webkit-backdrop-filter: blur($blur);
+    }
+
+    .caption:empty {
+      padding: 0;
+    }
+  }
+
+  #lightbox2.fullSize {
+    width: 100%;
+    height: 100vh;
+  }
+
+  #lightbox2.transition {
+    transition: $lightboxAnimationTime ease-out;
+  }
+
+  #lightbox2.active {
+    background-color: white;
+    z-index: 900;
+
+    .close.icon,
+    .caption {
+      display: initial;
+    }
+  }
+
+  #lightbox2.active.album {
+    .chevron-wrapper,
+    .chevron-wrapper .icon {
+      display: initial;
+    }
+    .chevron-wrapper.hide,
+    .chevron-wrapper.hide .icon {
+      display: none;
+    }
+  }
+
+  #lightbox2.fadeout {
+    opacity: 0;
+  }
+}

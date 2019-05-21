@@ -158,6 +158,8 @@ async function animate(initialPosition, endPosition, initialClip, endClip, durat
     // If lightbox is fullscreen, then add event listeners to remove the lightbox
     if (endPosition.width > initialPosition.width) {
         document.addEventListener("scroll", hideLightbox)
+        document.addEventListener("orientationchange", hideLightbox)
+        document.addEventListener("resize", hideLightbox)
     }
 
     animationInProgress = false
@@ -175,6 +177,8 @@ function hideLightbox() {
     if (animationInProgress) return
     animationInProgress = true
     document.removeEventListener("scroll", hideLightbox)
+    document.removeEventListener("orientationchange", hideLightbox)
+    document.removeEventListener("resize", hideLightbox)
     lightbox2.classList.add("fadeout")
     try{
         selectedFigure.querySelector("img").style.opacity = null

@@ -1,0 +1,125 @@
+body:not(.index-page) {
+  $desktop-desktopScaleFactor: 0.5;
+  $cutoffWidth: 1000px;
+
+  .interactive-website {
+    width: 100%;
+    display: block;
+    margin-bottom: 3rem;
+    @media (min-width: #{$cutoffWidth}) {
+      max-width: none;
+    }
+
+    &::before {
+      content: "Interactive Website";
+      text-align: center;
+      padding: 4rem;
+      font-family: "Palatino", "Palatino Linotype", "Georgia", Times, Serif;
+      font-style: italic;
+      display: block;
+      font-size: 2rem;
+      @media (max-width: #{$cutoffWidth}) {
+        content: "Screenshot(s) below. For an interactive demo, check this out on a desktop";
+        font-size: 1.8rem;
+      }
+    }
+
+    // Default iframe
+    iframe {
+      border: none;
+      @media (max-width: #{$cutoffWidth}) {
+        display: none;
+      }
+    }
+
+    &.desktop {
+      @media (min-width: #{$cutoffWidth}) {
+        padding-left: calc((100vw - 1920px * #{$desktop-desktopScaleFactor}) / 2);
+        padding-right: calc((100vw - 1920px * #{$desktop-desktopScaleFactor}) / 2);
+      }
+    }
+
+    &.desktop iframe {
+      width: 1920px;
+      height: 1080px;
+      transform: scale($desktop-desktopScaleFactor);
+      margin: -1080px * $desktop-desktopScaleFactor / 2 -1920px * $desktop-desktopScaleFactor / 2;
+      box-sizing: content-box;
+    }
+
+    &.tablet iframe {
+      width: 768px;
+      height: 1024px;
+      margin-left: calc((100vw - 768px) / 2);
+    }
+
+    &.mobile iframe {
+      width: 375px;
+      height: 667px;
+      margin-left: calc((100vw - 375px) / 2);
+    }
+
+    div.controls {
+      text-align: center;
+      padding-bottom: 3rem;
+
+      div {
+        @media (max-width: #{$cutoffWidth}) {
+          display: none;
+        }
+        padding-left: 2rem;
+        padding-right: 2rem;
+        text-align: center;
+        display: inline-block;
+        font-family: "Palatino", "Palatino Linotype", "Georgia", Times, Serif;
+        i {
+          font-size: 2rem;
+        }
+        font-size: 1.5rem;
+        transition: all 0.3s ease-in-out;
+        color: black;
+      }
+
+      &:hover {
+        cursor: pointer;
+        color: $blue;
+      }
+    }
+
+    
+  .iframe-alternate-photos img {
+    max-width: 100%;
+
+    @media (min-width: #{$cutoffWidth}) {
+      display: none;
+    }
+    //width:100%;
+    margin-top: 6rem;
+    @media (max-width: #{$cutoffWidth}) {
+    }
+  }
+
+  .iframe-alternate-photos img:first-child {
+    margin-top: 0;
+  }
+
+  .iframe-alternate-photos {
+    margin: 0;
+    margin-left: calc(50vw - 34rem);
+    @include tiny {
+      margin-left: 0;
+    }
+    @include phone {
+      margin-left: 0;
+    }
+    @include tablet {
+      margin-left: 0;
+    }
+    text-align: center;
+    @media (min-width: #{$cutoffWidth}) {
+      display: none;
+    }
+  }
+  }
+
+}
