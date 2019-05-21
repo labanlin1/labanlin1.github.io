@@ -71,7 +71,9 @@ async function expandAlbumImage(e) {
                 y: clipPortion
             }
         }
-        console.log(delete img)
+        if (delete img){
+            alert("xx")
+        }
 
     } else {
         naturalImagePositions = {
