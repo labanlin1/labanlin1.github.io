@@ -38,6 +38,7 @@ async function expandAlbumImage(e) {
     if (e.target.parentElement.parentElement.parentElement.classList.contains("square")) {
         // Get Natural Aspect Ratio of Image
         let img = new Image()
+        console.log(e.target.src)
         img.src = e.target.src
         if (img.naturalWidth > img.naturalHeight) {
             // Case 1
@@ -70,6 +71,7 @@ async function expandAlbumImage(e) {
                 y: clipPortion
             }
         }
+        console.log(delete img)
 
     } else {
         naturalImagePositions = {
@@ -158,7 +160,9 @@ function recursiveAnimation(timestamp) {
     lightbox2Image.style.height = `${height}px`
     lightbox2Image.style.left = `${animationVariables.initialPosition.TLx + animationVariables.deltaPosition.x * progress}px`
     lightbox2Image.style.top = `${animationVariables.initialPosition.TLy + animationVariables.deltaPosition.y * progress}px`
-    lightbox2Image.style.clipPath = `inset(${animationVariables.initialClip.y + animationVariables.deltaClip.y * progress}% ${animationVariables.initialClip.x + animationVariables.deltaClip.x * progress}%)`
+    let clip = `inset(${animationVariables.initialClip.y + animationVariables.deltaClip.y * progress}% ${animationVariables.initialClip.x + animationVariables.deltaClip.x * progress}%)`
+    lightbox2Image.style.clipPath = clip
+    lightbox2Image.style.webkitClipPath = clip
     if (progress < 1) {
         window.requestAnimationFrame(recursiveAnimation)
     } else {
@@ -248,8 +252,8 @@ function escapeHandler(event) {
     if (event.keyCode == 27 && selectedFigure !== null) hideLightbox()
 }
 
-
 var singleImages = document.querySelectorAll(".article .single-image:not(.no-zoom) img")
+
 for (let i = 0; i < singleImages.length; i++) {
     singleImages[i].addEventListener("click", expandSingleImage)
 }
