@@ -3,6 +3,8 @@ var lightbox2Image = document.getElementById("lightbox2-image")
 var animationInProgress = false
 var selectedFigure = null
 
+var animationVariables = null
+
 document.getElementById("close-album").addEventListener("click", hideLightbox)
 document.getElementById("next-album").addEventListener("click", () => { changeImage(true) })
 document.getElementById("prev-album").addEventListener("click", () => { changeImage(false) })
@@ -90,7 +92,7 @@ async function expandAlbumImage(e) {
     lightbox2Image.style.height = `${naturalImagePositions.height}px`
     lightbox2Image.style.clipPath = naturalImagePositions.clipPath
 
-    await nextFrame()
+    await windowRepainted()
 
     animate(naturalImagePositions,
         {
@@ -108,7 +110,7 @@ async function expandAlbumImage(e) {
 async function animate(initialPosition, endPosition, initialClip, endClip, duration) {
     animationInProgress = true
     lightbox2.classList.add("fullSize")
-    await nextFrame()
+    await windowRepainted()
     lightbox2.classList.add("transition", "active")
 
     let deltaPosition = {
@@ -128,46 +130,51 @@ async function animate(initialPosition, endPosition, initialClip, endClip, durat
 
     lightbox2Image.style.clipPath = `inset(${initialClip.y}% ${initialClip.x}%)`
 
-    let progress = 0
-    let startTime = await nextFrame()
-    let currentTime = startTime
-    
-    while(progress < .99){
-        progress = easeOut((currentTime - startTime)/ duration) //Add a function to turn this from linear to ease-in or ease-out, for example
-        let height = (initialPosition.height + deltaSize.y * progress)
-        let width = (initialPosition.width + deltaSize.x * progress)
-        lightbox2Image.style.width = `${width}px`
-        lightbox2Image.style.height = `${height}px`
-        lightbox2Image.style.left = `${initialPosition.TLx + deltaPosition.x * progress}px`
-        lightbox2Image.style.top = `${initialPosition.TLy + deltaPosition.y * progress}px`
-        lightbox2Image.style.clipPath = `inset(${initialClip.y + deltaClip.y * progress}% ${initialClip.x + deltaClip.x * progress}%)`
-        currentTime = await nextFrame()
+    // let progress = 0
+    animationVariables = {
+        initialPosition: initialPosition,
+        endPosition: endPosition,
+        initialClip: initialClip,
+        deltaSize: deltaSize,
+        deltaPosition: deltaPosition,
+        deltaClip: deltaClip,
+        duration: duration,
+        startTime: window.performance.now()
     }
 
-    // For some reason, this refuses to reach 1, so we'll just set it to 1 when it gets close enough
-    progress = 1
-
-    let height = (initialPosition.height + deltaSize.y * progress)
-    let width = (initialPosition.width + deltaSize.x * progress)
-    lightbox2Image.style.width = `${width}px`
-    lightbox2Image.style.height = `${height}px`
-    lightbox2Image.style.left = `${initialPosition.TLx + deltaPosition.x * progress}px`
-    lightbox2Image.style.top = `${initialPosition.TLy + deltaPosition.y * progress}px`
-    lightbox2Image.style.clipPath = `inset(${initialClip.y + deltaClip.y * progress}% ${initialClip.x + deltaClip.x * progress}%)`
-
-    // If lightbox is fullscreen, then add event listeners to remove the lightbox
-    if (endPosition.width > initialPosition.width) {
-        document.addEventListener("scroll", hideLightbox)
-        document.addEventListener("orientationchange", hideLightbox)
-        document.addEventListener("resize", hideLightbox)
-    }
-
-    animationInProgress = false
+    window.requestAnimationFrame(recursiveAnimation)
 }
 
-function nextFrame(){
+function recursiveAnimation(timestamp) {
+    // let progress = Math.min(easeOut((timestamp - animationVariables.startTime) / animationVariables.duration), 1) //Add a function to turn this from linear to ease-in or ease-out, for example
+    let t = Math.min((timestamp - animationVariables.startTime) / animationVariables.duration,1)
+    // Transform t into an ease-out
+
+    let progress = t * (2 - t)
+
+    let height = (animationVariables.initialPosition.height + animationVariables.deltaSize.y * progress)
+    let width = (animationVariables.initialPosition.width + animationVariables.deltaSize.x * progress)
+    lightbox2Image.style.width = `${width}px`
+    lightbox2Image.style.height = `${height}px`
+    lightbox2Image.style.left = `${animationVariables.initialPosition.TLx + animationVariables.deltaPosition.x * progress}px`
+    lightbox2Image.style.top = `${animationVariables.initialPosition.TLy + animationVariables.deltaPosition.y * progress}px`
+    lightbox2Image.style.clipPath = `inset(${animationVariables.initialClip.y + animationVariables.deltaClip.y * progress}% ${animationVariables.initialClip.x + animationVariables.deltaClip.x * progress}%)`
+    if (progress < 1) {
+        window.requestAnimationFrame(recursiveAnimation)
+    } else {
+        // If lightbox is fullscreen, then add event listeners to remove the lightbox
+        if (animationVariables.endPosition.width > animationVariables.initialPosition.width) {
+            document.addEventListener("scroll", hideLightbox)
+            document.addEventListener("orientationchange", hideLightbox)
+            document.addEventListener("resize", hideLightbox)
+        }
+        animationInProgress = false
+    }
+}
+
+function windowRepainted() {
     return new Promise(resolve => {
-        window.requestAnimationFrame((timestamp) =>{
+        window.requestAnimationFrame((timestamp) => {
             resolve(timestamp)
         })
     })
@@ -180,13 +187,13 @@ function hideLightbox() {
     document.removeEventListener("orientationchange", hideLightbox)
     document.removeEventListener("resize", hideLightbox)
     lightbox2.classList.add("fadeout")
-    try{
+    try {
         selectedFigure.querySelector("img").style.opacity = null
-    }catch(e){}
-    try{
+    } catch (e) { }
+    try {
         selectedFigure.style.opacity = null
-    }catch(e){}
-    
+    } catch (e) { }
+
     window.setTimeout(() => {
         lightbox2Image.style.backgroundImage = ""
         lightbox2.classList.remove("active", "fadeout", "transition", "fullSize", "album")
@@ -220,8 +227,6 @@ function updateAncillaryLightboxElements(e) {
     }
 }
 
-function easeOut(t) { return t * (2 - t) }
-
 function changeImage(forward) {
     selectedFigure.querySelector("img").style.opacity = null
     var newFigure = null
@@ -249,7 +254,7 @@ for (let i = 0; i < singleImages.length; i++) {
     singleImages[i].addEventListener("click", expandSingleImage)
 }
 
-async function expandSingleImage(e){
+async function expandSingleImage(e) {
     selectedFigure = e.target
     e.target.style.opacity = 0
     lightbox2Image.style.backgroundImage = `url("${e.target.src}"`
@@ -264,15 +269,15 @@ async function expandSingleImage(e){
 
     let caption = ""
     try {
-        if (e.target.nextElementSibling.classList.contains("caption")){
+        if (e.target.nextElementSibling.classList.contains("caption")) {
             caption = e.target.nextElementSibling.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ')
         }
-        
+
     } catch (e) {
 
     }
     lightbox2.querySelector(".caption").textContent = caption
-    await nextFrame()
+    await windowRepainted()
     animate(naturalImagePositions,
         {
             left: 0,
@@ -284,5 +289,5 @@ async function expandSingleImage(e){
         { x: 0, y: 0 },
         500
     )
-    
+
 }
